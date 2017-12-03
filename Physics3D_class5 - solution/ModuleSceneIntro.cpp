@@ -34,9 +34,21 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
-	p.axis = true;
+	PolygonPlane p;
+	p.color = GrassGreen;
+	p.Scale(100, 0, 100);
 	p.Render();
+
+	Cube c(12, 0.5f, 40);
+	c.color = Grey;
+	c.Render();
+
+	Cube c2(12, 0.5f, 40);
+	c2.SetPos(c.GetPos().x, c.GetPos().y, c.GetPos().z + c.GetSize().z / 2 + c2.GetSize().z / 2);
+
+	c2.Render();
+
+	//c.size = vec3(100, 1, 1);
 
 	return UPDATE_CONTINUE;
 }

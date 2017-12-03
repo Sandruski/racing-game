@@ -66,6 +66,16 @@ bool ModulePhysics3D::Start()
 		world->addRigidBody(body);
 	}
 
+	btCollisionShape* colShape = new btBoxShape(btVector3(10, 0.5f, 10));
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState();
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(0.0f, myMotionState, colShape);
+
+	btRigidBody* body = new btRigidBody(rbInfo);
+	body->translate(btVector3(0, -0.25f, 10));
+
+	world->addRigidBody(body);
+
 	return true;
 }
 

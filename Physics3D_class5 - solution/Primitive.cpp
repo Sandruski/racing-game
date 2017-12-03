@@ -87,6 +87,11 @@ void Primitive::SetPos(float x, float y, float z)
 	transform.translate(x, y, z);
 }
 
+vec3 Primitive::GetPos() const 
+{
+	return vec3(transform.M[12], transform.M[13], transform.M[14]);
+}
+
 // ------------------------------------------------------------
 void Primitive::SetRotation(float angle, const vec3 &u)
 {
@@ -99,6 +104,11 @@ void Primitive::Scale(float x, float y, float z)
 	transform.scale(x, y, z);
 }
 
+vec3 Primitive::GetScale() const 
+{
+	return vec3(transform.M[0], transform.M[5], transform.M[10]);
+}
+
 // CUBE ============================================
 Cube::Cube() : Primitive(), size(1.0f, 1.0f, 1.0f)
 {
@@ -108,6 +118,11 @@ Cube::Cube() : Primitive(), size(1.0f, 1.0f, 1.0f)
 Cube::Cube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
 {
 	type = PrimitiveTypes::Primitive_Cube;
+}
+
+vec3 Cube::GetSize() const 
+{
+	return vec3(size.x, size.y, size.z);
 }
 
 void Cube::InnerRender() const
@@ -246,18 +261,18 @@ void Line::InnerRender() const
 	glLineWidth(1.0f);
 }
 
-// PLANE ==================================================
-Plane::Plane() : Primitive(), normal(0, 1, 0), constant(1)
+// LINES PLANE ==================================================
+LinesPlane::LinesPlane() : Primitive(), normal(0, 1, 0), constant(1)
 {
 	type = PrimitiveTypes::Primitive_Plane;
 }
 
-Plane::Plane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
+LinesPlane::LinesPlane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
 {
 	type = PrimitiveTypes::Primitive_Plane;
 }
 
-void Plane::InnerRender() const
+void LinesPlane::InnerRender() const
 {
 	glLineWidth(1.0f);
 
@@ -275,3 +290,40 @@ void Plane::InnerRender() const
 
 	glEnd();
 }
+
+// POLYGON PLANE ==================================================
+PolygonPlane::PolygonPlane() : Primitive(), normal(0, 1, 0), constant(1)
+{
+	type = PrimitiveTypes::Primitive_Plane;
+}
+
+PolygonPlane::PolygonPlane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
+{
+	type = PrimitiveTypes::Primitive_Plane;
+}
+
+void PolygonPlane::InnerRender() const
+{
+	glBegin(GL_POLYGON);
+
+	glVertex3f(-a, ha, a);
+	glVertex3f(b, hb, b);
+	glVertex3f(c, hc, -c);
+	glVertex3f(-d, hd, -d);
+	
+	glEnd();
+}
+
+void PolygonPlane::SetVertexes(int a, int b, int c, int d, int ha, int hb, int hc, int hd)
+{
+	this->a = a;
+	this->b = b;
+	this->c = c;
+	this->d = d;
+
+	this->ha = ha;
+	this->hb = hb;
+	this->hc = hc;
+	this->hd = hd;
+}
+

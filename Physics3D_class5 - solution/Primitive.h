@@ -22,8 +22,10 @@ public:
 	virtual void	Render() const;
 	virtual void	InnerRender() const;
 	void			SetPos(float x, float y, float z);
+	vec3			GetPos() const;
 	void			SetRotation(float angle, const vec3 &u);
 	void			Scale(float x, float y, float z);
+	vec3			GetScale() const;
 	PrimitiveTypes	GetType() const;
 
 public:
@@ -43,6 +45,7 @@ public :
 	Cube();
 	Cube(float sizeX, float sizeY, float sizeZ);
 	void InnerRender() const;
+	vec3 GetSize() const;
 public:
 	vec3 size;
 };
@@ -83,13 +86,29 @@ public:
 };
 
 // ============================================
-class Plane : public Primitive
+class LinesPlane : public Primitive
 {
 public:
-	Plane();
-	Plane(float x, float y, float z, float d);
+	LinesPlane();
+	LinesPlane(float x, float y, float z, float d);
 	void InnerRender() const;
 public:
 	vec3 normal;
 	float constant;
+};
+
+class PolygonPlane : public Primitive
+{
+public:
+	PolygonPlane();
+	PolygonPlane(float x, float y, float z, float d);
+	void InnerRender() const;
+	void SetVertexes(int a, int b, int c, int d, int ha = 0, int hb = 0, int hc = 0, int hd = 0);
+
+public:
+	vec3 normal;
+	float constant;
+
+private:
+	int a = 1, b = 1, c = 1, d = 1, ha = 0, hb = 0, hc = 0, hd = 0;
 };
