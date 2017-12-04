@@ -56,6 +56,7 @@ bool ModulePhysics3D::Start()
 	vehicle_raycaster = new btDefaultVehicleRaycaster(world);
 
 	// Big plane as ground
+	/*
 	{
 		btCollisionShape* colShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 
@@ -65,16 +66,7 @@ bool ModulePhysics3D::Start()
 		btRigidBody* body = new btRigidBody(rbInfo);
 		world->addRigidBody(body);
 	}
-
-	btCollisionShape* colShape = new btBoxShape(btVector3(10, 0.5f, 10));
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState();
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(0.0f, myMotionState, colShape);
-
-	btRigidBody* body = new btRigidBody(rbInfo);
-	body->translate(btVector3(0, -0.25f, 10));
-
-	world->addRigidBody(body);
+	*/
 
 	return true;
 }
