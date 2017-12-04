@@ -40,17 +40,13 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	// Implement a debug camera with keys and mouse
-	// Now we can make this movememnt frame rate independant!
-
-	vec3 newPos(0,0,0);
-
-	newPos.x = App->player->position.x;
-	newPos.y = App->player->position.y + 5;
-	newPos.z = App->player->position.z - 7;
 	
-	Look(newPos, vec3(App->player->position.x, App->player->position.y + 3, App->player->position.z), true);
-	
+	Position.x = App->player->position.x - 10* App->player->vehicle->vehicle->getForwardVector().getX();
+	Position.y = App->player->position.y + 5;
+	Position.z = App->player->position.z - 10 * App->player->vehicle->vehicle->getForwardVector().getZ();
+
+	LookAt(vec3(App->player->position.x, App->player->position.y + 3, App->player->position.z));
+
 	// Mouse motion ----------------
 
 	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)

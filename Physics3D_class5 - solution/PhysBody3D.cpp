@@ -50,9 +50,8 @@ void PhysBody3D::GetPos(float& x, float& y, float& z)
 {
 	btTransform t = body->getWorldTransform();
 	btVector3 origin = t.getOrigin();
-	origin.setY(origin.getY());
-	origin.setZ(origin.getZ());
 	x = (float)origin.getX();
 	y = (float)origin.getY();
 	z = (float)origin.getZ();
+	
 }
