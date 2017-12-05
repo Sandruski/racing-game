@@ -25,6 +25,7 @@ public:
 	Cube CreateCube(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, Color color = White, bool axis = false, bool wire = false);
 	Cylinder CreateCylinder(float radius = 1.0f, float height = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, float angle = 0.0f, vec3 u = (0, 0, 0), Color color = White, bool axis = false, bool wire = false);
 	void CreateSpeedUp(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f);
+	void CreateFinishLine(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f);
 
 	void UpdateSpeedUpColors(float dt);
 	void UpdateSpeedUpIndex(uint &index);
