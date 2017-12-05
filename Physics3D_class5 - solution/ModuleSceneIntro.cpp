@@ -17,6 +17,21 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	//sensors
+	s.size = vec3(5, 3, 1);
+	s.SetPos(0, 2.5f, 20);
+
+	g.size = vec3(5, 3, 1);
+	g.SetPos(10, 5.0f, 20);
+
+	sensor = App->physics->AddBody(s, 0.0f);
+	sensor->SetAsSensor(true);
+	sensor->collision_listeners.add(this);
+
+	sensor2 = App->physics->AddBody(g, 0.0f);
+	sensor2->SetAsSensor(true);
+	sensor2->collision_listeners.add(this);
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -106,6 +121,12 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	// sensors
+	sensor->GetTransform(&s.transform);
+	s.Render();
+
+	sensor2->GetTransform(&g.transform);
+	g.Render();
 	// ROAD
 	// Road parameters
 	float road_width = 12.0f;
@@ -320,5 +341,13 @@ Cylinder ModuleSceneIntro::CreateCylinder(float radius, float height, float posX
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	if (body1 == sensor) {
+		App->player->speedup = true;
+	}
+		
+	else if (body1) {
+		LOG("ssensor2");
+		checkpoints_index = 1;
+	}
 }
 

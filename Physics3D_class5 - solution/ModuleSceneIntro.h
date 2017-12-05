@@ -62,4 +62,11 @@ public:
 	uint index_c = 2;
 	uint index_d = 3;
 	//_speed-up_parameters
+
+	//senors 
+	Cube s, g;
+	PhysBody3D* sensor;
+	PhysBody3D* sensor2;
+
+	uint checkpoints_index = 0;
 };

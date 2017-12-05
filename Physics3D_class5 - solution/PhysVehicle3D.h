@@ -52,6 +52,7 @@ public:
 	float GetKmh() const;
 public:
 
+	btRigidBody* body;
 	VehicleInfo info;
 	btRaycastVehicle* vehicle;
 };
