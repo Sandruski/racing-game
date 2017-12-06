@@ -4,6 +4,7 @@
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
+#include "ModuleSceneIntro.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
@@ -28,7 +29,7 @@ bool ModulePlayer::Start()
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
-	car.frictionSlip = 50.5;
+	car.frictionSlip = 100.5;
 	car.maxSuspensionForce = 6000.0f;
 
 	// Wheel properties ---------------------------------------
@@ -148,10 +149,38 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
+	{
+			vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
+			vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+			vehicle->SetTransform(IdentityMatrix.M);
+		
+		switch (App->scene_intro->checkpoints_index)
+		{
+		case 0:
+			vehicle->SetPos(0, 0, 0);
+			break;
+		case 1:
+			vehicle->SetPos(0, 20, 0);
+			break;
+		case 2:
+			vehicle->SetPos(0, 10, 0);
+			break;
+			//etc
+		}
+	}
+
 	if (vehicle->GetKmh() > 50)
 		acceleration = 0;
 
+	if (speedup)
+	{
+		vehicle->Push(0, 0, 500.0f);
+		speedup = false;
+	}
+
 	vehicle->ApplyEngineForce(acceleration);
+
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 	vehicle->Render();
