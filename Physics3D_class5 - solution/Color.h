@@ -40,3 +40,5 @@ extern Color Pink; // base pink
 extern Color DeepPink;
 extern Color Violet;
 extern Color Purple;
+
+extern Color Orange;
