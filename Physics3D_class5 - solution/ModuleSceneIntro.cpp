@@ -17,7 +17,10 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	//sensors
+	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
+	App->camera->LookAt(vec3(0, 0, 0));
+
+	// Sensors
 	s.size = vec3(5, 3, 1);
 	s.SetPos(0, 2.5f, 20);
 
@@ -31,9 +34,7 @@ bool ModuleSceneIntro::Start()
 	sensor2 = App->physics->AddBody(g, 0.0f);
 	sensor2->SetAsSensor(true);
 	sensor2->collision_listeners.add(this);
-
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
-	App->camera->LookAt(vec3(0, 0, 0));
+	//_sensors
 
 	// Colliders creation
 	float mass = 0.0f;
@@ -75,8 +76,43 @@ bool ModuleSceneIntro::Start()
 	App->physics->AddBody(cu5, mass);
 	Cylinder cy4 = CreateCylinder(road_width / 2.0f, road_height, cu5.GetPos().x + cu5.GetSize().x / 2.0f, cu5.GetPos().y, cu5.GetPos().z, right_angle, orthonormal_z, soil);
 	App->physics->AddBody(cy4, mass);
-	Cube cu6 = CreateCube(road_width, road_height, 3 * road_length, cy4.GetPos().x, cy4.GetPos().y, cy4.GetPos().z + 3 * road_length / 2.0f, soil);
+	Cube cu6 = CreateCube(road_width, road_height, 6 * road_length, cy4.GetPos().x, cy4.GetPos().y, cy4.GetPos().z + (6 * road_length) / 2.0f, soil);
 	App->physics->AddBody(cu6, mass);
+
+	// Hinges (rotating elements)
+	float cylinder_rotating_width = road_width / 2.0f;
+	float cylinder_real_width = road_width / 8.0f;
+	float cylinder_height = 50.0f * road_height; // y axis
+
+	float cube_width = road_width / 2.0f;
+	float cube_height = 2.0f * road_height;
+	float cube_length = road_length + 2.0f * road_width;
+
+	Color rotating_stuff = Orange;
+
+	rotating_cu = CreateCube(cube_width, cube_height, cube_length, cu6.GetPos().x + 20.0f, cu6.GetPos().y + 2.0f * cube_height, cu6.GetPos().z - cube_length / 2.0f, rotating_stuff);
+	bodyA = App->physics->AddBody(rotating_cu, 1000.0f);
+	Cylinder rotating_cy = CreateCylinder(cylinder_rotating_width, cylinder_height, rotating_cu.GetPos().x, rotating_cu.GetPos().y - cylinder_height / 2.0f, rotating_cu.GetPos().z, right_angle, orthonormal_z, rotating_stuff);
+	Cylinder real_cy = CreateCylinder(cylinder_real_width, cylinder_height, rotating_cu.GetPos().x, rotating_cu.GetPos().y - cylinder_height / 2.0f, rotating_cu.GetPos().z, right_angle, orthonormal_z, rotating_stuff);
+	PhysBody3D* bodyB = App->physics->AddBody(rotating_cy, 1000.0f);
+	App->physics->AddBody(real_cy, mass);
+
+	rotating_cu2 = CreateCube(cube_width, cube_height, cube_length, cu6.GetPos().x - 20.0f, cu6.GetPos().y + 2.0f * cube_height, cu6.GetPos().z + cube_length / 2.0f, rotating_stuff);
+	bodyA2 = App->physics->AddBody(rotating_cu2, 1000.0f);
+	Cylinder rotating_cy2 = CreateCylinder(cylinder_rotating_width, cylinder_height, rotating_cu2.GetPos().x, rotating_cu2.GetPos().y - cylinder_height / 2.0f, rotating_cu2.GetPos().z, right_angle, orthonormal_z, rotating_stuff);
+	Cylinder real_cy2 = CreateCylinder(cylinder_real_width, cylinder_height, rotating_cu.GetPos().x, rotating_cu.GetPos().y - cylinder_height / 2.0f, rotating_cu.GetPos().z, right_angle, orthonormal_z, rotating_stuff);
+	PhysBody3D* bodyB2 = App->physics->AddBody(rotating_cy2, 1000.0f);
+	App->physics->AddBody(real_cy2, mass);
+
+	bodyA->GetBody()->setLinearFactor(btVector3(0, 0, 0));
+	bodyA2->GetBody()->setLinearFactor(btVector3(0, 0, 0));
+	bodyB->GetBody()->setLinearFactor(btVector3(0, 0, 0));
+	bodyB->GetBody()->setAngularFactor(btVector3(0, 0, 0));
+	bodyB2->GetBody()->setLinearFactor(btVector3(0, 0, 0));
+	bodyB2->GetBody()->setAngularFactor(btVector3(0, 0, 0));
+
+	App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, -1, 0), vec3(0, 0, 0), true, true);
+	App->physics->AddConstraintHinge(*bodyA2, *bodyB2, vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 1, 0), vec3(0, 0, 0), true, true);
 
 	// GROUND
 	float ground_width = 150.0f;
@@ -121,12 +157,14 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	// sensors
+	// Sensors
 	sensor->GetTransform(&s.transform);
 	s.Render();
 
 	sensor2->GetTransform(&g.transform);
 	g.Render();
+	//_sensors
+
 	// ROAD
 	// Road parameters
 	float road_width = 12.0f;
@@ -152,57 +190,83 @@ update_status ModuleSceneIntro::Update(float dt)
 	// Road primitives
 	/// Always use last primitive created to set the position of the next primitive
 	/// Notice that the position of the primitives follows a pattern
+
 	Cube cu = CreateCube(road_width, road_height, road_length, 0.0f, 0.0f, 0.0f, soil);
 
 	Cube cu2 = CreateCube(road_width, road_height, road_length, cu.GetPos().x, cu.GetPos().y, cu.GetPos().z + cu.GetSize().z / 2.0f + road_length / 2.0f, soil);
 
-Cylinder cy = CreateCylinder(road_width / 2.0f, road_height + z_fighting, cu2.GetPos().x, cu2.GetPos().y, cu2.GetPos().z + cu2.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
+	Cylinder cy = CreateCylinder(road_width / 2.0f, road_height + z_fighting, cu2.GetPos().x, cu2.GetPos().y, cu2.GetPos().z + cu2.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
 
-Cube cu3 = CreateCube(road_length, road_height, road_width, cy.GetPos().x + road_length / 2.0f, cy.GetPos().y, cy.GetPos().z, soil);
+	Cube cu3 = CreateCube(road_length, road_height, road_width, cy.GetPos().x + road_length / 2.0f, cy.GetPos().y, cy.GetPos().z, soil);
 
-Cylinder cy2 = CreateCylinder(road_width / 2.0f, road_height + z_fighting, cu3.GetPos().x + cu3.GetSize().x / 2.0f, cu3.GetPos().y, cu3.GetPos().z, right_angle, orthonormal_z, soil);
+	Cylinder cy2 = CreateCylinder(road_width / 2.0f, road_height + z_fighting, cu3.GetPos().x + cu3.GetSize().x / 2.0f, cu3.GetPos().y, cu3.GetPos().z, right_angle, orthonormal_z, soil);
 
-Cube cu4 = CreateCube(road_width, road_height, road_short_length, cy2.GetPos().x, cy2.GetPos().y, cy2.GetPos().z + road_short_length / 2.0f, soil);
+	Cube cu4 = CreateCube(road_width, road_height, road_short_length, cy2.GetPos().x, cy2.GetPos().y, cy2.GetPos().z + road_short_length / 2.0f, soil);
 
-Cylinder cy3 = CreateCylinder(road_width / 2.0f, road_height + z_fighting, cu4.GetPos().x, cu4.GetPos().y, cu4.GetPos().z + cu4.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
+	Cylinder cy3 = CreateCylinder(road_width / 2.0f, road_height + z_fighting, cu4.GetPos().x, cu4.GetPos().y, cu4.GetPos().z + cu4.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
 
-Cube cu5 = CreateCube(road_length, road_height, road_width, cy3.GetPos().x + road_length / 2.0f, cy3.GetPos().y, cy3.GetPos().z, soil);
+	Cube cu5 = CreateCube(road_length, road_height, road_width, cy3.GetPos().x + road_length / 2.0f, cy3.GetPos().y, cy3.GetPos().z, soil);
 
-Cylinder cy4 = CreateCylinder(road_width / 2.0f, road_height + z_fighting, cu5.GetPos().x + cu5.GetSize().x / 2.0f, cu5.GetPos().y, cu5.GetPos().z, right_angle, orthonormal_z, soil);
+	Cylinder cy4 = CreateCylinder(road_width / 2.0f, road_height + z_fighting, cu5.GetPos().x + cu5.GetSize().x / 2.0f, cu5.GetPos().y, cu5.GetPos().z, right_angle, orthonormal_z, soil);
 
-Cube cu6 = CreateCube(road_width, road_height, 3 * road_length, cy4.GetPos().x, cy4.GetPos().y, cy4.GetPos().z + 3 * road_length / 2.0f, soil);
+	Cube cu6 = CreateCube(road_width, road_height, 6 * road_length, cy4.GetPos().x, cy4.GetPos().y, cy4.GetPos().z + (6 * road_length) / 2.0f, soil);
 
-// GROUND
-float ground_width = 150.0f;
-float ground_height = 15.0f; // y axis
-float ground_length = 100.0f;
+	// Hinges (rotating elements)
+	float cylinder_width = road_width / 8.0f;
+	float cylinder_height = 50.0f * road_height; // y axis
 
-Cube ground = CreateCube(ground_width, ground_height, ground_length, cy4.GetPos().x - ground_width / 3.0f, cy4.GetPos().y - ground_height / 2, cy4.GetPos().z + cy4.radius - ground_length / 2, Pink);
+	float cube_width = road_width / 2.0f;
+	float cube_height = 2.0f * road_height;
+	float cube_length = road_length + 10.0f;
 
-Cube ground1 = CreateCube(ground_width, ground_height, ground_length, ground.GetPos().x, ground.GetPos().y - ground_height, ground.GetPos().z + ground_length, Cyan);
-//_ground
+	Color rotating_stuff = Orange;
 
-// SPEED-UPS
-float speed_width = 4.0f;
-float speed_length = 2.0f;
+	Cylinder rotating_cy = CreateCylinder(cylinder_width, cylinder_height, rotating_cu.GetPos().x, rotating_cu.GetPos().y - cylinder_height / 2.0f, rotating_cu.GetPos().z, right_angle, orthonormal_z, rotating_stuff);
+	Cylinder rotating_cy2 = CreateCylinder(cylinder_width, cylinder_height, rotating_cu2.GetPos().x, rotating_cu2.GetPos().y - cylinder_height / 2.0f, rotating_cu2.GetPos().z, right_angle, orthonormal_z, rotating_stuff);
 
-/// It is only needed to set the position and size of the first element of the speed-up
-CreateSpeedUp(speed_width, road_height, speed_length, 0, z_fighting, 5.0f);
-CreateSpeedUp(speed_width, road_height, speed_length, cu6.GetPos().x, z_fighting, cu6.GetPos().z);
+	rotating_cu.Render();
+	rotating_cu2.Render();
 
-UpdateSpeedUpColors(dt);
-//_speed-ups
+	mat4x4 trans;
+	bodyA->GetTransform(trans.M);
+	rotating_cu.transform = trans;
+	bodyA2->GetTransform(trans.M);
+	rotating_cu2.transform = trans;
+	//_hinges
 
-// FINISH LINE
-float line_width = 1.0f;
-float line_length = 1.0f;
+	// GROUND
+	float ground_width = 150.0f;
+	float ground_height = 15.0f; // y axis
+	float ground_length = 100.0f;
 
-CreateFinishLine(line_width, road_height, line_length, line_width / 2.0f - cu.GetSize().x / 2.0f, z_fighting, 0.0f);
-//_finish_line
-//_road_primitives
-//_road
+	Cube ground = CreateCube(ground_width, ground_height, ground_length, cy4.GetPos().x - ground_width / 3.0f, cy4.GetPos().y - ground_height / 2, cy4.GetPos().z + cy4.radius - ground_length / 2, Pink);
 
-return UPDATE_CONTINUE;
+	Cube ground1 = CreateCube(ground_width, ground_height, ground_length, ground.GetPos().x, ground.GetPos().y - ground_height, ground.GetPos().z + ground_length, Cyan);
+	//_ground
+
+	// SPEED-UPS
+	float speed_width = 4.0f;
+	float speed_length = 2.0f;
+
+	/// It is only needed to set the position and size of the first element of the speed-up
+	CreateSpeedUp(speed_width, road_height, speed_length, 0, z_fighting, 5.0f);
+	CreateSpeedUp(speed_width, road_height, speed_length, cu6.GetPos().x, z_fighting, cu6.GetPos().z);
+
+	UpdateSpeedUpColors(dt);
+	//_speed-ups
+
+	// FINISH LINE
+	float line_width = 1.0f;
+	float line_length = 1.0f;
+
+	CreateFinishLine(line_width, road_height, line_length, line_width / 2.0f - cu.GetSize().x / 2.0f, z_fighting, 0.0f);
+	//_finish_line
+
+
+	//_road_primitives
+	//_road
+
+	return UPDATE_CONTINUE;
 }
 
 // Specific functions
@@ -255,55 +319,25 @@ void ModuleSceneIntro::UpdateSpeedUpIndex(uint &index)
 
 void ModuleSceneIntro::CreateFinishLine(float sizeX, float sizeY, float sizeZ, float posX, float posY, float posZ)
 {
-	/*
+	Color c1 = White;
+	Color c2 = Black;
+
 	for (int i = 0; i < 3; ++i) {
-		for (int j = 0; j < 11; ++j) {
-			CreateCube(sizeX, sizeY, sizeZ, posX + j * sizeX, posY, posZ + i * sizeZ, White);
-			CreateCube(sizeX, sizeY, sizeZ, posX + (j + 1) * sizeX, posY, posZ + i * sizeZ, Black);
+
+		if (i % 2 != 0) {
+			c1 = Black;
+			c2 = White;
+		}
+		else {
+			c1 = White;
+			c2 = Black;
+		}
+
+		for (int j = 0; j < 6; ++j) {
+			CreateCube(sizeX, sizeY, sizeZ, posX + (j * 2 + 0) * sizeX, posY, posZ + i * sizeZ, c1);
+			CreateCube(sizeX, sizeY, sizeZ, posX + (j * 2 + 1) * sizeX, posY, posZ + i * sizeZ, c2);
 		}
 	}
-	*/
-	
-	
-	CreateCube(sizeX, sizeY, sizeZ, posX, posY, posZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 1 * sizeX, posY, posZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 2 * sizeX, posY, posZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 3 * sizeX, posY, posZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 4 * sizeX, posY, posZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 5 * sizeX, posY, posZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 6 * sizeX, posY, posZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 7 * sizeX, posY, posZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 8 * sizeX, posY, posZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 9 * sizeX, posY, posZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 10 * sizeX, posY, posZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 11 * sizeX, posY, posZ, Black);
-
-	CreateCube(sizeX, sizeY, sizeZ, posX, posY, posZ + 1 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 1 * sizeX, posY, posZ + 1 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 2 * sizeX, posY, posZ + 1 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 3 * sizeX, posY, posZ + 1 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 4 * sizeX, posY, posZ + 1 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 5 * sizeX, posY, posZ + 1 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 6 * sizeX, posY, posZ + 1 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 7 * sizeX, posY, posZ + 1 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 8 * sizeX, posY, posZ + 1 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 9 * sizeX, posY, posZ + 1 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 10 * sizeX, posY, posZ + 1 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 11 * sizeX, posY, posZ + 1 * sizeZ, White);
-
-	CreateCube(sizeX, sizeY, sizeZ, posX, posY, posZ + 2 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 1 * sizeX, posY, posZ + 2 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 2 * sizeX, posY, posZ + 2 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 3 * sizeX, posY, posZ + 2 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 4 * sizeX, posY, posZ + 2 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 5 * sizeX, posY, posZ + 2 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 6 * sizeX, posY, posZ + 2 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 7 * sizeX, posY, posZ + 2 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 8 * sizeX, posY, posZ + 2 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 9 * sizeX, posY, posZ + 2 * sizeZ, Black);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 10 * sizeX, posY, posZ + 2 * sizeZ, White);
-	CreateCube(sizeX, sizeY, sizeZ, posX + 11 * sizeX, posY, posZ + 2 * sizeZ, Black);
-	
 }
 
 //_specific_functions
@@ -350,4 +384,3 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		checkpoints_index = 1;
 	}
 }
-

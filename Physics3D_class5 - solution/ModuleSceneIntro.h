@@ -63,10 +63,18 @@ public:
 	uint index_d = 3;
 	//_speed-up_parameters
 
-	//senors 
+	// Hinge
+	PhysBody3D* bodyA;
+	PhysBody3D* bodyA2;
+	Cube rotating_cu;
+	Cube rotating_cu2;
+	//_hinge
+
+	// Senors 
 	Cube s, g;
 	PhysBody3D* sensor;
 	PhysBody3D* sensor2;
 
 	uint checkpoints_index = 0;
+	//_sensors
 };
