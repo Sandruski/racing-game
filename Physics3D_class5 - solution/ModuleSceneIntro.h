@@ -20,9 +20,10 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	Cube CreateCube(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, Color color = White, bool draw = true, bool collider = true, float mass = 0.0f);
+	Cube CreateCube(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, Color color = White, bool draw = true, bool collider = true, float mass = 0.0f, float angle = 0.0f, vec3 u = (0, 0, 0));
 	Cylinder CreateCylinder(float radius = 1.0f, float height = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, float angle = 0.0f, vec3 u = (0, 0, 0), Color color = White, bool draw = true, bool collider = true, float mass = 0.0f);
-	void CreateSpeedUp(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f);
+	
+	void CreateSpeedUp(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, uint num = 4, bool add_z = true, float angle = 0.0f, vec3 u = (0, 0, 0));
 	void CreateFinishLine(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f);
 
 	void UpdateSpeedUpColors(float dt);
@@ -50,6 +51,10 @@ public:
 	uint index_a = 0, index_b = 1, index_c = 2, index_d = 3;
 
 	Cube cu6; // 2nd speed-up position reference
+	Cube cu7;
+	Cube cu9;
+	Cube cu12;
+	Cube ground1;
 
 	// Senors 
 	Cube s, g;

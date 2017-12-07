@@ -55,6 +55,8 @@ bool ModuleSceneIntro::Start()
 	// Road primitives
 	/// Always use last primitive created to set the position of the next primitive
 	/// Notice that the position of the primitives follows a pattern
+
+	// First section
 	Cube cu = CreateCube(road_width, road_height, road_length, 0.0f, 0.0f, 0.0f, soil);
 	Cube cu2 = CreateCube(road_width, road_height, road_length, cu.GetPos().x, cu.GetPos().y, cu.GetPos().z + cu.GetSize().z / 2.0f + road_length / 2.0f, soil);
 	Cylinder cy = CreateCylinder(road_width / 2.0f, road_height, cu2.GetPos().x, cu2.GetPos().y, cu2.GetPos().z + cu2.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
@@ -65,6 +67,76 @@ bool ModuleSceneIntro::Start()
 	Cube cu5 = CreateCube(road_length, road_height, road_width, cy3.GetPos().x + road_length / 2.0f, cy3.GetPos().y, cy3.GetPos().z, soil);
 	Cylinder cy4 = CreateCylinder(road_width / 2.0f, road_height, cu5.GetPos().x + cu5.GetSize().x / 2.0f, cu5.GetPos().y, cu5.GetPos().z, right_angle, orthonormal_z, soil);
 	cu6 = CreateCube(road_width, road_height, 6 * road_length, cy4.GetPos().x, cy4.GetPos().y, cy4.GetPos().z + (6 * road_length) / 2.0f, soil);
+	cu7 = CreateCube(road_width, road_height, road_length / 2.0f, cu6.GetPos().x, cu6.GetPos().y, cu6.GetPos().z + cu6.GetSize().z / 2.0f, soil, true, true, 0.0f, -20, orthonormal_x);
+
+	// Ground
+	float ground_width = 150.0f;
+	float ground_height = 15.0f; // y axis
+	float ground_length = 100.0f;
+
+	Cube ground = CreateCube(ground_width, ground_height, ground_length, cy4.GetPos().x - ground_width / 3.0f, cy4.GetPos().y - ground_height / 2.0f, cy4.GetPos().z + cy4.radius - ground_length / 2.0f, Pink);
+	Cube water = CreateCube(2.0f * ground_width, ground_height, 3.0f * ground_length + 15.0f, ground.GetPos().x, ground.GetPos().y - ground_height, ground.GetPos().z + ground_length, Cyan);
+	ground1 = CreateCube(2.0f * ground_width, ground_height / 2.0f, 2.0f * ground_length, water.GetPos().x + water.GetSize().x / 2.0f, ground.GetPos().y - ground.GetSize().y / 2.0f, water.GetPos().z + water.GetSize().z / 2.0f + (2.0f * ground_length) / 2.0f, Pink);
+	//_ground
+	//_first_section
+
+	// Second section
+	Cube cu8 = CreateCube(3.0f * road_width, road_height, 3.0f * road_length, cu7.GetPos().x, ground1.GetPos().y + ground1.GetSize().y / 2.0f + road_height / 2.0f, ground1.GetPos().z - ground1.GetSize().z / 2.0f + (3.0f * road_length) / 2.0f, soil);
+	Cylinder cy6 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu8.GetPos().x, cu8.GetPos().y, cu8.GetPos().z + cu8.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
+	cu9 = CreateCube(4.0f * road_length, road_height, 3.0f * road_width, cy6.GetPos().x + (4.0f * road_length) / 2.0f, cy6.GetPos().y, cy6.GetPos().z, soil);
+	Cylinder cy7 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu9.GetPos().x + cu9.GetPos().x / 2.0f, cu9.GetPos().y, cu9.GetPos().z, right_angle, orthonormal_z, soil);
+	Cube cu10 = CreateCube(4.0f * road_length, road_height, 3.0f * road_width, cy7.GetPos().x, cy7.GetPos().y, cy7.GetPos().z, soil, true, true, 0.0f, 20, orthonormal_z);
+	Cube cu11 = CreateCube(2.0f * road_length, road_height, 3.0f * road_width, cu10.GetPos().x + cu10.GetSize().x - (2.0f * road_length) / 2.0f - 4.0f, cu10.GetPos().y + cu10.GetSize().z * tan(DEGTORAD * 30) - 0.4f, cu10.GetPos().z, soil);
+	Cylinder cy8 = CreateCylinder(road_width / 2.0f, 50.0f * road_height, cu11.GetPos().x + cu11.GetSize().x / 3.0f - (road_width / 2.0f), cu11.GetPos().y + cu11.GetSize().y / 2.0f - (50.0f * road_height) / 2.0f, cu11.GetPos().z, right_angle, orthonormal_z, soil);
+	cu12 = CreateCube(3.0f * road_width, road_height, 4.0f * road_length, cu11.GetPos().x + cu11.GetSize().x / 2.0f - (3.0f * road_width) / 2.0f, cy7.GetPos().y, cu11.GetPos().z - (4.0f * road_length) / 2.0f - cu11.GetSize().z / 2.0f + 4.0f, soil, true, true, 0.0f, -20, orthonormal_x);
+	Cube cu13 = CreateCube(3.0f * road_width, road_height, 4.0f * road_length, cu12.GetPos().x, cu12.GetPos().y - cu11.GetSize().z * tan(DEGTORAD * 30) + 0.4f, cu12.GetPos().z - cu12.GetSize().z / 2.0f + 4.0f, soil, true, true, 0.0f, -20, orthonormal_x);
+	Cube cu14 = CreateCube(3.0f * road_width, road_height, 2.0f * road_length, cu13.GetPos().x, cu13.GetPos().y, cu13.GetPos().z - cu13.GetSize().z / 2.0f + (2.0f * road_length) / 2.0f, soil);
+	Cube cu15 = CreateCube(3.0f * road_width, road_height, 2.0f * road_length, cu14.GetPos().x, cu14.GetPos().y, cu14.GetPos().z - 1.2f * cu14.GetSize().z, soil);
+	Cube cu16 = CreateCube(3.0f * road_width, road_height, 2.0f * road_length, cu15.GetPos().x, cu15.GetPos().y, cu15.GetPos().z - 1.2f * cu15.GetSize().z, soil);
+
+	// Castle
+	Cube castle = CreateCube(90.0f, 90.0f, 130.0f, water.GetPos().x + water.GetSize().x / 2.0f + 90.0f / 3.0f, water.GetPos().y + water.GetSize().y, water.GetPos().z, White);
+	Cube castle1 = CreateCube(30.0f, 80.0f, 30.0f, castle.GetPos().x, castle.GetPos().y + castle.GetSize().y / 2.0f, castle.GetPos().z, White);
+	Cube castle2 = CreateCube(20.0f, 50.0f, 20.0f, castle1.GetPos().x, castle1.GetPos().y + castle1.GetSize().y / 2.0f, castle1.GetPos().z, White);
+	
+	Cube tower = CreateCube(15.0f, 40.0f, 15.0f, castle.GetPos().x + castle.GetSize().x / 2.0f, castle.GetPos().y + castle.GetSize().y / 2.0f - 40.0f / 5.0f, castle.GetPos().z + castle.GetSize().z / 2.0f, White);
+	Cube flag = CreateCube(1.0f, 15.0f, 1.0f, tower.GetPos().x, tower.GetPos().y + tower.GetSize().y / 2.0f, tower.GetPos().z, White);
+	Cube tower2 = CreateCube(15.0f, 40.0f, 15.0f, castle.GetPos().x - castle.GetSize().x / 2.0f, castle.GetPos().y + castle.GetSize().y / 2.0f - 40.0f / 5.0f, castle.GetPos().z - castle.GetSize().z / 2.0f, White);
+	Cube flag2 = CreateCube(1.0f, 15.0f, 1.0f, tower2.GetPos().x, tower2.GetPos().y + tower2.GetSize().y / 2.0f, tower2.GetPos().z, White);
+	Cube tower3 = CreateCube(15.0f, 40.0f, 15.0f, castle.GetPos().x - castle.GetSize().x / 2.0f, castle.GetPos().y + castle.GetSize().y / 2.0f - 40.0f / 5.0f, castle.GetPos().z + castle.GetSize().z / 2.0f, White);
+	Cube flag3 = CreateCube(1.0f, 15.0f, 1.0f, tower3.GetPos().x, tower3.GetPos().y + tower3.GetSize().y / 2.0f, tower3.GetPos().z, White);
+	Cube tower4 = CreateCube(15.0f, 40.0f, 15.0f, castle.GetPos().x + castle.GetSize().x / 2.0f, castle.GetPos().y + castle.GetSize().y / 2.0f - 40.0f / 5.0f, castle.GetPos().z - castle.GetSize().z / 2.0f, White);
+	Cube flag4 = CreateCube(1.0f, 15.0f, 1.0f, tower4.GetPos().x, tower4.GetPos().y + tower4.GetSize().y / 2.0f, tower4.GetPos().z, White);
+	//_castle
+
+	// Ground
+	Cube ground2 = CreateCube(ground_width, ground_height / 2.0f, ground_length - 20.0f, ground1.GetPos().x, ground1.GetPos().y, ground1.GetPos().z - ground1.GetSize().z / 2.0f, Pink, true, true, 0.0f, 60, orthonormal_y);
+	Cube ground3 = CreateCube(castle.GetSize().x, 3.0f * ground_height, ground_length, castle.GetPos().x, ground1.GetPos().y + ground1.GetSize().y / 2.0f - (3.0f * ground_height) / 2.0f, ground1.GetPos().z - ground1.GetSize().z / 2.0f - ground_length / 2.0f, Pink);
+	Cube ground4 = CreateCube(castle.GetSize().x, ground_height, ground_length, cu14.GetPos().x - cu14.GetSize().x / 2.0f + castle.GetSize().x / 2.0f, cu14.GetPos().y - cu14.GetSize().y / 2.0f - ground_height / 2.0f, ground3.GetPos().z + ground3.GetSize().z / 2.0f - ground_length / 2.0f, Pink);
+	Cube ground5 = CreateCube(castle.GetSize().x, ground_height, cu15.GetSize().z, cu15.GetPos().x - cu15.GetSize().x / 2.0f + castle.GetSize().x / 2.0f, cu15.GetPos().y - cu15.GetSize().y / 2.0f - ground_height / 2.0f, cu15.GetPos().z, Pink);
+	Cube ground6 = CreateCube(3.0f * castle.GetSize().x, ground_height, 5.0f * cu16.GetSize().z, cu16.GetPos().x - cu16.GetSize().x / 2.0f + (3.0f * castle.GetSize().x) / 2.0f, cu16.GetPos().y - cu16.GetSize().y / 2.0f - ground_height / 2.0f, cu16.GetPos().z + cu16.GetSize().z / 2.0f - (5.0f * cu16.GetSize().z) / 2.0f, Pink);
+	Cube ground7 = CreateCube(ground_width, 2.0f * ground_height, ground1.GetSize().z, ground4.GetPos().x + ground4.GetSize().x / 2.0f - ground_width / 2.0f, ground1.GetPos().y - ground1.GetSize().y / 2.0f - (2.0f * ground_height) / 2.0f, ground4.GetPos().z + ground4.GetSize().z / 2.0f + ground1.GetSize().z / 2.0f, Pink);
+
+	Cube water2 = CreateCube(2.0f * ground4.GetSize().x, ground4.GetSize().y, 4.0f * ground4.GetSize().z, ground4.GetPos().x + ground4.GetSize().x / 2.0f - (2.0f * ground4.GetSize().x) / 2.0f, ground4.GetPos().y - ground4.GetSize().y, ground4.GetPos().z + ground4.GetSize().z / 2.0f - (4.0f * ground4.GetSize().z) / 2.0f, Cyan);
+	//_ground
+	//_second_section
+
+	// Third section
+	Cylinder cy9 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu16.GetPos().x, cu16.GetPos().y, cu16.GetPos().z - cu16.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
+	Cube cu17 = CreateCube(2.0f * road_length, road_height, 3.0f * road_width, cy9.GetPos().x + (2.0f * road_length) / 2.0f, cy9.GetPos().y, cy9.GetPos().z, soil);
+	Cylinder cy10 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu17.GetPos().x + cu17.GetSize().x / 2.0f, cu17.GetPos().y, cu17.GetPos().z, right_angle, orthonormal_z, soil);
+	Cube cu18 = CreateCube(3.0f * road_width, road_height, 6.0f * road_length, cy10.GetPos().x, cy10.GetPos().y, cy10.GetPos().z - (6.0f * road_length) / 2.0f, soil);
+	Cylinder cy11 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu18.GetPos().x, cu18.GetPos().y, cu18.GetPos().z - cu18.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
+	//_third_section
+
+	// Tunel
+	float tunel_width = 2.0f;
+	float tunel_height = 15.0f; // y axis
+	float tunel_length = 20.0f;
+
+	//Cube tunel_wall = CreateCube(tunel_width, tunel_height, tunel_length, cu17.GetPos().x + (2.0f * road_length) / 2.0f, cu17.GetPos().y, cu16.GetPos().z, soil);
+
+	//_tunel
 
 	// Hinges (rotating elements)
 	float cylinder_rotating_width = road_width / 2.0f;
@@ -98,15 +170,6 @@ bool ModuleSceneIntro::Start()
 
 	App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, -1, 0), vec3(0, 0, 0), true, true);
 	App->physics->AddConstraintHinge(*bodyA2, *bodyB2, vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 1, 0), vec3(0, 0, 0), true, true);
-
-	// Ground
-	float ground_width = 150.0f;
-	float ground_height = 15.0f; // y axis
-	float ground_length = 100.0f;
-
-	Cube ground = CreateCube(ground_width, ground_height, ground_length, cy4.GetPos().x - ground_width / 3.0f, cy4.GetPos().y - ground_height / 2, cy4.GetPos().z + cy4.radius - ground_length / 2, Pink);
-	Cube ground1 = CreateCube(ground_width, ground_height, ground_length, ground.GetPos().x, ground.GetPos().y - ground_height, ground.GetPos().z + ground_length, Cyan);
-	//_ground
 
 	// Finish line
 	float line_width = 1.0f;
@@ -178,9 +241,23 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	float road_height = 0.5f; // y axis
 
+	vec3 orthonormal_x(1, 0, 0);
+	vec3 orthonormal_y(0, 1, 0);
+	vec3 orthonormal_z(0, 0, 1);
+	float right_angle = 90.0f;
+
 	/// It is only needed to set the position and size of the first element of the speed-up
-	CreateSpeedUp(speed_width, speed_height, speed_length, 0, road_height, 0);
-	CreateSpeedUp(speed_width, speed_height, speed_length, cu6.GetPos().x, road_height, cu6.GetPos().z);
+	CreateSpeedUp(speed_width, speed_height, speed_length, 0.0f, road_height / 2.0f, 0.0f);
+	CreateSpeedUp(speed_width, speed_height, speed_length, cu6.GetPos().x, road_height / 2.0f, cu6.GetPos().z);
+
+	CreateSpeedUp(speed_length, speed_height, 2.0f * speed_width, cu7.GetPos().x - cu7.GetSize().x / 2.0f + speed_length / 2.0f, road_height / 2.0f, cu7.GetPos().z, 3, false, -20, orthonormal_x);
+	CreateSpeedUp(speed_length, speed_height, 2.0f * speed_width, cu7.GetPos().x + speed_length / 2.0f, road_height / 2.0f, cu7.GetPos().z, 3, false, -20, orthonormal_x);
+
+	CreateSpeedUp(2.0f * speed_length, speed_height, 2.0f * speed_width, cu9.GetPos().x, cu9.GetPos().y + cu9.GetSize().y / 2.0f, cu9.GetPos().z, 4, false);
+
+	CreateSpeedUp(2.0f * speed_length, speed_height, 2.0f * speed_width, cu12.GetPos().x - cu12.GetSize().x / 2.0f + (2.0f * speed_length) / 2.0f, ground1.GetPos().y + ground1.GetSize().y / 2.0f, cu12.GetPos().z - 2.0f * speed_width, 3, false);
+	CreateSpeedUp(2.0f * speed_length, speed_height, 2.0f * speed_width, cu12.GetPos().x - 2.0f * speed_length, ground1.GetPos().y + ground1.GetSize().y / 2.0f, cu12.GetPos().z - 2.0f * speed_width, 3, false);
+	CreateSpeedUp(2.0f * speed_length, speed_height, 2.0f * speed_width, cu12.GetPos().x + 2.0f * 2.0f * speed_length, ground1.GetPos().y + ground1.GetSize().y / 2.0f, cu12.GetPos().z - 2.0f * speed_width, 3, false);
 
 	UpdateSpeedUpColors(dt);
 
@@ -188,16 +265,49 @@ update_status ModuleSceneIntro::Update(float dt)
 }
 
 // Specific functions
-void ModuleSceneIntro::CreateSpeedUp(float sizeX, float sizeY, float sizeZ, float posX, float posY, float posZ)
+void ModuleSceneIntro::CreateSpeedUp(float sizeX, float sizeY, float sizeZ, float posX, float posY, float posZ, uint num, bool add_z, float angle, vec3 u)
 {
 	Cube speed_a = CreateCube(sizeX, sizeY, sizeZ, posX, posY, posZ, colors[index_d], false, false);
+	if (angle != 0)
+		speed_a.SetRotation(angle, u);
 	speed_a.Render();
-	Cube speed_b = CreateCube(sizeX, sizeY, sizeZ, speed_a.GetPos().x, posY, speed_a.GetPos().z + speed_a.GetSize().z, colors[index_c], false, false);
-	speed_b.Render();
-	Cube speed_c = CreateCube(sizeX, sizeY, sizeZ, speed_b.GetPos().x, posY, speed_b.GetPos().z + speed_b.GetSize().z, colors[index_b], false, false);
-	speed_c.Render();
-	Cube speed_d = CreateCube(sizeX, sizeY, sizeZ, speed_c.GetPos().x, posY, speed_c.GetPos().z + speed_c.GetSize().z, colors[index_a], false, false);
-	speed_d.Render();
+
+	if (add_z) {
+		Cube speed_b = CreateCube(sizeX, sizeY, sizeZ, speed_a.GetPos().x, posY, speed_a.GetPos().z + speed_a.GetSize().z, colors[index_c], false, false);
+		if (angle != 0)
+			speed_b.SetRotation(angle, u);
+		speed_b.Render();
+
+		Cube speed_c = CreateCube(sizeX, sizeY, sizeZ, speed_b.GetPos().x, posY, speed_b.GetPos().z + speed_b.GetSize().z, colors[index_b], false, false);
+		if (angle != 0)
+			speed_c.SetRotation(angle, u);
+		speed_c.Render();
+
+		if (num == 4) {
+			Cube speed_d = CreateCube(sizeX, sizeY, sizeZ, speed_c.GetPos().x, posY, speed_c.GetPos().z + speed_c.GetSize().z, colors[index_a], false, false);
+			if (angle != 0)
+				speed_d.SetRotation(angle, u);
+			speed_d.Render();
+		}
+	}
+	else {
+		Cube speed_b = CreateCube(sizeX, sizeY, sizeZ, speed_a.GetPos().x + speed_a.GetSize().x, posY, speed_a.GetPos().z, colors[index_c], false, false);
+		if (angle != 0)
+			speed_b.SetRotation(angle, u);
+		speed_b.Render();
+
+		Cube speed_c = CreateCube(sizeX, sizeY, sizeZ, speed_b.GetPos().x + speed_b.GetSize().x, posY, speed_b.GetPos().z, colors[index_b], false, false);
+		if (angle != 0)
+			speed_c.SetRotation(angle, u);
+		speed_c.Render();
+
+		if (num == 4) {
+			Cube speed_d = CreateCube(sizeX, sizeY, sizeZ, speed_c.GetPos().x + speed_c.GetSize().x, posY, speed_c.GetPos().z, colors[index_a], false, false);
+			if (angle != 0)
+				speed_d.SetRotation(angle, u);
+			speed_d.Render();
+		}
+	}
 }
 
 void ModuleSceneIntro::UpdateSpeedUpColors(float dt)
@@ -263,11 +373,14 @@ void ModuleSceneIntro::CreateFinishLine(float sizeX, float sizeY, float sizeZ, f
 }
 
 // Generic functions
-Cube ModuleSceneIntro::CreateCube(float sizeX, float sizeY, float sizeZ, float posX, float posY, float posZ, Color color, bool draw, bool collider, float mass)
+Cube ModuleSceneIntro::CreateCube(float sizeX, float sizeY, float sizeZ, float posX, float posY, float posZ, Color color, bool draw, bool collider, float mass, float angle, vec3 u)
 {
 	Cube cu(sizeX, sizeY, sizeZ);
 	cu.SetPos(posX, posY, posZ);
 	cu.color = color;
+
+	if (angle != 0)
+		cu.SetRotation(angle, vec3(u.x, u.y, u.z));
 
 	if (collider)
 		App->physics->AddBody(cu, mass);
