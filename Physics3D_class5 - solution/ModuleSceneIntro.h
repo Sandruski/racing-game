@@ -4,8 +4,6 @@
 #include "Globals.h"
 #include "Primitive.h"
 
-#define MAX_SNAKE 2
-
 struct PhysBody3D;
 struct PhysMotor3D;
 struct Primitive;
@@ -22,8 +20,8 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	Cube CreateCube(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, Color color = White, bool axis = false, bool wire = false);
-	Cylinder CreateCylinder(float radius = 1.0f, float height = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, float angle = 0.0f, vec3 u = (0, 0, 0), Color color = White, bool axis = false, bool wire = false);
+	Cube CreateCube(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, Color color = White, bool draw = true, bool collider = true, float mass = 0.0f);
+	Cylinder CreateCylinder(float radius = 1.0f, float height = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, float angle = 0.0f, vec3 u = (0, 0, 0), Color color = White, bool draw = true, bool collider = true, float mass = 0.0f);
 	void CreateSpeedUp(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f);
 	void CreateFinishLine(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f);
 
@@ -31,14 +29,6 @@ public:
 	void UpdateSpeedUpIndex(uint &index);
 
 public:
-	/*
-	PhysBody3D* pb_snake[MAX_SNAKE];
-	Sphere s_snake[MAX_SNAKE];
-
-	PhysBody3D* pb_snake2[MAX_SNAKE];
-	Sphere s_snake2[MAX_SNAKE];
-	*/
-
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
 
@@ -57,18 +47,9 @@ public:
 	// Speed-up parameters
 	Color colors[5] = { PalePink, Pink, DeepPink, Violet, Purple };
 	bool a_updated = false, b_updated = false, c_updated = false, d_updated = false;
-	uint index_a = 0;
-	uint index_b = 1;
-	uint index_c = 2;
-	uint index_d = 3;
-	//_speed-up_parameters
+	uint index_a = 0, index_b = 1, index_c = 2, index_d = 3;
 
-	// Hinge
-	PhysBody3D* bodyA;
-	PhysBody3D* bodyA2;
-	Cube rotating_cu;
-	Cube rotating_cu2;
-	//_hinge
+	Cube cu6; // 2nd speed-up position reference
 
 	// Senors 
 	Cube s, g;
@@ -76,5 +57,15 @@ public:
 	PhysBody3D* sensor2;
 
 	uint checkpoints_index = 0;
-	//_sensors
+
+	// Hinges
+	PhysBody3D* bodyA;
+	PhysBody3D* bodyA2;
+	Cube rotating_cu;
+	Cube rotating_cu2;
+
+	// Blit primitives
+	p2List<Cube> cubes;
+	p2List<Cylinder> cylinders;
 };
+
