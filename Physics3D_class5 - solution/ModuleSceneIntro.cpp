@@ -118,12 +118,8 @@ bool ModuleSceneIntro::Start()
 	Cube ground2 = CreateCube(ground_width, ground_height / 2.0f, ground_length - 20.0f, ground1.GetPos().x, ground1.GetPos().y, ground1.GetPos().z - ground1.GetSize().z / 2.0f, Pink, true, true, 0.0f, 60, orthonormal_y);
 	Cube ground3 = CreateCube(castle.GetSize().x, 3.0f * ground_height, ground_length, castle.GetPos().x, ground1.GetPos().y + ground1.GetSize().y / 2.0f - (3.0f * ground_height) / 2.0f, ground1.GetPos().z - ground1.GetSize().z / 2.0f - ground_length / 2.0f, Pink);
 	Cube ground4 = CreateCube(castle.GetSize().x, ground_height, ground_length, cu14.GetPos().x - cu14.GetSize().x / 2.0f + castle.GetSize().x / 2.0f, cu14.GetPos().y - cu14.GetSize().y / 2.0f - ground_height / 2.0f, ground3.GetPos().z + ground3.GetSize().z / 2.0f - ground_length / 2.0f, Pink);
-	
 	Cube ground5 = CreateCube(castle.GetSize().x, ground_height, cu15.GetSize().z, cu15.GetPos().x - cu15.GetSize().x / 2.0f + castle.GetSize().x / 2.0f, cu15.GetPos().y - cu15.GetSize().y / 2.0f - ground_height / 2.0f, cu15.GetPos().z, Pink);
-	
 	Cube ground6 = CreateCube(3.0f * castle.GetSize().x, 2.0f * ground_height, 5.0f * cu16.GetSize().z, cu16.GetPos().x - cu16.GetSize().x / 2.0f + (3.0f * castle.GetSize().x) / 2.0f, cu16.GetPos().y - cu16.GetSize().y / 2.0f - (2.0f * ground_height) / 2.0f, cu16.GetPos().z + cu16.GetSize().z / 2.0f - (5.0f * cu16.GetSize().z) / 2.0f, Pink);
-	
-	
 	Cube ground7 = CreateCube(ground_width, 2.0f * ground_height, ground1.GetSize().z, ground4.GetPos().x + ground4.GetSize().x / 2.0f - ground_width / 2.0f, ground1.GetPos().y - ground1.GetSize().y / 2.0f - (2.0f * ground_height) / 2.0f, ground4.GetPos().z + ground4.GetSize().z / 2.0f + ground1.GetSize().z / 2.0f, Pink);
 	Cube ground8 = CreateCube(ground_width / 5.0f, 4.0f * ground_height, ground1.GetSize().z, water.GetPos().x + water.GetSize().x / 2.0f + (ground_width / 5.0f) / 2.0f, water.GetPos().y + water.GetSize().y / 2.0f - (4.0f * ground_height) / 2.0f, castle.GetPos().z - castle.GetSize().z / 2.0f - ground1.GetSize().z / 2.0f, Pink);
 	Cube ground9 = CreateCube(2.0f * ground_width, 4.0f * ground_height, ground1.GetSize().z / 4.0f, ground8.GetPos().x - ground8.GetSize().x / 2.0f - (2.0f * ground_width) / 2.0f, ground8.GetPos().y, ground8.GetPos().z - ground8.GetSize().z / 2.0f + (ground1.GetSize().z / 4.0f) / 2.0f, Pink);
@@ -131,9 +127,7 @@ bool ModuleSceneIntro::Start()
 	Cube water2 = CreateCube(2.0f * ground4.GetSize().x, ground4.GetSize().y, 4.0f * ground4.GetSize().z, ground4.GetPos().x + ground4.GetSize().x / 2.0f - (2.0f * ground4.GetSize().x) / 2.0f, ground4.GetPos().y - ground4.GetSize().y, ground4.GetPos().z + ground4.GetSize().z / 2.0f - (4.0f * ground4.GetSize().z) / 2.0f, Cyan);
 	Cube water3 = CreateCube(3.0f * ground4.GetSize().x + 50.0f, 2.0f * ground4.GetSize().y, 2.0f * ground4.GetSize().z, water.GetPos().x - water.GetSize().x / 2.0f + (3.0f * ground4.GetSize().x + 50.0f) / 2.0f, water.GetPos().y - water.GetSize().y / 2.0f - (2.0f * ground4.GetSize().y) / 2.0f, water2.GetPos().z - water2.GetSize().z / 2.0f + (2.0f * ground4.GetSize().z) / 2.0f, Cyan);	
 	Cube water4 = CreateCube(8.0f * ground4.GetSize().x, 4.0f * ground4.GetSize().y, ground4.GetSize().z, water.GetPos().x - water.GetSize().x / 2.0f + (8.0f * ground4.GetSize().x) / 2.0f, water2.GetPos().y - water2.GetSize().y / 2.0f - (4.0f * ground4.GetSize().y) / 2.0f, water2.GetPos().z - water2.GetSize().z / 2.0f - ground4.GetSize().z / 2.0f, Cyan);
-	
-	//Cube water5 = CreateCube(ground4.GetSize().z, 4.0f * ground4.GetSize().y, 8.0f * ground4.GetSize().x, water4.GetPos().x - water4.GetSize().x / 2.0f + ground4.GetSize().z / 2.0f, water2.GetPos().y + water2.GetSize().y / 2.0f + (4.0f * ground4.GetSize().y) / 2.0f, water3.GetPos().z, Cyan);
-	
+	Cube water5 = CreateCube(ground6.GetSize().x, water4.GetSize().y, ground6.GetSize().z, water4.GetPos().x + water4.GetSize().x / 2 - ground6.GetSize().x / 2, water4.GetPos().y - water4.GetSize().y / 2, ground6.GetPos().z, Cyan);
 	//_ground
 	//_second_section
 
@@ -181,22 +175,22 @@ bool ModuleSceneIntro::Start()
 	Color rotating_stuff = Orange;
 
 	rotating_cu = CreateCube(cube_width, cube_height, cube_length, cu6.GetPos().x + 20.0f, cu6.GetPos().y + 2.0f * cube_height, cu6.GetPos().z - cube_length / 2.0f, rotating_stuff, false, false);
-	bodyA = App->physics->AddBody(rotating_cu, 1000.0f);
+	bodyA = App->physics->AddBody(rotating_cu, 10000.0f);
 	Cylinder rotating_cy = CreateCylinder(cylinder_rotating_width, cylinder_height, rotating_cu.GetPos().x, rotating_cu.GetPos().y - cylinder_height / 2.0f, rotating_cu.GetPos().z, right_angle, orthonormal_z, rotating_stuff, false, false);
-	PhysBody3D* bodyB = App->physics->AddBody(rotating_cy, 1000.0f);
+	PhysBody3D* bodyB = App->physics->AddBody(rotating_cy, 10000.0f);
 	Cylinder real_cy = CreateCylinder(cylinder_real_width, cylinder_height, rotating_cu.GetPos().x, rotating_cu.GetPos().y - cylinder_height / 2.0f, rotating_cu.GetPos().z, right_angle, orthonormal_z, rotating_stuff);
 
 	rotating_cu2 = CreateCube(cube_width, cube_height, cube_length, cu6.GetPos().x - 20.0f, cu6.GetPos().y + 2.0f * cube_height, cu6.GetPos().z + cube_length / 2.0f, rotating_stuff, false, false);
-	bodyA2 = App->physics->AddBody(rotating_cu2, 1000.0f);
+	bodyA2 = App->physics->AddBody(rotating_cu2, 10000.0f);
 	Cylinder rotating_cy2 = CreateCylinder(cylinder_rotating_width, cylinder_height, rotating_cu2.GetPos().x, rotating_cu2.GetPos().y - cylinder_height / 2.0f, rotating_cu2.GetPos().z, right_angle, orthonormal_z, rotating_stuff, false, false);
-	PhysBody3D* bodyB2 = App->physics->AddBody(rotating_cy2, 1000.0f);
+	PhysBody3D* bodyB2 = App->physics->AddBody(rotating_cy2, 10000.0f);
 	Cylinder real_cy2 = CreateCylinder(cylinder_real_width, cylinder_height, rotating_cu2.GetPos().x, rotating_cu2.GetPos().y - cylinder_height / 2.0f, rotating_cu2.GetPos().z, right_angle, orthonormal_z, rotating_stuff);
 
 	bodyA->GetBody()->setLinearFactor(btVector3(0, 0, 0));
 	bodyA2->GetBody()->setLinearFactor(btVector3(0, 0, 0));
-	bodyB->GetBody()->setLinearFactor(btVector3(0, 0, 0));
+	//bodyB->GetBody()->setLinearFactor(btVector3(0, 0, 0));
 	bodyB->GetBody()->setAngularFactor(btVector3(0, 0, 0));
-	bodyB2->GetBody()->setLinearFactor(btVector3(0, 0, 0));
+	//bodyB2->GetBody()->setLinearFactor(btVector3(0, 0, 0));
 	bodyB2->GetBody()->setAngularFactor(btVector3(0, 0, 0));
 
 	App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, -1, 0), vec3(0, 0, 0), true, true);

@@ -358,7 +358,7 @@ void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, c
 		btVector3(axisB.x, axisB.y, axisB.z));
 
 	if (motor)
-		hinge->enableAngularMotor(true, 1.0f, INFINITY);
+		hinge->enableAngularMotor(true, 1.0f, INFINITE);
 
 	world->addConstraint(hinge, disable_collision);
 	constraints.add(hinge);
