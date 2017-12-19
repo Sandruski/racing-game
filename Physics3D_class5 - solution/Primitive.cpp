@@ -206,7 +206,8 @@ void Cylinder::InnerRender() const
 
 	// Cylinder Bottom
 	glBegin(GL_POLYGON);
-	
+
+	glNormal3f(-1.0f, 0.0f, 0.0f);
 	for(int i = 360; i >= 0; i -= (360 / n))
 	{
 		float a = i * M_PI / 180; // degrees to radians
@@ -216,7 +217,7 @@ void Cylinder::InnerRender() const
 
 	// Cylinder Top
 	glBegin(GL_POLYGON);
-	glNormal3f(0.0f, 0.0f, 1.0f);
+	glNormal3f(1.0f, 0.0f, 0.0f);
 	for(int i = 0; i <= 360; i += (360 / n))
 	{
 		float a = i * M_PI / 180; // degrees to radians
@@ -229,6 +230,8 @@ void Cylinder::InnerRender() const
 	for(int i = 0; i < 480; i += (360 / n))
 	{
 		float a = i * M_PI / 180; // degrees to radians
+
+		glNormal3f(0.0f, cos(a), sin(a));
 
 		glVertex3f(height*0.5f,  radius * cos(a), radius * sin(a) );
 		glVertex3f(-height*0.5f, radius * cos(a), radius * sin(a) );
