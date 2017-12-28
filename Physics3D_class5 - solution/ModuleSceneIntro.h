@@ -14,6 +14,7 @@ public:
 	ModuleSceneIntro(Application* app, bool start_enabled = true);
 	~ModuleSceneIntro();
 
+	bool Init(pugi::xml_node& node);
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();

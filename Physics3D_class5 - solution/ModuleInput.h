@@ -19,7 +19,7 @@ public:
 	ModuleInput(Application* app, bool start_enabled = true);
 	~ModuleInput();
 
-	bool Init();
+	bool Init(pugi::xml_node& node);
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 

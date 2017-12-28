@@ -1,4 +1,5 @@
 #include "Application.h"
+#include <iostream>
 
 Application::Application()
 {
@@ -45,12 +46,25 @@ bool Application::Init()
 {
 	bool ret = true;
 
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+	pugi::xml_node		app_config;
+
+	config = LoadConfig(config_file); //root node
+
+	if (config.empty() == false)
+	{
+		// self-config
+		ret = true;
+		app_config = config.child("app");
+	}
+
 	// Call Init() in all modules
 	p2List_item<Module*>* item = list_modules.getFirst();
 
 	while(item != NULL && ret == true)
 	{
-		ret = item->data->Init();
+		ret = item->data->Init(config.child(item->data->name.GetString()));
 		item = item->next;
 	}
 
@@ -111,6 +125,22 @@ update_status Application::Update()
 	}
 
 	FinishUpdate();
+	return ret;
+}
+
+// ---------------------------------------------
+pugi::xml_node Application::LoadConfig(pugi::xml_document& config_file) const
+{
+	pugi::xml_node ret;
+
+	pugi::xml_parse_result result = config_file.load_file("config.xml");
+
+	if (result == NULL) {
+		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+	}
+	else
+		ret = config_file.child("config");
+
 	return ret;
 }
 

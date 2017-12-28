@@ -10,6 +10,16 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name.create("scene_intro");
+}
+
+bool ModuleSceneIntro::Init(pugi::xml_node& node) 
+{
+	bool ret = true;
+
+	float trying = node.child("trying").attribute("value").as_float();
+
+	return ret;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()

@@ -12,7 +12,7 @@ ModuleAudio::~ModuleAudio()
 {}
 
 // Called before render is available
-bool ModuleAudio::Init()
+bool ModuleAudio::Init(pugi::xml_node& node)
 {
 	LOG("Loading Audio Mixer");
 	bool ret = true;

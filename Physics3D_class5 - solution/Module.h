@@ -1,12 +1,18 @@
 #pragma once
 
+#include "p2SString.h"
+#include "PugiXml\src\pugixml.hpp"
+
 class Application;
 struct PhysBody3D;
 
 class Module
 {
-private :
-	bool enabled;
+private:
+	bool		enabled;
+
+public:
+	p2SString	name;
 
 public:
 	Application* App;
@@ -17,7 +23,7 @@ public:
 	virtual ~Module()
 	{}
 
-	virtual bool Init() 
+	virtual bool Init(pugi::xml_node& node)
 	{
 		return true; 
 	}

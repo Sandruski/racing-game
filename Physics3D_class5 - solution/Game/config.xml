@@ -1,0 +1,18 @@
+<!-- Config file for the game -->
+
+<config>
+  <app>
+    <title>Racing Game</title>
+    <organization>UPC</organization>    
+  </app>
+
+  <scene_intro>
+    <trying value="3.56"/>
+  </scene_intro>
+
+  <player>
+    
+
+  </player>
+
+</config>

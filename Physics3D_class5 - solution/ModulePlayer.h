@@ -16,6 +16,7 @@ public:
 	ModulePlayer(Application* app, bool start_enabled = true);
 	virtual ~ModulePlayer();
 
+	bool Init(pugi::xml_node& node);
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();

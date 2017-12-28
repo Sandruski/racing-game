@@ -14,7 +14,7 @@ ModuleWindow::~ModuleWindow()
 }
 
 // Called before render is available
-bool ModuleWindow::Init()
+bool ModuleWindow::Init(pugi::xml_node& node)
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;

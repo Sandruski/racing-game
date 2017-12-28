@@ -37,7 +37,7 @@ ModulePhysics3D::~ModulePhysics3D()
 }
 
 // Render not available yet----------------------------------
-bool ModulePhysics3D::Init()
+bool ModulePhysics3D::Init(pugi::xml_node& node)
 {
 	LOG("Creating 3D Physics simulation");
 	bool ret = true;

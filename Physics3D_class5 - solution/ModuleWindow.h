@@ -15,7 +15,7 @@ public:
 	// Destructor
 	virtual ~ModuleWindow();
 
-	bool Init();
+	bool Init(pugi::xml_node& node);
 	bool CleanUp();
 
 	void SetTitle(const char* title);

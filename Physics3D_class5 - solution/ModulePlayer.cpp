@@ -8,7 +8,16 @@
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
+	name.create("player");
+
 	turn = acceleration = brake = 0.0f;
+}
+
+bool ModulePlayer::Init(pugi::xml_node& node) 
+{
+	bool ret = true;
+
+	return ret;
 }
 
 ModulePlayer::~ModulePlayer()

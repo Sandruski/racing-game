@@ -13,6 +13,8 @@
 #include "ModulePhysics3D.h"
 #include "ModulePlayer.h"
 
+#include "PugiXml\src\pugixml.hpp"
+
 class Application
 {
 public:
@@ -45,4 +47,8 @@ private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+	// Load config file
+	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+
 };
