@@ -5,6 +5,7 @@
 
 class btRaycastVehicle;
 struct PhysBody3D;
+struct Color;
 
 struct Wheel
 {
@@ -24,6 +25,9 @@ struct VehicleInfo
 {
 	~VehicleInfo();
 	
+	uint parts;
+	vec3* parts_size;
+	vec3* parts_offset;
 	vec3 chassis_size;
 	vec3 chassis_offset;
 	float mass;
@@ -50,6 +54,7 @@ public:
 	void Brake(float force);
 	void Turn(float degrees);
 	float GetKmh() const;
+	void RenderParts();
 public:
 
 	btRigidBody* body;

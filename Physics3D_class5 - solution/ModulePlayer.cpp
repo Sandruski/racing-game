@@ -6,6 +6,7 @@
 #include "PhysBody3D.h"
 #include "ModuleSceneIntro.h"
 
+
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	name.create("player");
@@ -30,9 +31,22 @@ bool ModulePlayer::Start()
 
 	VehicleInfo car;
 
+	car.parts = 4;
+	car.parts_size = new vec3[car.parts];
+	car.parts_offset = new vec3[car.parts];
+
 	// Car properties ----------------------------------------
+	car.parts_size[0].Set(0.5f, 2, 4);
+	car.parts_offset[0].Set(10, 10, 0);
+	car.parts_size[1].Set(2, 2, 4);
+	car.parts_offset[1].Set(0, 1.5, 0);
+	car.parts_size[2].Set(2, 2, 4);
+	car.parts_offset[2].Set(0, 1.5, 0);
+	car.parts_size[3].Set(2, 2, 4);
+	car.parts_offset[3].Set(0, 1.5, 0);
 	car.chassis_size.Set(2, 2, 4);
 	car.chassis_offset.Set(0, 1.5, 0);
+
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
