@@ -35,11 +35,14 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	// Sensors
-	s.size = vec3(5, 3, 1);
-	s.SetPos(0, 2.5f, 20);
+	s.size = vec3(4, 2, 8); // First sensor, dont touch
+	s.SetPos(0, 1.5f, 3); // First sensor, dont touch
 
-	g.size = vec3(5, 3, 1);
-	g.SetPos(10, 5.0f, 20);
+	g.size = vec3(4, 2, 8); // Second sensor, dont touch
+	g.SetPos(60, 1.5f, 158); // Second sensor, dont touch
+
+	h.size = vec3(10, 2, 8); // Third sensor, need to be fixed
+	h.SetPos(60, 1.5f, 240); // Third sensor, need to be fixed
 
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
@@ -48,6 +51,10 @@ bool ModuleSceneIntro::Start()
 	sensor2 = App->physics->AddBody(g, 0.0f);
 	sensor2->SetAsSensor(true);
 	sensor2->collision_listeners.add(this);
+
+	sensor3 = App->physics->AddBody(h, 0.0f);
+	sensor3->SetAsSensor(true);
+	sensor3->collision_listeners.add(this);
 	//_sensors
 
 	// Road
@@ -235,6 +242,9 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	sensor2->GetTransform(&g.transform);
 	g.Render();
+
+	sensor3->GetTransform(&h.transform);
+	h.Render();
 
 	// Debug cube
 	Cube debug_cube = CreateCube(2.0f, 2.0f, 2.0f, 0.0f, 3.0f, 0.0f, White, false, false);

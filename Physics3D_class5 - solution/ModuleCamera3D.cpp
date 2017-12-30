@@ -44,7 +44,7 @@ update_status ModuleCamera3D::Update(float dt)
 	
 	vec3 newPos(0,0,0);
 	float speed = 60.0f * dt;
-	/*
+	
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * dt;
 
@@ -60,7 +60,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	Position += newPos;
 	Reference += newPos;
-	*/
+	/*
 	
 	Position.x = App->player->position.x - 10* App->player->vehicle->vehicle->getForwardVector().getX();
 	Position.y = App->player->position.y + 5;
@@ -68,7 +68,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	LookAt(vec3(App->player->position.x, App->player->position.y + 3, App->player->position.z));
 	
-
+	*/
 	// Mouse motion ----------------
 
 	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
