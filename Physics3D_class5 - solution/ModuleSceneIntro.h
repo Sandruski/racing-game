@@ -58,10 +58,12 @@ public:
 	Cube ground1;
 
 	// Senors 
-	Cube s, g, h;
+	Cube s, g, h, t, n;
 	PhysBody3D* sensor;
 	PhysBody3D* sensor2;
 	PhysBody3D* sensor3;
+	PhysBody3D* sensor4;
+	PhysBody3D* sensor5;
 	uint checkpoints_index = 0;
 
 	// Hinges
