@@ -29,8 +29,6 @@ public:
 	
 	void CreateLimits(Primitive* p, bool pos[4], bool inv_col[4], bool inv_pos[4], vec4 lim = { 0.0f,0.0f,0.0f,0.0f });
 
-	void SetArrayBooleans(bool array[], uint length, bool value = true);
-
 
 	void UpdateSpeedUpColors(float dt);
 	void UpdateSpeedUpIndex(uint &index);
@@ -63,9 +61,8 @@ public:
 	Cube ground1;
 
 	// Senors 
-	Cube s, g, h, t, n;
+	Cube s, h, t, n;
 	PhysBody3D* sensor;
-	PhysBody3D* sensor2;
 	PhysBody3D* sensor3;
 	PhysBody3D* sensor4;
 	PhysBody3D* sensor5;

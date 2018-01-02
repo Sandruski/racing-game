@@ -38,25 +38,18 @@ bool ModuleSceneIntro::Start()
 	s.size = vec3(4, 2, 8); // First sensor, dont touch
 	s.SetPos(0, 1.5f, 3); // First sensor, dont touch
 
-	g.size = vec3(4, 2, 8); // Second sensor, dont touch
-	g.SetPos(60, 1.5f, 158); // Second sensor, dont touch
-
 	h.size = vec3(10, 2, 8); // Third sensor, need to be fixed
 	h.SetPos(60, 1.5f, 240); // Third sensor, need to be fixed
 
-	t.size = vec3(10, 2, 8); // forth sensor, touch
-	t.SetPos(60, 1.5f, 240); // forth sensor, touch
+	t.size = vec3(14, 2, 7); // forth sensor, need to be fixed
+	t.SetPos(125, -4, 369); // forth sensor, need to be fixed
 
-	n.size = vec3(10, 2, 8); // fifth sensor, touch
-	n.SetPos(60, 1.5f, 240); // fifth sensor, touch
+	n.size = vec3(32, 2, 9); // fifth sensor, need to be fixed
+	n.SetPos(277, 0.5f, 287); // fifth sensor, need to be fixed
 
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
-
-	sensor2 = App->physics->AddBody(g, 0.0f);
-	sensor2->SetAsSensor(true);
-	sensor2->collision_listeners.add(this);
 
 	sensor3 = App->physics->AddBody(h, 0.0f);
 	sensor3->SetAsSensor(true);
@@ -76,7 +69,6 @@ bool ModuleSceneIntro::Start()
 	float road_width = RW;
 	float road_height = RH; // y axis
 	float road_length = RL;
-
 
 	float road_short_length = 20.0f;
 
@@ -118,13 +110,13 @@ bool ModuleSceneIntro::Start()
 
 	// Second section
 	Cube cu8 = CreateCube(3.0f * road_width, road_height, 3.0f * road_length, cu7.GetPos().x, ground1.GetPos().y + ground1.GetSize().y / 2.0f + road_height / 2.0f, ground1.GetPos().z - ground1.GetSize().z / 2.0f + (3.0f * road_length) / 2.0f, soil);
-	Cylinder cy6 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu8.GetPos().x, cu8.GetPos().y, cu8.GetPos().z + cu8.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
-	cu9 = CreateCube(4.0f * road_length, road_height, 3.0f * road_width, cy6.GetPos().x + (4.0f * road_length) / 2.0f, cy6.GetPos().y, cy6.GetPos().z, soil);
-	Cylinder cy7 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu9.GetPos().x + cu9.GetPos().x / 2.0f, cu9.GetPos().y, cu9.GetPos().z, right_angle, orthonormal_z, soil);
-	Cube cu10 = CreateCube(4.0f * road_length, road_height, 3.0f * road_width, cy7.GetPos().x, cy7.GetPos().y, cy7.GetPos().z, soil, true, true, 0.0f, 20, orthonormal_z);
+	Cylinder cy5 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu8.GetPos().x, cu8.GetPos().y, cu8.GetPos().z + cu8.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
+	cu9 = CreateCube(4.0f * road_length, road_height, 3.0f * road_width, cy5.GetPos().x + (4.0f * road_length) / 2.0f, cy5.GetPos().y, cy5.GetPos().z, soil);
+	Cylinder cy6 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu9.GetPos().x + cu9.GetPos().x / 2.0f, cu9.GetPos().y, cu9.GetPos().z, right_angle, orthonormal_z, soil);
+	Cube cu10 = CreateCube(4.0f * road_length, road_height, 3.0f * road_width, cy6.GetPos().x, cy6.GetPos().y, cy6.GetPos().z, soil, true, true, 0.0f, 20, orthonormal_z);
 	Cube cu11 = CreateCube(2.0f * road_length, road_height, 3.0f * road_width, cu10.GetPos().x + cu10.GetSize().x - (2.0f * road_length) / 2.0f - 4.0f, cu10.GetPos().y + cu10.GetSize().z * tan(DEGTORAD * 30) - 0.4f, cu10.GetPos().z, soil);
-	Cylinder cy8 = CreateCylinder(road_width / 2.0f, 50.0f * road_height, cu11.GetPos().x + cu11.GetSize().x / 3.0f - (road_width / 2.0f), cu11.GetPos().y + cu11.GetSize().y / 2.0f - (50.0f * road_height) / 2.0f, cu11.GetPos().z, right_angle, orthonormal_z, soil);
-	cu12 = CreateCube(3.0f * road_width, road_height, 4.0f * road_length, cu11.GetPos().x + cu11.GetSize().x / 2.0f - (3.0f * road_width) / 2.0f, cy7.GetPos().y, cu11.GetPos().z - (4.0f * road_length) / 2.0f - cu11.GetSize().z / 2.0f + 4.0f, soil, true, true, 0.0f, -20, orthonormal_x);
+	Cylinder cy7 = CreateCylinder(road_width / 2.0f, 50.0f * road_height, cu11.GetPos().x + cu11.GetSize().x / 3.0f - (road_width / 2.0f), cu11.GetPos().y + cu11.GetSize().y / 2.0f - (50.0f * road_height) / 2.0f, cu11.GetPos().z, right_angle, orthonormal_z, soil);
+	cu12 = CreateCube(3.0f * road_width, road_height, 4.0f * road_length, cu11.GetPos().x + cu11.GetSize().x / 2.0f - (3.0f * road_width) / 2.0f, cy6.GetPos().y, cu11.GetPos().z - (4.0f * road_length) / 2.0f - cu11.GetSize().z / 2.0f + 4.0f, soil, true, true, 0.0f, -20, orthonormal_x);
 	Cube cu13 = CreateCube(3.0f * road_width, road_height, 4.0f * road_length, cu12.GetPos().x, cu12.GetPos().y - cu11.GetSize().z * tan(DEGTORAD * 30) + 0.4f, cu12.GetPos().z - cu12.GetSize().z / 2.0f + 4.0f, soil, true, true, 0.0f, -20, orthonormal_x);
 	Cube cu14 = CreateCube(3.0f * road_width, road_height, 2.0f * road_length, cu13.GetPos().x, cu13.GetPos().y, cu13.GetPos().z - cu13.GetSize().z / 2.0f + (2.0f * road_length) / 2.0f, soil);
 	Cube cu15 = CreateCube(3.0f * road_width, road_height, 2.0f * road_length, cu14.GetPos().x, cu14.GetPos().y, cu14.GetPos().z - 1.2f * cu14.GetSize().z, soil);
@@ -163,35 +155,55 @@ bool ModuleSceneIntro::Start()
 	//_second_section
 
 	// Third section
-	Cylinder cy9 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu16.GetPos().x, cu16.GetPos().y, cu16.GetPos().z - cu16.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
-	Cube cu17 = CreateCube(2.0f * road_length, road_height, 3.0f * road_width, cy9.GetPos().x + (2.0f * road_length) / 2.0f, cy9.GetPos().y, cy9.GetPos().z, soil);
-	Cylinder cy10 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu17.GetPos().x + cu17.GetSize().x / 2.0f, cu17.GetPos().y, cu17.GetPos().z, right_angle, orthonormal_z, soil);
-	Cube cu18 = CreateCube(3.0f * road_width, road_height, 6.0f * road_length, cy10.GetPos().x, cy10.GetPos().y, cy10.GetPos().z - (6.0f * road_length) / 2.0f, soil);
-	Cylinder cy11 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu18.GetPos().x, cu18.GetPos().y, cu18.GetPos().z - cu18.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
-	Cube cu19 = CreateCube(4.0f * road_length, road_height, 3.0f * road_width, cy11.GetPos().x + (4.0f * road_length) / 2.0f, cy11.GetPos().y, cy11.GetPos().z, soil);
-	Cylinder cy12 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu19.GetPos().x + cu19.GetSize().x / 2.0f, cu19.GetPos().y, cu19.GetPos().z, right_angle, orthonormal_z, soil);
-	Cube cu20 = CreateCube(3.0f * road_width, road_height, 3.0f * road_length, cy12.GetPos().x, cy12.GetPos().y, cy12.GetPos().z + (3.0f * road_length) / 2.0f, soil);
-	Cylinder cy13 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu20.GetPos().x, cu20.GetPos().y, cu20.GetPos().z + cu20.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
-	Cube cu21 = CreateCube(road_length, road_height, 3.0f * road_width, cy13.GetPos().x - road_length / 2.0f, cy13.GetPos().y, cy13.GetPos().z, soil);
-
-	Cube cu22 = CreateCube(5.0f * road_length - 0.8f, road_height, 3.0f * road_width, cu21.GetPos().x - cu21.GetSize().x / 2.0f, cu21.GetPos().y, cu21.GetPos().z, soil, true, true, 0.0f, -20, orthonormal_z);
+	Cylinder cy8 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu16.GetPos().x, cu16.GetPos().y, cu16.GetPos().z - cu16.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
+	Cube cu17 = CreateCube(2.0f * road_length, road_height, 3.0f * road_width, cy8.GetPos().x + (2.0f * road_length) / 2.0f, cy8.GetPos().y, cy8.GetPos().z, soil);
+	Cylinder cy9 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu17.GetPos().x + cu17.GetSize().x / 2.0f, cu17.GetPos().y, cu17.GetPos().z, right_angle, orthonormal_z, soil);
+	Cube cu18 = CreateCube(3.0f * road_width, road_height, 6.0f * road_length, cy9.GetPos().x, cy9.GetPos().y, cy9.GetPos().z - (6.0f * road_length) / 2.0f, soil);
+	Cylinder cy10 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu18.GetPos().x, cu18.GetPos().y, cu18.GetPos().z - cu18.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
+	Cube cu19 = CreateCube(4.0f * road_length, road_height, 3.0f * road_width, cy10.GetPos().x + (4.0f * road_length) / 2.0f, cy10.GetPos().y, cy10.GetPos().z, soil);
+	Cylinder cy11 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu19.GetPos().x + cu19.GetSize().x / 2.0f, cu19.GetPos().y, cu19.GetPos().z, right_angle, orthonormal_z, soil);
+	Cube cu20 = CreateCube(3.0f * road_width, road_height, 3.0f * road_length, cy11.GetPos().x, cy11.GetPos().y, cy11.GetPos().z + (3.0f * road_length) / 2.0f, soil);
+	Cylinder cy12 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu20.GetPos().x, cu20.GetPos().y, cu20.GetPos().z + cu20.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
+	Cube cu21 = CreateCube(road_length, road_height, 3.0f * road_width, cy12.GetPos().x - road_length / 2.0f, cy12.GetPos().y, cy12.GetPos().z, soil);
+	Cube cu22 = CreateCube(4.0f * road_length + road_length / 2.0f + road_width / 2.0f, road_height, 3.0f * road_width, cu21.GetPos().x - cu21.GetSize().x / 2.0f, cu21.GetPos().y, cu21.GetPos().z, soil, true, true, 0.0f, -20, orthonormal_z);
 
 	// Tunnel
-	float tunnel_width = 5.0f;
-	float tunnel_height = 50.0f; // y axis
-	float tunnel_length = cu18.GetSize().z - 2.0f * cy10.radius;
+	float tunnel_width = road_width / 2.0f;
+	float tunnel_height = 45.0f;
+	float tunnel_length = cu18.GetSize().z - 2.0f * cy9.radius;
 
-	Cube tunnel_wall = CreateCube(tunnel_width, tunnel_height, tunnel_length, cu17.GetPos().x + (2.0f * road_length) / 2.0f - cy10.radius, cu17.GetPos().y, cy10.GetPos().z - cy10.radius - tunnel_length / 2.0f, soil);
-	Cube tunnel_wall2 = CreateCube(tunnel_width, tunnel_height, tunnel_length, cu17.GetPos().x + (2.0f * road_length) / 2.0f + cy10.radius, cu17.GetPos().y, cy10.GetPos().z - cy10.radius - tunnel_length / 2.0f, soil);
-	Cube tunnel_wall3 = CreateCube(tunnel_width - 4.0f, tunnel_height - 2.0f * tunnel_width + 1.0f, tunnel_length, tunnel_wall2.GetPos().x - (tunnel_height - 2.0f * tunnel_width + 1.0f) / 2.0f + tunnel_width / 2.0f, tunnel_wall2.GetPos().y + tunnel_wall2.GetSize().y / 2.0f, cy10.GetPos().z - cy10.radius - tunnel_length / 2.0f, soil, true, true, 0.0f, right_angle, orthonormal_z);
+	Cube tunnel_wall = CreateCube(tunnel_width, tunnel_height, tunnel_length, cu17.GetPos().x + (2.0f * road_length) / 2.0f - cy9.radius - tunnel_width / 2.0f, cu17.GetPos().y, cy9.GetPos().z - cy9.radius - tunnel_length / 2.0f, soil);
+	Cube tunnel_wall2 = CreateCube(tunnel_width, tunnel_height, tunnel_length, cu17.GetPos().x + (2.0f * road_length) / 2.0f + cy9.radius + tunnel_width / 2.0f, cu17.GetPos().y, cy9.GetPos().z - cy9.radius - tunnel_length / 2.0f, soil);
+	Cube tunnel_wall3 = CreateCube((tunnel_wall2.GetPos().x + tunnel_wall2.GetSize().x / 2.0f) - (tunnel_wall.GetPos().x - tunnel_wall.GetSize().x / 2.0f), tunnel_width / 4.0f, tunnel_length, tunnel_wall.GetPos().x + tunnel_wall.GetSize().x / 2.0f + cu18.GetSize().x / 2.0f, tunnel_wall.GetPos().y + tunnel_wall.GetSize().y / 2.0f + (tunnel_width / 4.0f) / 2.0f, tunnel_wall.GetPos().z, soil);
 	//_tunnel
 	//_third_section
 
 	// Fourth section
-	Cube cu23 = CreateCube(2.0f * road_length, road_height, road_width / 2.0f, tunnel_wall3.GetPos().x - tunnel_wall3.GetSize().y / 2.0f - (2.0f * road_length) / 2.0f, tunnel_wall3.GetPos().y + tunnel_wall3.GetSize().x / 2.0f - road_height / 2.0f, tunnel_wall3.GetPos().z - 2.0f + road_width / 2.0f, soil);
-	Cube cu24 = CreateCube(2.0f * road_length, road_height, road_width / 2.0f, tunnel_wall3.GetPos().x - tunnel_wall3.GetSize().y / 2.0f - (2.0f * road_length) / 2.0f, tunnel_wall3.GetPos().y + tunnel_wall3.GetSize().x / 2.0f - road_height / 2.0f, tunnel_wall3.GetPos().z + 2.0f - road_width / 2.0f, soil);
+	Cube cu23 = CreateCube(2.0f * road_length, road_height, road_width / 2.0f + 1.0f, tunnel_wall3.GetPos().x - tunnel_wall3.GetSize().x / 2.0f - (2.0f * road_length) / 2.0f, tunnel_wall3.GetPos().y + tunnel_wall3.GetSize().y / 2.0f - road_height / 2.0f, tunnel_wall3.GetPos().z + road_width / 2.0f + 0.5f, soil);
+	Cube cu24 = CreateCube(2.0f * road_length, road_height, road_width / 2.0f + 1.0f, tunnel_wall3.GetPos().x - tunnel_wall3.GetSize().x / 2.0f - (2.0f * road_length) / 2.0f, tunnel_wall3.GetPos().y + tunnel_wall3.GetSize().y / 2.0f - road_height / 2.0f, tunnel_wall3.GetPos().z - road_width / 2.0f - 0.5f, soil);	
+	Cube cu25 = CreateCube(road_length, road_height, cu23.GetPos().z - (cu24.GetPos().z - cu24.GetSize().z), (cu24.GetPos().x - cu24.GetSize().x / 2.0f) - road_length / 2.0f, tunnel_wall3.GetPos().y + tunnel_wall3.GetSize().y / 2.0f - road_height / 2.0f, tunnel_wall3.GetPos().z, soil);
+	Cube cu26 = CreateCube((cu25.GetPos().x - cu25.GetSize().x / 2.0f) - (ground8.GetPos().x + ground8.GetSize().x / 2.0f) + 2.0f, road_height, cu25.GetSize().z, cu25.GetPos().x - cu25.GetSize().x / 2.0f - ((cu25.GetPos().x - cu25.GetSize().x / 2.0f) - (ground8.GetPos().x + ground8.GetSize().x / 2.0f)) / 2.0f, cu25.GetPos().y - ((cu25.GetPos().x - cu25.GetSize().x / 2.0f) - (ground8.GetPos().x + ground8.GetSize().x / 2.0f)) / 2.0f * tan(DEGTORAD * 12), cu25.GetPos().z, soil, true, true, 0.0f, 12, orthonormal_z);
+	Cube cu27 = CreateCube(road_length, road_height, cu26.GetSize().z, ground8.GetPos().x, ground8.GetPos().y + ground8.GetSize().y / 2.0f + road_height / 2.0f, cu26.GetPos().z, soil);
+	Cylinder cy13 = CreateCylinder(road_width, 2.0f * road_height, cu27.GetPos().x - cu27.GetSize().x, cu27.GetPos().y - 10.0f * cu27.GetSize().y, cu27.GetPos().z, right_angle, orthonormal_z, soil);
+	Cylinder cy14 = CreateCylinder(road_width / 2.0f, 25.0f * road_height, cy13.GetPos().x, cy13.GetPos().y + cy13.height / 2.0f - (25.0f * road_height) / 2.0f, cy13.GetPos().z, right_angle, orthonormal_z, soil);
+	Cylinder cy15 = CreateCylinder(cy13.radius, cy13.height, cy13.GetPos().x - cu27.GetSize().x, cy13.GetPos().y, cy13.GetPos().z, right_angle, orthonormal_z, soil);
+	Cylinder cy16 = CreateCylinder(road_width / 2.0f, 25.0f * road_height, cy15.GetPos().x, cy15.GetPos().y + cy15.height / 2.0f - (25.0f * road_height) / 2.0f, cy15.GetPos().z, right_angle, orthonormal_z, soil);
+	Cube cu28 = CreateCube(road_length, road_height, road_width, cy16.GetPos().x - cu27.GetSize().x, cy15.GetPos().y, cy16.GetPos().z, soil);
+	Cylinder cy18 = CreateCylinder(road_width / 2.0f, road_height, cu28.GetPos().x - cu28.GetSize().x / 2.0f, cu28.GetPos().y, cu28.GetPos().z, right_angle, orthonormal_z, soil);
+	Cylinder cy19 = CreateCylinder(road_width / 3.0f, 25.0f * road_height, cy18.GetPos().x, cy18.GetPos().y + cy18.height / 2.0f - (25.0f * road_height) / 2.0f, cy18.GetPos().z, right_angle, orthonormal_z, soil);
+	Cube cu29 = CreateCube(road_width, road_height, road_length, cy18.GetPos().x, cy18.GetPos().y, cy18.GetPos().z - road_length / 2.0f, soil);
+	Cylinder cy20 = CreateCylinder(road_width / 2.0f, road_height, cu29.GetPos().x, cu29.GetPos().y, cu29.GetPos().z - cu29.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
+	Cylinder cy21 = CreateCylinder(road_width / 3.0f, 25.0f * road_height, cy20.GetPos().x, cy20.GetPos().y + cy20.height / 2.0f - (25.0f * road_height) / 2.0f, cy20.GetPos().z, right_angle, orthonormal_z, soil);
+	Cube cu30 = CreateCube((cu29.GetPos().x - cu29.GetSize().x) - (cu.GetPos().x - cu.GetSize().x), road_height, road_width, cy20.GetPos().x - ((cu29.GetPos().x - cu29.GetSize().x) - (cu.GetPos().x - cu.GetSize().x)) / 2.0f, cy20.GetPos().y, cy20.GetPos().z, soil);
+	Cylinder cy22 = CreateCylinder(road_width / 2.0f, road_height, cu30.GetPos().x - cu30.GetSize().x / 2.0f, cu30.GetPos().y, cu30.GetPos().z, right_angle, orthonormal_z, soil);
+	Cylinder cy23 = CreateCylinder(road_width / 3.0f, 25.0f * road_height, cy22.GetPos().x, cy22.GetPos().y + cy22.height / 2.0f - (25.0f * road_height) / 2.0f, cy22.GetPos().z, right_angle, orthonormal_z, soil);
+	Cube cu31 = CreateCube(road_width, road_height, cy22.radius, cy22.GetPos().x, cy22.GetPos().y, cy22.GetPos().z + cy22.radius / 2.0f, soil);
 
-	Cube cu25 = CreateCube(2.0f * road_length, road_height, road_width + 2.0f, cu24.GetPos().x - cu24.GetSize().x, tunnel_wall3.GetPos().y + tunnel_wall3.GetSize().x / 2.0f - road_height / 2.0f, tunnel_wall3.GetPos().z, soil);
+	float ramp_precision_y = 0.6f;
+	float ramp_precision_z = 2.1f;
+
+	Cube cu32 = CreateCube(road_width, road_height, road_length + 2.0f * road_width + 0.5f, cu31.GetPos().x, cu31.GetPos().y - ((road_length + 2.0f * road_width + 0.5f) / 2.0f) * tan(DEGTORAD * -21) - ramp_precision_y, cu31.GetPos().z + cu31.GetSize().z / 2.0f + (road_length + 2.0f * road_width + 0.5f) / 2.0f - ramp_precision_z, soil, true, true, 0.0f, -21, orthonormal_x);
+	Cube cu33 = CreateCube(road_width, road_height, road_length, cu.GetPos().x, cu.GetPos().y, ground.GetPos().z - ground.GetSize().z / 2.0f + road_length / 2.0f, soil);
 	//_fourth_section
 
 	// Hinges (rotating elements)
@@ -219,9 +231,7 @@ bool ModuleSceneIntro::Start()
 
 	bodyA->GetBody()->setLinearFactor(btVector3(0, 0, 0));
 	bodyA2->GetBody()->setLinearFactor(btVector3(0, 0, 0));
-	//bodyB->GetBody()->setLinearFactor(btVector3(0, 0, 0));
 	bodyB->GetBody()->setAngularFactor(btVector3(0, 0, 0));
-	//bodyB2->GetBody()->setLinearFactor(btVector3(0, 0, 0));
 	bodyB2->GetBody()->setAngularFactor(btVector3(0, 0, 0));
 
 	App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, -1, 0), vec3(0, 0, 0), true, true);
@@ -240,9 +250,11 @@ bool ModuleSceneIntro::Start()
 	bool inv_pos[4] = { false,false,false,false };
 	uint i = 0;
 
+	// From start to hinges
 	CreateLimits((Primitive*)&cu, pos, inv_col, inv_pos);
 
-	SetArrayBooleans(inv_col, 4, true);
+	inv_col[2] = true;
+	inv_col[3] = true;
 	CreateLimits((Primitive*)&cu2, pos, inv_col, inv_pos, vec4(0.0f,0.0f, cu3.GetSize().z / 2.0f, cu3.GetSize().z / 2.0f));
 
 	pos[i] = true;
@@ -250,6 +262,8 @@ bool ModuleSceneIntro::Start()
 	pos[++i] = false;
 	pos[++i] = true;
 	i = 0;
+	inv_col[2] = false;
+	inv_col[0] = true;
 	CreateLimits((Primitive*)&cy, pos, inv_col, inv_pos);
 
 	pos[i] = true;
@@ -259,6 +273,8 @@ bool ModuleSceneIntro::Start()
 	i = 0;
 	inv_pos[1] = true;
 	inv_col[0] = false;
+	inv_col[1] = true;
+	inv_col[3] = false;
 	CreateLimits((Primitive*)&cu3, pos, inv_col, inv_pos, vec4(cu2.GetSize().x / 2.0f, cu2.GetSize().x / 2.0f,0.0f,0.0f));
 
 	pos[i] = false;
@@ -267,7 +283,7 @@ bool ModuleSceneIntro::Start()
 	pos[++i] = false;
 	i = 0;
 	inv_pos[1] = false;
-	SetArrayBooleans(inv_col, 4, false);
+	inv_col[2] = true;
 	CreateLimits((Primitive*)&cy2, pos, inv_col, inv_pos);
 
 	pos[i] = false;
@@ -276,7 +292,9 @@ bool ModuleSceneIntro::Start()
 	pos[++i] = true;
 	i = 0;
 	inv_pos[3] = true;
-	SetArrayBooleans(inv_col, 4, true);
+	inv_col[1] = false;
+	inv_col[2] = false;
+	inv_col[3] = true;
 	CreateLimits((Primitive*)&cu4, pos, inv_col, inv_pos, vec4(0.0f,0.0f, cu3.GetSize().z / 2.0f, cu3.GetSize().z / 2.0f));
 
 	pos[i] = false;
@@ -293,7 +311,8 @@ bool ModuleSceneIntro::Start()
 	pos[++i] = false;
 	i = 0;
 	inv_pos[1] = true;
-	SetArrayBooleans(inv_col, 4, false);
+	inv_col[1] = true;
+	inv_col[3] = false;
 	CreateLimits((Primitive*)&cu5, pos, inv_col, inv_pos, vec4(0.0f, cu4.GetSize().x / 2.0f,0.0f,0.0f));
 
 	pos[i] = false;
@@ -302,19 +321,202 @@ bool ModuleSceneIntro::Start()
 	pos[++i] = false;
 	i = 0;
 	inv_pos[1] = false;
+	inv_col[2] = true;
 	CreateLimits((Primitive*)&cy4, pos, inv_col, inv_pos);
+
+	// From hinges to tunnel
+	pos[i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	pos[++i] = true;
+	i = 0;
+	inv_col[1] = false;
+	inv_col[2] = false;
+	CreateLimits((Primitive*)&cu8, pos, inv_col, inv_pos, vec4(0.0f,0.0f, cu9.GetSize().z / 2.0f,0.0f));
+
+	pos[i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	i = 0;
+	CreateLimits((Primitive*)&cy5, pos, inv_col, inv_pos);
+
+	pos[i] = true;
+	pos[++i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	i = 0;
+	inv_pos[1] = true;
+	inv_col[1] = true;
+	CreateLimits((Primitive*)&cu9, pos, inv_col, inv_pos, vec4(0.0f, cu8.GetSize().x / 2.0f,0.0f,0.0f));
+
+	pos[i] = true;
+	pos[++i] = false;
+	pos[++i] = true;
+	pos[++i] = false;
+	i = 0;
+	inv_pos[1] = false;
+	inv_col[1] = false;
+	inv_col[2] = true;
+	CreateLimits((Primitive*)&cu11, pos, inv_col, inv_pos);
+
+	Cube aux_cu = CreateCube(cu12.GetSize().x, cu12.GetSize().y, cu12.GetPos().z - (ground1.GetPos().z - ground1.GetSize().z / 2.0f), cu12.GetPos().x, cu12.GetPos().y, cu12.GetPos().z - (cu12.GetPos().z - (ground1.GetPos().z - ground1.GetSize().z / 2.0f)) / 2.0f, soil, false, false);
+	pos[i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	pos[++i] = true;
+	i = 0;
+	inv_col[2] = false;
+	CreateLimits((Primitive*)&aux_cu, pos, inv_col, inv_pos);
+
+	pos[i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	pos[++i] = false;
+	i = 0;
+	CreateLimits((Primitive*)&cu14, pos, inv_col, inv_pos);
+
+	CreateLimits((Primitive*)&cu15, pos, inv_col, inv_pos);
+
+	inv_pos[2] = true;
+	CreateLimits((Primitive*)&cu16, pos, inv_col, inv_pos, vec4(0.0f,0.0f, cu17.GetSize().z / 2.0f,0.0f));
+
+	pos[i] = false;
+	pos[++i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	i = 0;
+	inv_pos[2] = false;
+	inv_col[1] = true;
+	CreateLimits((Primitive*)&cy8, pos, inv_col, inv_pos);
+
+	pos[i] = true;
+	pos[++i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	i = 0;
+	inv_pos[0] = true;
+	inv_col[1] = false;
+	CreateLimits((Primitive*)&cu17, pos, inv_col, inv_pos, vec4(cu18.GetSize().x / 2.0f, cu18.GetSize().x / 2.0f,0.0f,0.0f));
+
+	pos[i] = true;
+	pos[++i] = false;
+	pos[++i] = true;
+	pos[++i] = false;
+	i = 0;
+	inv_pos[0] = false;
+	inv_col[2] = true;
+	CreateLimits((Primitive*)&cy9, pos, inv_col, inv_pos);
+
+	// From tunnel to start
+	pos[i] = false;
+	pos[++i] = true;
+	pos[++i] = false;
+	pos[++i] = true;
+	i = 0;
+	inv_col[1] = true;
+	inv_col[2] = false;
+	CreateLimits((Primitive*)&cy10, pos, inv_col, inv_pos);
+
+	pos[i] = false;
+	pos[++i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	i = 0;
+	inv_col[1] = false;
+	CreateLimits((Primitive*)&cu19, pos, inv_col, inv_pos);
+
+	Cube aux_cu2 = CreateCube(cu19.GetSize().x - cy10.radius - cy11.radius, cu19.GetSize().y, cu19.GetSize().z, cu19.GetPos().x, cu19.GetPos().y, cu19.GetPos().z, soil, false, false);
+	pos[i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	pos[++i] = false;
+	i = 0;
+	CreateLimits((Primitive*)&aux_cu2, pos, inv_col, inv_pos);
+
+	pos[i] = false;
+	pos[++i] = true;
+	pos[++i] = true;
+	pos[++i] = false;
+	i = 0;
+	CreateLimits((Primitive*)&cy11, pos, inv_col, inv_pos);
+
+	pos[i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	pos[++i] = false;
+	i = 0;
+	inv_col[2] = true;
+	CreateLimits((Primitive*)&cu20, pos, inv_col, inv_pos);
+
+	Cube aux_cu3 = CreateCube(cu20.GetSize().x, cu20.GetSize().y, cu20.GetSize().z - cy11.radius - cy12.radius, cu20.GetPos().x, cu20.GetPos().y, cu20.GetPos().z, soil, false, false);
+	pos[i] = false;
+	pos[++i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	i = 0;
+	inv_col[2] = false;
+	inv_col[3] = true;
+	CreateLimits((Primitive*)&aux_cu3, pos, inv_col, inv_pos);
+	
+	pos[i] = true;
+	pos[++i] = false;
+	pos[++i] = true;
+	pos[++i] = false;
+	i = 0;
+	inv_col[2] = true;
+	inv_col[3] = false;
+	CreateLimits((Primitive*)&cy12, pos, inv_col, inv_pos);
+
+	pos[i] = true;
+	pos[++i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	i = 0;
+	inv_col[2] = false;
+	CreateLimits((Primitive*)&cu21, pos, inv_col, inv_pos, vec4(0.0f, cu20.GetSize().x / 2.0f,0.0f,0.0f));
+
+	Cube aux_cu4 = CreateCube(tunnel_wall3.GetSize().x, tunnel_wall3.GetSize().y, cu21.GetSize().z, tunnel_wall3.GetPos().x, tunnel_wall3.GetPos().y + tunnel_wall3.GetSize().y, tunnel_wall3.GetPos().z, soil, false, false);
+	CreateLimits((Primitive*)&aux_cu4, pos, inv_col, inv_pos);
+
+	Cube aux_cu5 = CreateCube(aux_cu4.GetSize().x, aux_cu4.GetSize().y, aux_cu4.GetSize().z, aux_cu4.GetPos().x + 2.0f, aux_cu4.GetPos().y, aux_cu4.GetPos().z, soil, false, false);
+	pos[i] = false;
+	pos[++i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	i = 0;
+	inv_col[3] = true;
+	CreateLimits((Primitive*)&aux_cu5, pos, inv_col, inv_pos, vec4(0.0f,0.0f,0.0f, tunnel_wall3.GetSize().x / 2.0f + cu23.GetSize().z / 2.0f));
+
+	inv_pos[3] = true;
+	CreateLimits((Primitive*)&aux_cu5, pos, inv_col, inv_pos, vec4(0.0f, 0.0f, 0.0f, tunnel_wall3.GetSize().x / 2.0f + cu23.GetSize().z / 2.0f));
+
+	Cube aux_cu6 = CreateCube(aux_cu5.GetSize().x, aux_cu5.GetSize().y, (cu23.GetPos().z - cu23.GetSize().z) - cu24.GetPos().z, aux_cu5.GetPos().x, aux_cu5.GetPos().y, aux_cu5.GetPos().z, soil, false, false);
+	inv_pos[3] = false;
+	CreateLimits((Primitive*)&aux_cu6, pos, inv_col, inv_pos);
+
+	pos[i] = true;
+	pos[++i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	i = 0;
+	inv_col[3] = false;
+	CreateLimits((Primitive*)&cu27, pos, inv_col, inv_pos);
+
+	pos[i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	pos[++i] = true;
+	i = 0;
+	inv_col[2] = true;
+	inv_col[3] = true;
+	CreateLimits((Primitive*)&cu33, pos, inv_col, inv_pos);
 	//_road_limits
 
 	//_road_primitives
 	//_road
 
 	return ret;
-}
-
-void ModuleSceneIntro::SetArrayBooleans(bool array[], uint length, bool value)
-{
-	for (uint i = 0; i < length; ++i)
-		array[i] = value;
 }
 
 void ModuleSceneIntro::CreateLimits(Primitive* p, bool pos[4], bool inv_col[4], bool inv_pos[4], vec4 lim)
@@ -328,11 +530,12 @@ void ModuleSceneIntro::CreateLimits(Primitive* p, bool pos[4], bool inv_col[4], 
 	}
 	else if (p->GetType() == Primitive_Cylinder) {
 		Cylinder* cy = (Cylinder*)p;
-		size = 2.0f * cy->radius;
+		float diameter = 2.0f * cy->radius;
+		size = vec3(diameter, cy->height, diameter);
 	}
 
 	float cu_base = 2.0f;
-	float cu_height = 2.0f * cu_base;
+	float cu_height = 2.0f;
 	float x = 0.0f, z = 0.0f;
 
 	// Cube color code
@@ -403,7 +606,7 @@ void ModuleSceneIntro::CreateLimits(Primitive* p, bool pos[4], bool inv_col[4], 
 				else if (i == 2 || i == 3)
 					z = increment_z;
 
-				CreateCube(cu_base, cu_height, cu_base, x, position.y, z, color);
+				CreateCube(cu_base, cu_height, cu_base, x, (position.y - size.y / 2.0f) + cu_height / 2.0f, z, color);
 
 				increment_z += dir * cu_base;
 				increment_x += dir * cu_base;
@@ -426,9 +629,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	// Update sensors
 	sensor->GetTransform(&s.transform);
 	s.Render();
-
-	sensor2->GetTransform(&g.transform);
-	g.Render();
 
 	sensor3->GetTransform(&h.transform);
 	h.Render();
@@ -486,7 +686,6 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	/// It is only needed to set the position and size of the first element of the speed-up
 	CreateSpeedUp(speed_width, speed_height, speed_length, 0.0f, road_height / 2.0f, 0.0f);
-	CreateSpeedUp(speed_width, speed_height, speed_length, cu6.GetPos().x, road_height / 2.0f, cu6.GetPos().z);
 
 	CreateSpeedUp(speed_length, speed_height, 2.0f * speed_width, cu7.GetPos().x - cu7.GetSize().x / 2.0f + speed_length / 2.0f, road_height / 2.0f, cu7.GetPos().z, 3, false, -20, orthonormal_x);
 	CreateSpeedUp(speed_length, speed_height, 2.0f * speed_width, cu7.GetPos().x + speed_length / 2.0f, road_height / 2.0f, cu7.GetPos().z, 3, false, -20, orthonormal_x);
@@ -647,9 +846,22 @@ Cylinder ModuleSceneIntro::CreateCylinder(float radius, float height, float posX
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1 == sensor) {
-		App->player->speedup = true;
+	if (body1 == sensor && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupZ = true;
 	}
+
+	else if (body1 == sensor3 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupZ = true;
+	}
+
+	else if (body1 == sensor4 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupX = true;
+	}
+
+	else if (body1 == sensor5 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupZnegative = true;
+	}
+
 
 	else if (body1) {
 		checkpoints_index = 1;
