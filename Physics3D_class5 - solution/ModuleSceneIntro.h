@@ -26,6 +26,11 @@ public:
 	
 	void CreateSpeedUp(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, uint num = 4, bool add_z = true, float angle = 0.0f, vec3 u = (0, 0, 0));
 	void CreateFinishLine(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f);
+	
+	void CreateLimits(Primitive* p, bool pos[4], bool inv_col[4], bool inv_pos[4], vec4 lim = { 0.0f,0.0f,0.0f,0.0f });
+
+	void SetArrayBooleans(bool array[], uint length, bool value = true);
+
 
 	void UpdateSpeedUpColors(float dt);
 	void UpdateSpeedUpIndex(uint &index);

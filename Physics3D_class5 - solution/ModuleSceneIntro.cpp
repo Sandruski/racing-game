@@ -134,7 +134,7 @@ bool ModuleSceneIntro::Start()
 	Cube castle = CreateCube(90.0f, 90.0f, 130.0f, water.GetPos().x + water.GetSize().x / 2.0f + 90.0f / 3.0f, water.GetPos().y + water.GetSize().y, water.GetPos().z, White);
 	Cube castle1 = CreateCube(30.0f, 80.0f, 30.0f, castle.GetPos().x, castle.GetPos().y + castle.GetSize().y / 2.0f, castle.GetPos().z, White);
 	Cube castle2 = CreateCube(20.0f, 50.0f, 20.0f, castle1.GetPos().x, castle1.GetPos().y + castle1.GetSize().y / 2.0f, castle1.GetPos().z, White);
-	
+
 	Cube tower = CreateCube(15.0f, 40.0f, 15.0f, castle.GetPos().x + castle.GetSize().x / 2.0f, castle.GetPos().y + castle.GetSize().y / 2.0f - 40.0f / 5.0f, castle.GetPos().z + castle.GetSize().z / 2.0f, White);
 	Cube flag = CreateCube(1.0f, 15.0f, 1.0f, tower.GetPos().x, tower.GetPos().y + tower.GetSize().y / 2.0f, tower.GetPos().z, White);
 	Cube tower2 = CreateCube(15.0f, 40.0f, 15.0f, castle.GetPos().x - castle.GetSize().x / 2.0f, castle.GetPos().y + castle.GetSize().y / 2.0f - 40.0f / 5.0f, castle.GetPos().z - castle.GetSize().z / 2.0f, White);
@@ -156,7 +156,7 @@ bool ModuleSceneIntro::Start()
 	Cube ground9 = CreateCube(2.0f * ground_width, 4.0f * ground_height, ground1.GetSize().z / 4.0f, ground8.GetPos().x - ground8.GetSize().x / 2.0f - (2.0f * ground_width) / 2.0f, ground8.GetPos().y, ground8.GetPos().z - ground8.GetSize().z / 2.0f + (ground1.GetSize().z / 4.0f) / 2.0f, Pink);
 
 	Cube water2 = CreateCube(2.0f * ground4.GetSize().x, ground4.GetSize().y, 4.0f * ground4.GetSize().z, ground4.GetPos().x + ground4.GetSize().x / 2.0f - (2.0f * ground4.GetSize().x) / 2.0f, ground4.GetPos().y - ground4.GetSize().y, ground4.GetPos().z + ground4.GetSize().z / 2.0f - (4.0f * ground4.GetSize().z) / 2.0f, Cyan);
-	Cube water3 = CreateCube(3.0f * ground4.GetSize().x + 50.0f, 2.0f * ground4.GetSize().y, 2.0f * ground4.GetSize().z, water.GetPos().x - water.GetSize().x / 2.0f + (3.0f * ground4.GetSize().x + 50.0f) / 2.0f, water.GetPos().y - water.GetSize().y / 2.0f - (2.0f * ground4.GetSize().y) / 2.0f, water2.GetPos().z - water2.GetSize().z / 2.0f + (2.0f * ground4.GetSize().z) / 2.0f, Cyan);	
+	Cube water3 = CreateCube(3.0f * ground4.GetSize().x + 50.0f, 2.0f * ground4.GetSize().y, 2.0f * ground4.GetSize().z, water.GetPos().x - water.GetSize().x / 2.0f + (3.0f * ground4.GetSize().x + 50.0f) / 2.0f, water.GetPos().y - water.GetSize().y / 2.0f - (2.0f * ground4.GetSize().y) / 2.0f, water2.GetPos().z - water2.GetSize().z / 2.0f + (2.0f * ground4.GetSize().z) / 2.0f, Cyan);
 	Cube water4 = CreateCube(8.0f * ground4.GetSize().x, 4.0f * ground4.GetSize().y, ground4.GetSize().z, water.GetPos().x - water.GetSize().x / 2.0f + (8.0f * ground4.GetSize().x) / 2.0f, water2.GetPos().y - water2.GetSize().y / 2.0f - (4.0f * ground4.GetSize().y) / 2.0f, water2.GetPos().z - water2.GetSize().z / 2.0f - ground4.GetSize().z / 2.0f, Cyan);
 	Cube water5 = CreateCube(ground6.GetSize().x, water4.GetSize().y, ground6.GetSize().z, water4.GetPos().x + water4.GetSize().x / 2 - ground6.GetSize().x / 2, water4.GetPos().y - water4.GetSize().y / 2, ground6.GetPos().z, Cyan);
 	//_ground
@@ -173,7 +173,7 @@ bool ModuleSceneIntro::Start()
 	Cube cu20 = CreateCube(3.0f * road_width, road_height, 3.0f * road_length, cy12.GetPos().x, cy12.GetPos().y, cy12.GetPos().z + (3.0f * road_length) / 2.0f, soil);
 	Cylinder cy13 = CreateCylinder((3.0f * road_width) / 2.0f, road_height, cu20.GetPos().x, cu20.GetPos().y, cu20.GetPos().z + cu20.GetSize().z / 2.0f, right_angle, orthonormal_z, soil);
 	Cube cu21 = CreateCube(road_length, road_height, 3.0f * road_width, cy13.GetPos().x - road_length / 2.0f, cy13.GetPos().y, cy13.GetPos().z, soil);
-	
+
 	Cube cu22 = CreateCube(5.0f * road_length - 0.8f, road_height, 3.0f * road_width, cu21.GetPos().x - cu21.GetSize().x / 2.0f, cu21.GetPos().y, cu21.GetPos().z, soil, true, true, 0.0f, -20, orthonormal_z);
 
 	// Tunnel
@@ -183,7 +183,7 @@ bool ModuleSceneIntro::Start()
 
 	Cube tunnel_wall = CreateCube(tunnel_width, tunnel_height, tunnel_length, cu17.GetPos().x + (2.0f * road_length) / 2.0f - cy10.radius, cu17.GetPos().y, cy10.GetPos().z - cy10.radius - tunnel_length / 2.0f, soil);
 	Cube tunnel_wall2 = CreateCube(tunnel_width, tunnel_height, tunnel_length, cu17.GetPos().x + (2.0f * road_length) / 2.0f + cy10.radius, cu17.GetPos().y, cy10.GetPos().z - cy10.radius - tunnel_length / 2.0f, soil);
-	Cube tunnel_wall3 = CreateCube(tunnel_width - 4.0f, tunnel_height - 2.0f * tunnel_width + 1.0f, tunnel_length, tunnel_wall2.GetPos().x - (tunnel_height - 2.0f * tunnel_width + 1.0f ) / 2.0f + tunnel_width / 2.0f, tunnel_wall2.GetPos().y + tunnel_wall2.GetSize().y / 2.0f, cy10.GetPos().z - cy10.radius - tunnel_length / 2.0f, soil, true, true, 0.0f, right_angle, orthonormal_z);
+	Cube tunnel_wall3 = CreateCube(tunnel_width - 4.0f, tunnel_height - 2.0f * tunnel_width + 1.0f, tunnel_length, tunnel_wall2.GetPos().x - (tunnel_height - 2.0f * tunnel_width + 1.0f) / 2.0f + tunnel_width / 2.0f, tunnel_wall2.GetPos().y + tunnel_wall2.GetSize().y / 2.0f, cy10.GetPos().z - cy10.radius - tunnel_length / 2.0f, soil, true, true, 0.0f, right_angle, orthonormal_z);
 	//_tunnel
 	//_third_section
 
@@ -201,7 +201,7 @@ bool ModuleSceneIntro::Start()
 
 	float cube_width = road_width / 2.0f;
 	float cube_height = 2.0f * road_height;
-	float cube_length = road_length + 2.0f * road_width;
+	float cube_length = road_length + road_width;
 
 	Color rotating_stuff = Orange;
 
@@ -233,10 +233,183 @@ bool ModuleSceneIntro::Start()
 
 	CreateFinishLine(line_width, road_height, line_length, line_width / 2.0f - cu.GetSize().x / 2.0f, 0.1f, 0.0f);
 	//_finish_line
+
+	// Road limits
+	bool pos[4] = { false, false, true, true };
+	bool inv_col[4] = { false,false,false,false };
+	bool inv_pos[4] = { false,false,false,false };
+	uint i = 0;
+
+	CreateLimits((Primitive*)&cu, pos, inv_col, inv_pos);
+
+	SetArrayBooleans(inv_col, 4, true);
+	CreateLimits((Primitive*)&cu2, pos, inv_col, inv_pos, vec4(0.0f,0.0f, cu3.GetSize().z / 2.0f, cu3.GetSize().z / 2.0f));
+
+	pos[i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	i = 0;
+	CreateLimits((Primitive*)&cy, pos, inv_col, inv_pos);
+
+	pos[i] = true;
+	pos[++i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	i = 0;
+	inv_pos[1] = true;
+	inv_col[0] = false;
+	CreateLimits((Primitive*)&cu3, pos, inv_col, inv_pos, vec4(cu2.GetSize().x / 2.0f, cu2.GetSize().x / 2.0f,0.0f,0.0f));
+
+	pos[i] = false;
+	pos[++i] = true;
+	pos[++i] = true;
+	pos[++i] = false;
+	i = 0;
+	inv_pos[1] = false;
+	SetArrayBooleans(inv_col, 4, false);
+	CreateLimits((Primitive*)&cy2, pos, inv_col, inv_pos);
+
+	pos[i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	pos[++i] = true;
+	i = 0;
+	inv_pos[3] = true;
+	SetArrayBooleans(inv_col, 4, true);
+	CreateLimits((Primitive*)&cu4, pos, inv_col, inv_pos, vec4(0.0f,0.0f, cu3.GetSize().z / 2.0f, cu3.GetSize().z / 2.0f));
+
+	pos[i] = false;
+	pos[++i] = false;
+	pos[++i] = false;
+	pos[++i] = true;
+	i = 0;
+	inv_pos[3] = false;
+	CreateLimits((Primitive*)&cy3, pos, inv_col, inv_pos);
+
+	pos[i] = false;
+	pos[++i] = true;
+	pos[++i] = false;
+	pos[++i] = false;
+	i = 0;
+	inv_pos[1] = true;
+	SetArrayBooleans(inv_col, 4, false);
+	CreateLimits((Primitive*)&cu5, pos, inv_col, inv_pos, vec4(0.0f, cu4.GetSize().x / 2.0f,0.0f,0.0f));
+
+	pos[i] = false;
+	pos[++i] = true;
+	pos[++i] = true;
+	pos[++i] = false;
+	i = 0;
+	inv_pos[1] = false;
+	CreateLimits((Primitive*)&cy4, pos, inv_col, inv_pos);
+	//_road_limits
+
 	//_road_primitives
 	//_road
 
 	return ret;
+}
+
+void ModuleSceneIntro::SetArrayBooleans(bool array[], uint length, bool value)
+{
+	for (uint i = 0; i < length; ++i)
+		array[i] = value;
+}
+
+void ModuleSceneIntro::CreateLimits(Primitive* p, bool pos[4], bool inv_col[4], bool inv_pos[4], vec4 lim)
+{
+	vec3 position = p->GetPos();
+	vec3 size = vec3(0.0f, 0.0f, 0.0f);
+
+	if (p->GetType() == Primitive_Cube) {
+		Cube* cu = (Cube*)p;
+		size = cu->GetSize();
+	}
+	else if (p->GetType() == Primitive_Cylinder) {
+		Cylinder* cy = (Cylinder*)p;
+		size = 2.0f * cy->radius;
+	}
+
+	float cu_base = 2.0f;
+	float cu_height = 2.0f * cu_base;
+	float x = 0.0f, z = 0.0f;
+
+	// Cube color code
+	Color c1, c2, color;
+
+	// Cube direction of creation
+	float increment_x = 0.0f, increment_z = 0.0f;
+	int dir = 0;
+
+	for (uint i = 0; i < 4; ++i) {
+
+		if (pos[i]) {
+
+			// Update cube color code
+			if (inv_col[i]) {
+				c1 = Cyan;
+				c2 = Orange;
+			}
+			else {
+				c1 = Orange;
+				c2 = Cyan;
+			}
+
+			// Update cube direction of creation
+			if (inv_pos[i]) {
+				increment_x = position.x + size.x / 2.0f - cu_base / 2.0f;
+				increment_z = position.z + size.z / 2.0f - cu_base / 2.0f;
+				dir = -1;
+			}
+			else {
+				increment_x = position.x - size.x / 2.0f + cu_base / 2.0f;
+				increment_z = position.z - size.z / 2.0f + cu_base / 2.0f;
+				dir = 1;
+			}
+
+			// Calculate cubes per row
+			uint max_cubes = 0;
+
+			switch (i) {
+			case 0:
+				max_cubes = (size.x - lim.x) / cu_base;
+				z = position.z + size.z / 2.0f + cu_base / 2.0f;
+				break;
+			case 1:
+				max_cubes = (size.x - lim.y) / cu_base;
+				z = position.z - size.z / 2.0f - cu_base / 2.0f;
+				break;
+			case 2:
+				max_cubes = (size.z - lim.z) / cu_base;
+				x = position.x + size.x / 2.0f + cu_base / 2.0f;
+				break;
+			case 3:
+				max_cubes = (size.z - lim.w) / cu_base;
+				x = position.x - size.x / 2.0f - cu_base / 2.0f;
+				break;
+			}
+
+			// Create cubes
+			for (uint j = 0; j < max_cubes; ++j) {
+
+				if (j % 2 != 0)
+					color = c2;
+				else
+					color = c1;
+
+				if (i == 0 || i == 1)
+					x = increment_x;
+				else if (i == 2 || i == 3)
+					z = increment_z;
+
+				CreateCube(cu_base, cu_height, cu_base, x, position.y, z, color);
+
+				increment_z += dir * cu_base;
+				increment_x += dir * cu_base;
+			}
+		}
+	}
 }
 
 // Load assets

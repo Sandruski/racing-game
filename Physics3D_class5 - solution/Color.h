@@ -34,6 +34,7 @@ extern Color White;
 // Personalized palette
 extern Color Cyan;
 extern Color Beige;
+extern Color Orange;
 
 extern Color PalePink;
 extern Color Pink; // base pink
@@ -41,4 +42,4 @@ extern Color DeepPink;
 extern Color Violet;
 extern Color Purple;
 
-extern Color Orange;
+extern Color GreenYellow;
