@@ -133,7 +133,7 @@ bool ModulePlayer::Start()
 	vehicle->GetPos(x, y, z);
 	float i, j, k;
 	sphere->GetPos(i, j, k);
-	//App->physics->AddConstraintP2P(*(PhysBody3D*)(vehicle->body), *sphere, vec3(x,y,z), vec3(i, j, k));
+	App->physics->AddConstraintP2P(*(PhysBody3D*)(vehicle->GetBody()), *sphere, vec3(x,y,z), vec3(i, j, k));
 
 	return true;
 }
@@ -192,15 +192,23 @@ update_status ModulePlayer::Update(float dt)
 		switch (App->scene_intro->checkpoints_index)
 		{
 		case 0:
-			vehicle->SetPos(0, 0, 0);
+			vehicle->SetPos(0, 12, 10);
 			break;
-		case 1:
-			vehicle->SetPos(0, 20, 0);
+		case 1: case 6: case 11:
+			vehicle->SetPos(60, 12, 65);
 			break;
-		case 2:
-			vehicle->SetPos(0, 10, 0);
+		case 2: case 7: case 12:
+			vehicle->SetPos(60, 12, 300);
 			break;
-			//etc
+		case 3: case 8: case 13:
+			vehicle->SetPos(277, 12, 267);
+			break;
+		case 4: case 9: case 14:
+			vehicle->SetPos(277, 12, 70);
+			break;
+		case 5: case 10: case 15:
+			vehicle->SetPos(338, 12, -55);
+			break;
 		}
 	}
 
@@ -238,56 +246,181 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->GetPos(position.x, position.y, position.z);
 	position;
 	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
+	sprintf_s(title, "%.1f Km/h, checkpoint: %i loops: %i", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->loopsCount);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
 }
 
 /*
-void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-{
-	if (body1 == sensor && body2 == (PhysBody3D*)App->player->vehicle) {
-		App->player->speedupZ = true;
-	}
+// AL START DESPRES DELS ALTRES SENSORS sceneintro.cpp
+// CheckPoint Sensors
+ch1.size = vec3(10, 4, 10);
+ch1.SetPos(60, 1.5f, 65);
 
-	else if (body1 == sensor2 && body2 == (PhysBody3D*)App->player->vehicle) {
-		App->player->speedupZ = true;
-	}
+checkpoint1 = App->physics->AddBody(ch1, 0.0f);
+checkpoint1->SetAsSensor(true);
+checkpoint1->collision_listeners.add(this);
 
-	else if (body1 == sensor3 && body2 == (PhysBody3D*)App->player->vehicle) {
-		App->player->speedupZ = true;
-	}
+ch2.size = vec3(40, 20, 40);
+ch2.SetPos(60, 1.5f, 300);
 
-	else if (body1 == sensor4 && body2 == (PhysBody3D*)App->player->vehicle) {
-		App->player->speedupX = true;
-	}
+checkpoint2 = App->physics->AddBody(ch2, 0.0f);
+checkpoint2->SetAsSensor(true);
+checkpoint2->collision_listeners.add(this);
 
-	else if (body1 == sensor5 && body2 == (PhysBody3D*)App->player->vehicle) {
-		App->player->speedupZnegative = true;
-	}
+ch3.size = vec3(40, 20, 40);
+ch3.SetPos(277, 0.5f, 267);
 
+checkpoint3 = App->physics->AddBody(ch3, 0.0f);
+checkpoint3->SetAsSensor(true);
+checkpoint3->collision_listeners.add(this);
 
-	else if (body1) {
-		checkpoints_index = 1;
-	}
-}
+ch4.size = vec3(40, 60, 40);
+ch4.SetPos(277, 0, 70);
+
+checkpoint4 = App->physics->AddBody(ch4, 0.0f);
+checkpoint4->SetAsSensor(true);
+checkpoint4->collision_listeners.add(this);
+
+ch5.size = vec3(40, 6, 40);
+ch5.SetPos(338, 0, -55);
+
+checkpoint5 = App->physics->AddBody(ch5, 0.0f);
+checkpoint5->SetAsSensor(true);
+checkpoint5->collision_listeners.add(this);
+
+loopCompletedCube.size = vec3(10, 30, 3);
+loopCompletedCube.SetPos(0, 0, 1);
+
+loopCompleted = App->physics->AddBody(loopCompletedCube, 0.0f);
+loopCompleted->SetAsSensor(true);
+loopCompleted->collision_listeners.add(this);
+//_CheckPoint Sensors
+
 */
 
 /*
-// Sensors
-s.size = vec3(4, 2, 8); // First sensor, dont touch
-s.SetPos(0, 1.5f, 3); // First sensor, dont touch
+// AL sceneintro.h
+Cube ch1, ch2, ch3, ch4, ch5, loopCompletedCube;
+PhysBody3D* checkpoint1;
+PhysBody3D* checkpoint2;
+PhysBody3D* checkpoint3;
+PhysBody3D* checkpoint4;
+PhysBody3D* checkpoint5;
 
-g.size = vec3(4, 2, 8); // Second sensor, dont touch
-g.SetPos(60, 1.5f, 158); // Second sensor, dont touch
+PhysBody3D* loopCompleted;
 
-h.size = vec3(10, 2, 8); // Third sensor, need to be fixed
-h.SetPos(60, 1.5f, 240); // Third sensor, need to be fixed
+uint checkpoints_index = 0;
+uint loopsCount = 0;
+*/
 
-t.size = vec3(14, 2, 7); // forth sensor, need to be fixed
-t.SetPos(125, -4, 369); // forth sensor, need to be fixed
+/*
+// ES EL NOU ONCOLISSION DEL sceneintro.cpp
+void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+{
+if (body1 == sensor && body2 == (PhysBody3D*)App->player->vehicle) {
+App->player->speedupZ = true;
+}
 
-n.size = vec3(32, 2, 9); // fifth sensor, need to be fixed
-n.SetPos(277, 0.5f, 287); // fifth sensor, need to be fixed
+else if (body1 == sensor2 && body2 == (PhysBody3D*)App->player->vehicle) {
+App->player->speedupZ = true;
+}
+
+else if (body1 == sensor3 && body2 == (PhysBody3D*)App->player->vehicle) {
+App->player->speedupZ = true;
+}
+
+else if (body1 == sensor4 && body2 == (PhysBody3D*)App->player->vehicle) {
+App->player->speedupX = true;
+}
+
+else if (body1 == sensor5 && body2 == (PhysBody3D*)App->player->vehicle) {
+App->player->speedupZnegative = true;
+}
+
+else if (body1 == checkpoint1 && body2 == (PhysBody3D*)App->player->vehicle) {
+switch (checkpoints_index) {
+case 0:
+checkpoints_index = 1;
+break;
+case 5:
+checkpoints_index = 5;
+break;
+case 10:
+checkpoints_index = 11;
+break;
+}
+}
+
+else if (body1 == checkpoint2 && body2 == (PhysBody3D*)App->player->vehicle) {
+switch (checkpoints_index) {
+case 1:
+checkpoints_index = 2;
+break;
+case 6:
+checkpoints_index = 7;
+break;
+case 12:
+checkpoints_index = 12;
+break;
+}
+}
+
+else if (body1 == checkpoint3 && body2 == (PhysBody3D*)App->player->vehicle) {
+switch (checkpoints_index) {
+case 2:
+checkpoints_index = 3;
+break;
+case 7:
+checkpoints_index = 8;
+break;
+case 12:
+checkpoints_index = 13;
+break;
+}
+}
+
+else if (body1 == checkpoint4 && body2 == (PhysBody3D*)App->player->vehicle) {
+switch (checkpoints_index) {
+case 3:
+checkpoints_index = 4;
+break;
+case 8:
+checkpoints_index = 9;
+break;
+case 13:
+checkpoints_index = 14;
+break;
+}
+}
+
+else if (body1 == checkpoint5 && body2 == (PhysBody3D*)App->player->vehicle) {
+switch (checkpoints_index) {
+case 4:
+checkpoints_index = 5;
+break;
+case 9:
+checkpoints_index = 10;
+break;
+case 14:
+checkpoints_index = 15;
+break;
+}
+}
+
+else if (body1 == loopCompleted && body2 == (PhysBody3D*)App->player->vehicle) {
+switch (checkpoints_index) {
+case 5:
+loopsCount = 1;
+break;
+case 10:
+loopsCount = 2;
+break;
+case 15:
+loopsCount = 3;
+break;
+}
+}
+}
 */
