@@ -29,5 +29,9 @@ public:
 	float brake;
 	vec3 position;
 
-	bool speedup = false;
+	PhysBody3D* sphere;
+
+	bool speedupX = false;
+	bool speedupZ = false;
+	bool speedupZnegative = false;
 };

@@ -31,21 +31,21 @@ bool ModulePlayer::Start()
 
 	VehicleInfo car;
 
-	car.parts = 4;
+	car.parts = 0;
 	car.parts_size = new vec3[car.parts];
 	car.parts_offset = new vec3[car.parts];
 
 	// Car properties ----------------------------------------
-	car.parts_size[0].Set(0.5f, 2, 4);
-	car.parts_offset[0].Set(10, 10, 0);
-	car.parts_size[1].Set(2, 2, 4);
-	car.parts_offset[1].Set(0, 1.5, 0);
-	car.parts_size[2].Set(2, 2, 4);
-	car.parts_offset[2].Set(0, 1.5, 0);
-	car.parts_size[3].Set(2, 2, 4);
-	car.parts_offset[3].Set(0, 1.5, 0);
-	car.chassis_size.Set(2, 2, 4);
-	car.chassis_offset.Set(0, 1.5, 0);
+	//car.parts_size[0].Set(0.5f, 2, 4);
+	//car.parts_offset[0].Set(10, 10, 0);
+	//car.parts_size[1].Set(2, 2, 4);
+	//car.parts_offset[1].Set(0, 1.5, 0);
+	//car.parts_size[2].Set(2, 2, 4);
+	//car.parts_offset[2].Set(0, 1.5, 0);
+	//car.parts_size[3].Set(2, 2, 4);
+	//car.parts_offset[3].Set(0, 1.5, 0);
+	car.chassis_size.Set(2, 1, 4);
+	car.chassis_offset.Set(0, 1, 0);
 
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
@@ -57,7 +57,7 @@ bool ModulePlayer::Start()
 
 	// Wheel properties ---------------------------------------
 	float connection_height = 1.2f;
-	float wheel_radius = 0.6f;
+	float wheel_radius = 0.5f;
 	float wheel_width = 0.5f;
 	float suspensionRestLength = 1.2f;
 
@@ -124,6 +124,17 @@ bool ModulePlayer::Start()
 	position = { 0, 12, 10 };
 	vehicle->SetPos(position.x, position.y, position.z);
 	
+	Sphere ballon;
+	ballon.radius = 1.0f;
+	ballon.SetPos(0, 16, 10);
+
+	sphere = App->physics->AddBody(ballon);
+	float x, y, z;
+	vehicle->GetPos(x, y, z);
+	float i, j, k;
+	sphere->GetPos(i, j, k);
+	//App->physics->AddConstraintP2P(*(PhysBody3D*)(vehicle->body), *sphere, vec3(x,y,z), vec3(i, j, k));
+
 	return true;
 }
 
@@ -196,10 +207,26 @@ update_status ModulePlayer::Update(float dt)
 	if (vehicle->GetKmh() > 50)
 		acceleration = 0;
 
-	if (speedup)
+
+	if (vehicle->GetKmh() > 0)
+		acceleration -= 100;
+
+	if (speedupZ)
 	{
-		vehicle->Push(0, 0, 500.0f);
-		speedup = false;
+		vehicle->Push(0, 0, 300.0f);
+		speedupZ = false;
+	}
+
+	else if (speedupZnegative)
+	{
+		vehicle->Push(0, 0, -300.0f);
+		speedupZnegative = false;
+	}
+
+	if (speedupX)
+	{
+		vehicle->Push(300.0f, 0, 0);
+		speedupX = false;
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
@@ -217,5 +244,50 @@ update_status ModulePlayer::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
+/*
+void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+{
+	if (body1 == sensor && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupZ = true;
+	}
+
+	else if (body1 == sensor2 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupZ = true;
+	}
+
+	else if (body1 == sensor3 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupZ = true;
+	}
+
+	else if (body1 == sensor4 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupX = true;
+	}
+
+	else if (body1 == sensor5 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupZnegative = true;
+	}
 
 
+	else if (body1) {
+		checkpoints_index = 1;
+	}
+}
+*/
+
+/*
+// Sensors
+s.size = vec3(4, 2, 8); // First sensor, dont touch
+s.SetPos(0, 1.5f, 3); // First sensor, dont touch
+
+g.size = vec3(4, 2, 8); // Second sensor, dont touch
+g.SetPos(60, 1.5f, 158); // Second sensor, dont touch
+
+h.size = vec3(10, 2, 8); // Third sensor, need to be fixed
+h.SetPos(60, 1.5f, 240); // Third sensor, need to be fixed
+
+t.size = vec3(14, 2, 7); // forth sensor, need to be fixed
+t.SetPos(125, -4, 369); // forth sensor, need to be fixed
+
+n.size = vec3(32, 2, 9); // fifth sensor, need to be fixed
+n.SetPos(277, 0.5f, 287); // fifth sensor, need to be fixed
+*/
