@@ -32,7 +32,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	//Music
-	App->audio->PlayMusic("Music/OGG/P5.ogg");
+	//App->audio->PlayMusic("Music/OGG/P5.ogg");
 
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));

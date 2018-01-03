@@ -5,6 +5,7 @@
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleAudio.h"
 
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
@@ -27,6 +28,9 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+	App->audio->LoadFx("Music/WAV/IDLE.wav");
+	App->audio->LoadFx("Music/WAV/LOOP.wav");
+
 	LOG("Loading player");
 
 	VehicleInfo car;
@@ -133,8 +137,8 @@ bool ModulePlayer::Start()
 	vehicle->GetPos(x, y, z);
 	float i, j, k;
 	sphere->GetPos(i, j, k);
-//	App->physics->AddConstraintP2P(*(PhysBody3D*)(vehicle->GetBody()), *sphere, vec3(x,y,z), vec3(i, j, k));
-
+//	App->physics->AddConstraintP2P(*(PhysBody3D*)(vehicle->GetBody()), *sphere, vec3(0,0,0), vec3(0,1,0));
+	//App->audio->PlayFx(0);
 	return true;
 }
 
@@ -150,10 +154,18 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
-
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{
+		App->audio->PlayFx(0);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && App->scene_intro->winCondition == 0)
 	{
 		acceleration = MAX_ACCELERATION;
+		
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
+	{
+		App->audio->PlayFx(1);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -168,7 +180,7 @@ update_status ModulePlayer::Update(float dt)
 			turn -= TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && App->scene_intro->winCondition == 0)
 	{
 		acceleration = -MAX_ACCELERATION;
 	}
@@ -183,7 +195,7 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT && App->scene_intro->winCondition == 0)
 	{
 			vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 			vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
@@ -215,7 +227,6 @@ update_status ModulePlayer::Update(float dt)
 	if (vehicle->GetKmh() > 80)
 		acceleration = 0;
 
-
 	if (vehicle->GetKmh() > 0)
 		acceleration -= 100;
 
@@ -235,6 +246,19 @@ update_status ModulePlayer::Update(float dt)
 	{
 		vehicle->Push(300.0f, 0, 0);
 		speedupX = false;
+	}
+
+	if (App->scene_intro->winCondition == 1 || App->scene_intro->winCondition == 2 && !finished)
+	{
+		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
+		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+
+		vehicle->SetPos(200, 200, 200);
+		finished = true;
+
+		// TODO FINISH CAMERA AND GOOD POSITION AND ADD RESTART GAME BUTTON
+
+		// TODO CLEAN CODE AND ADD VARIABLES TO XML
 	}
 
 	vehicle->ApplyEngineForce(acceleration);

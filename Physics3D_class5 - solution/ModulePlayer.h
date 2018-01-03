@@ -34,4 +34,5 @@ public:
 	bool speedupX = false;
 	bool speedupZ = false;
 	bool speedupZnegative = false;
+	bool finished = false;
 };
