@@ -68,6 +68,20 @@ public:
 	PhysBody3D* sensor5;
 	uint checkpoints_index = 0;
 
+	Cube ch1, ch2, ch3, ch4, ch5, loopCompletedCube;
+	PhysBody3D* checkpoint1;
+	PhysBody3D* checkpoint2;
+	PhysBody3D* checkpoint3;
+	PhysBody3D* checkpoint4;
+	PhysBody3D* checkpoint5;
+
+	PhysBody3D* loopCompleted;
+	uint loopsCount = 0;
+	int minutes = 3;
+	float seconds = 60;
+	bool endTime = false;
+	uint winCondition = 0; //0 neutral //1 win //2 lose
+
 	// Hinges
 	PhysBody3D* bodyA;
 	PhysBody3D* bodyA2;
