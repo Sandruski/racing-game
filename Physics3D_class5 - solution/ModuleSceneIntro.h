@@ -8,6 +8,8 @@ struct PhysBody3D;
 struct PhysMotor3D;
 struct Primitive;
 
+#define MAX_MUSIC 3
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -81,6 +83,9 @@ public:
 	float seconds = 60;
 	bool endTime = false;
 	uint winCondition = 0; //0 neutral //1 win //2 lose
+
+	uint indexMusic = 0;
+	bool song1_active = true, song2_active = false, song3_active = false, song4_active = false;
 
 	// Hinges
 	PhysBody3D* bodyA;

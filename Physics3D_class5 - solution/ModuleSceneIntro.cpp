@@ -31,6 +31,10 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	//Music
+	App->audio->PlayMusic("Music/OGG/P5.ogg");
+
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -670,6 +674,38 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN && indexMusic != MAX_MUSIC)
+		indexMusic += 1;
+	else if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN && indexMusic == MAX_MUSIC)
+		indexMusic = 0;
+
+	if (indexMusic == 0 && !song1_active)
+	{
+		App->audio->PlayMusic("Music/OGG/P5.ogg", 1.0f);
+		song1_active = true;
+		song4_active = false;
+	}
+	else if (indexMusic == 1 && !song2_active)
+	{
+		App->audio->PlayMusic("MUSIC/OGG/GHOSTBUSTERS.ogg", 1.0f);
+		song1_active = false;
+		song2_active = true;
+	}
+	else if (indexMusic == 2 && !song3_active)
+	{
+		App->audio->PlayMusic("MUSIC/OGG/LETITGO.ogg", 1.0f);
+
+		song2_active = false;
+		song3_active = true;
+	}
+	else if (indexMusic == 3 && !song4_active)
+	{
+		App->audio->PlayMusic("MUSIC/OGG/POKEMON.ogg", 1.0f);
+
+		song3_active = false;
+		song4_active = true;
+	}
 
 	if (minutes >= 0) {
 		seconds -= 1.0f * dt;

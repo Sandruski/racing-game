@@ -212,7 +212,7 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 
-	if (vehicle->GetKmh() > 50)
+	if (vehicle->GetKmh() > 80)
 		acceleration = 0;
 
 
