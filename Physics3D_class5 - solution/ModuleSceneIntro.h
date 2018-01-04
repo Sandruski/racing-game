@@ -23,21 +23,20 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	Cube CreateCube(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, Color color = White, bool draw = true, bool collider = true, float mass = 0.0f, float angle = 0.0f, vec3 u = (0, 0, 0));
-	Cylinder CreateCylinder(float radius = 1.0f, float height = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, float angle = 0.0f, vec3 u = (0, 0, 0), Color color = White, bool draw = true, bool collider = true, float mass = 0.0f);
+	Cube CreateCube(vec3 size = { 1.0f,1.0f,1.0f }, vec3 pos = { 0.0f, 0.0f, 0.0f }, Color color = White, float angle = 0.0f, vec3 u = (0.0f, 0.0f, 0.0f), float mass = 0.0f, bool draw = true, bool collider = true);
+	Cylinder CreateCylinder(float radius = 1.0f, float height = 1.0f, vec3 pos = { 0.0f,0.0f,0.0f }, Color color = White, bool flip = true, float angle = 0.0f, vec3 u = { 0.0f, 0.0f, 0.0f }, float mass = 0.0f, bool draw = true, bool collider = true);
+	Cone CreateCone(float radius = 1.0f, float height = 1.0f, vec3 pos = { 0.0f,0.0f,0.0f }, Color color = White, bool flip = true, float angle = 0.0f, vec3 u = { 0.0f, 0.0f, 0.0f }, float mass = 0.0f, bool draw = true, bool collider = true);
 	
-	void CreateSpeedUp(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f, uint num = 4, bool add_z = true, float angle = 0.0f, vec3 u = (0, 0, 0));
-	void CreateFinishLine(float sizeX = 1.0f, float sizeY = 1.0f, float sizeZ = 1.0f, float posX = 0.0f, float posY = 0.0f, float posZ = 0.0f);
-	
+	void CreateSpeedUp(vec3 size = { 1.0f,1.0f,1.0f }, vec3 pos = { 0.0f, 0.0f, 0.0f }, uint num = 4, bool flip = true, float angle = 0.0f, vec3 u = { 0.0f, 0.0f, 0.0f });
+	void CreateFinishLine(vec3 size = { 1.0f,1.0f,1.0f }, vec3 pos = { 0.0f, 0.0f, 0.0f });
 	void CreateLimits(Primitive* p, bool pos[4], bool inv_col[4], bool inv_pos[4], vec4 lim = { 0.0f,0.0f,0.0f,0.0f });
-
 
 	void UpdateSpeedUpColors(float dt);
 	void UpdateSpeedUpIndex(uint &index);
 
 public:
-	PhysBody3D* pb_chassis;
-	Cube p_chassis;
+	PhysBody3D* pb_Thassis;
+	Cube p_Thassis;
 
 	PhysBody3D* pb_wheel;
 	Cylinder p_wheel;
@@ -60,22 +59,26 @@ public:
 	Cube cu7;
 	Cube cu9;
 	Cube cu12;
-	Cube ground1;
+	Cube cu18;
+	Cube cu21;
+	Cube cu23;
+	Cube cu24;
+	Cube ground2;
 
-	// Senors 
+	// Senors
 	Cube s, h, t, n;
 	PhysBody3D* sensor;
 	PhysBody3D* sensor3;
 	PhysBody3D* sensor4;
 	PhysBody3D* sensor5;
-	uint checkpoints_index = 0;
+	uint Theckpoints_index = 0;
 
-	Cube ch1, ch2, ch3, ch4, ch5, loopCompletedCube;
-	PhysBody3D* checkpoint1;
-	PhysBody3D* checkpoint2;
-	PhysBody3D* checkpoint3;
-	PhysBody3D* checkpoint4;
-	PhysBody3D* checkpoint5;
+	Cube Th1, Th2, Th3, Th4, Th5, loopCompletedCube;
+	PhysBody3D* Theckpoint1;
+	PhysBody3D* Theckpoint2;
+	PhysBody3D* Theckpoint3;
+	PhysBody3D* Theckpoint4;
+	PhysBody3D* Theckpoint5;
 
 	PhysBody3D* loopCompleted;
 	uint loopsCount = 0;
@@ -96,5 +99,12 @@ public:
 	// Blit primitives
 	p2List<Cube> cubes;
 	p2List<Cylinder> cylinders;
+	p2List<Cone> cones;
+
+	// Parameters
+	vec3 orthonormal_x = { 0.0f,0.0f,0.0f }, orthonormal_y = { 0.0f,0.0f,0.0f }, orthonormal_z = { 0.0f,0.0f,0.0f }, vec3_zero = { 0.0f,0.0f,0.0f };
+	float RW = 0.0f, RH = 0.0f, RL = 0.0f, sRL = 0.0f;
+	float GW = 0.0f, GH = 0.0f, GL = 0.0f;
+	Color road_col, water_col, ground_col, castle_col, tower_col, hinge_col, finish_line_col, tree_col, trunk_col, sky_col, obstacle_col;
 };
 

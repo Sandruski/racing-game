@@ -20,7 +20,7 @@ ModulePhysics3D::ModulePhysics3D(Application* app, bool start_enabled) : Module(
 	debug = true;
 
 	collision_conf = new btDefaultCollisionConfiguration();
-	dispatcher = new btCollisionDispatcher(collision_conf);
+	dispatTher = new btCollisionDispatcher(collision_conf);
 	broad_phase = new btDbvtBroadphase();
 	solver = new btSequentialImpulseConstraintSolver();
 	debug_draw = new DebugDrawer();
@@ -32,7 +32,7 @@ ModulePhysics3D::~ModulePhysics3D()
 	delete debug_draw;
 	delete solver;
 	delete broad_phase;
-	delete dispatcher;
+	delete dispatTher;
 	delete collision_conf;
 }
 
@@ -50,7 +50,7 @@ bool ModulePhysics3D::Start()
 {
 	LOG("Creating Physics environment");
 
-	world = new btDiscreteDynamicsWorld(dispatcher, broad_phase, solver, collision_conf);
+	world = new btDiscreteDynamicsWorld(dispatTher, broad_phase, solver, collision_conf);
 	world->setDebugDrawer(debug_draw);
 	world->setGravity(GRAVITY);
 	vehicle_raycaster = new btDefaultVehicleRaycaster(world);
@@ -251,7 +251,8 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 // ---------------------------------------------------------
 PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass)
 {
-	btCollisionShape* colShape = new btCylinderShapeX(btVector3(cylinder.height*0.5f, cylinder.radius, 0.0f));
+	// The veThicle doesn't detect well btCylinderShapeX
+	btCollisionShape* colShape = new btBoxShape(btVector3(cylinder.height*0.5f, cylinder.radius, cylinder.radius));
 	shapes.add(colShape);
 
 	btTransform startTransform;
@@ -259,6 +260,33 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass)
 
 	btVector3 localInertia(0, 0, 0);
 	if(mass != 0.f)
+		colShape->calculateLocalInertia(mass, localInertia);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+	motions.add(myMotionState);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
+
+	btRigidBody* body = new btRigidBody(rbInfo);
+	PhysBody3D* pbody = new PhysBody3D(body);
+
+	body->setUserPointer(pbody);
+	world->addRigidBody(body);
+	bodies.add(pbody);
+
+	return pbody;
+}
+
+// ---------------------------------------------------------
+PhysBody3D* ModulePhysics3D::AddBody(const Cone& cone, float mass)
+{
+	btCollisionShape* colShape = new btConeShapeX(cone.radius, cone.height);
+	shapes.add(colShape);
+
+	btTransform startTransform;
+	startTransform.setFromOpenGLMatrix(&cone.transform);
+
+	btVector3 localInertia(0, 0, 0);
+	if (mass != 0.f)
 		colShape->calculateLocalInertia(mass, localInertia);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
@@ -335,25 +363,25 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 }
 
 // ---------------------------------------------------------
-void ModulePhysics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB)
+void ModulePhysics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anThorA, const vec3& anThorB)
 {
 	btTypedConstraint* p2p = new btPoint2PointConstraint(
 		*(bodyA.body), 
 		*(bodyB.body), 
-		btVector3(anchorA.x, anchorA.y, anchorA.z), 
-		btVector3(anchorB.x, anchorB.y, anchorB.z));
+		btVector3(anThorA.x, anThorA.y, anThorA.z), 
+		btVector3(anThorB.x, anThorB.y, anThorB.z));
 	world->addConstraint(p2p);
 	constraints.add(p2p);
 	p2p->setDbgDrawSize(2.0f);
 }
 
-void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisA, const vec3& axisB, bool disable_collision, bool motor)
+void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anThorA, const vec3& anThorB, const vec3& axisA, const vec3& axisB, bool disable_collision, bool motor)
 {
 	btHingeConstraint* hinge = new btHingeConstraint(
 		*(bodyA.body),
 		*(bodyB.body),
-		btVector3(anchorA.x, anchorA.y, anchorA.z),
-		btVector3(anchorB.x, anchorB.y, anchorB.z),
+		btVector3(anThorA.x, anThorA.y, anThorA.z),
+		btVector3(anThorB.x, anThorB.y, anThorB.z),
 		btVector3(axisA.x, axisA.y, axisA.z),
 		btVector3(axisB.x, axisB.y, axisB.z));
 
