@@ -34,5 +34,8 @@ public:
 	bool speedupX = false;
 	bool speedupZ = false;
 	bool speedupZnegative = false;
+	bool speedupXnegative = false;
 	bool finished = false;
+	bool cantJump = false;
+	float timerJump = 0.0f;
 };

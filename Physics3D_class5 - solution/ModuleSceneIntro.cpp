@@ -73,23 +73,38 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	//Music
-	//App->audio->PlayMusic("Music/OGG/P5.ogg");
+	App->audio->PlayMusic("Music/OGG/P5.ogg");
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	// Sensors
-	s.size = vec3(4, 2, 8); // First sensor, dont touTh
-	s.SetPos(0, 1.5f, 3); // First sensor, dont touTh
+	s.size = vec3(4, 2, 8); // First sensor
+	s.SetPos(0, 1.5f, 13); // First sensor
 
-	h.size = vec3(10, 20, 8); // Third sensor, need to be fixed
-	h.SetPos(60, 1.5f, 240); // Third sensor, need to be fixed
+	h.size = vec3(10, 20, 8); // Third sensor
+	h.SetPos(60, 1.5f, 240); // Third sensor
 
-	t.size = vec3(14, 20, 7); // forth sensor, need to be fixed
-	t.SetPos(125, -4, 369); // forth sensor, need to be fixed
+	t.size = vec3(14, 20, 7); // forth sensor
+	t.SetPos(125, -4, 369); // forth sensor
 
-	n.size = vec3(32, 20, 9); // fifth sensor, need to be fixed
-	n.SetPos(277, 0.5f, 287); // fifth sensor, need to be fixed
+	n.size = vec3(32, 20, 9); // fifth sensor
+	n.SetPos(277, 0.5f, 287); // fifth sensor
+
+	r.size = vec3(8, 60, 15); // 6 sensor
+	r.SetPos(345, 0, -13); // fifth sensor
+
+	w.size = vec3(8, 60, 15); // 9 sensor
+	w.SetPos(331, 0, -85); // fifth sensor
+
+	y.size = vec3(8, 60, 34); // 9 sensor
+	y.SetPos(432, 0, -56); // fifth sensor
+
+	p.size = vec3(8, 10, 4); // 7 sensor
+	p.SetPos(317, 0.5f, -49); // fifth sensor
+
+	q.size = vec3(8, 10, 4); // 8 sensor
+	q.SetPos(317, 0.5f, -62); // fifth sensor
 
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
@@ -106,6 +121,26 @@ bool ModuleSceneIntro::Start()
 	sensor5 = App->physics->AddBody(n, 0.0f);
 	sensor5->SetAsSensor(true);
 	sensor5->collision_listeners.add(this);
+
+	sensor6 = App->physics->AddBody(r, 0.0f);
+	sensor6->SetAsSensor(true);
+	sensor6->collision_listeners.add(this);
+
+	sensor7 = App->physics->AddBody(p, 0.0f);
+	sensor7->SetAsSensor(true);
+	sensor7->collision_listeners.add(this);
+
+	sensor8 = App->physics->AddBody(q, 0.0f);
+	sensor8->SetAsSensor(true);
+	sensor8->collision_listeners.add(this);
+
+	sensor9 = App->physics->AddBody(w, 0.0f);
+	sensor9->SetAsSensor(true);
+	sensor9->collision_listeners.add(this);
+
+	sensor10 = App->physics->AddBody(y, 0.0f);
+	sensor10->SetAsSensor(true);
+	sensor10->collision_listeners.add(this);
 
 	// Checkpoint sensors
 	ch1.size = vec3(10, 4, 10);
@@ -734,19 +769,6 @@ update_status ModuleSceneIntro::Update(float dt)
 		winCondition = 2;
 	}
 
-	// Update sensors
-	sensor->GetTransform(&s.transform);
-	s.Render();
-
-	sensor3->GetTransform(&h.transform);
-	h.Render();
-
-	sensor4->GetTransform(&t.transform);
-	h.Render();
-
-	sensor5->GetTransform(&n.transform);
-	h.Render();
-
 	// Blit cubes
 	p2List_item<Cube>* cubes_it = cubes.getFirst();
 
@@ -1100,6 +1122,26 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		App->player->speedupZnegative = true;
 	}
 
+	else if (body1 == sensor6 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupZnegative = true;
+	}
+
+	else if (body1 == sensor7 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupXnegative = true;
+	}
+
+	else if (body1 == sensor8 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupXnegative = true;
+	}
+
+	else if (body1 == sensor9 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupZnegative = true;
+	}
+
+	else if (body1 == sensor10 && body2 == (PhysBody3D*)App->player->vehicle) {
+		App->player->speedupXnegative = true;
+	}
+
 	else if (body1 == checkpoint1 && body2 == (PhysBody3D*)App->player->vehicle) {
 		switch (checkpoints_index) {
 		case 0:
@@ -1122,7 +1164,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		case 6:
 			checkpoints_index = 7;
 			break;
-		case 12:
+		case 11:
 			checkpoints_index = 12;
 			break;
 		}
@@ -1171,18 +1213,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 
 	else if (body1 == loopCompleted && body2 == (PhysBody3D*)App->player->vehicle) {
-		switch (checkpoints_index) {
-		case 5:
-			loopsCount = 1;
-			break;
-		case 10:
-			loopsCount = 2;
-			break;
-		case 15:
-			loopsCount = 3;
-			if (endTime = false)
-				winCondition = 1;
-			break;
-		}
+		if (checkpoints_index == 5) 
+			winCondition = 1;	
 	}
 }

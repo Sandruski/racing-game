@@ -48,28 +48,13 @@ void PhysVehicle3D::Render()
 	chassis.transform.M[12] += offset.getX();
 	chassis.transform.M[13] += offset.getY();
 	chassis.transform.M[14] += offset.getZ();
-
-	RenderParts();
-	
+	chassis.color.r = info.color.r;
+	chassis.color.g = info.color.g;
+	chassis.color.b = info.color.b;
+	chassis.color.a = info.color.a;
 	chassis.Render();
 }
-void PhysVehicle3D::RenderParts()
-{
-	Cube extra_shapes;
-	for (uint i = 0; i < info.parts; ++i)
-	{
-		extra_shapes.size.Set(info.parts_size[i].x, info.parts_size[i].y, info.parts_size[i].z);
-		vehicle->getChassisWorldTransform().getOpenGLMatrix(&extra_shapes.transform);
-		btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
-		btVector3 offset(info.parts_offset[i].x, info.parts_offset[i].y, info.parts_offset[i].z);
-		offset = offset.rotate(q.getAxis(), q.getAngle());
-		extra_shapes.transform.M[12] += offset.getX();
-		extra_shapes.transform.M[13] += offset.getY();
-		extra_shapes.transform.M[14] += offset.getZ();
-		extra_shapes.color = *new Color(White);
-		extra_shapes.Render();
-	}
-}
+
 // ----------------------------------------------------------------------------
 void PhysVehicle3D::ApplyEngineForce(float force)
 {

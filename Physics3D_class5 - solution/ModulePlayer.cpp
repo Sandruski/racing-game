@@ -35,21 +35,10 @@ bool ModulePlayer::Start()
 
 	VehicleInfo car;
 
-	car.parts = 0;
-	car.parts_size = new vec3[car.parts];
-	car.parts_offset = new vec3[car.parts];
-
 	// Car properties ----------------------------------------
-	//car.parts_size[0].Set(0.5f, 2, 4);
-	//car.parts_offset[0].Set(10, 10, 0);
-	//car.parts_size[1].Set(2, 2, 4);
-	//car.parts_offset[1].Set(0, 1.5, 0);
-	//car.parts_size[2].Set(2, 2, 4);
-	//car.parts_offset[2].Set(0, 1.5, 0);
-	//car.parts_size[3].Set(2, 2, 4);
-	//car.parts_offset[3].Set(0, 1.5, 0);
 	car.chassis_size.Set(2, 1, 4);
 	car.chassis_offset.Set(0, 1, 0);
+	car.color = White;
 
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
@@ -58,7 +47,7 @@ bool ModulePlayer::Start()
 	car.maxSuspensionTravelCm = 1000.0f;
 	car.frictionSlip = 100.5;
 	car.maxSuspensionForce = 6000.0f;
-
+	
 	// Wheel properties ---------------------------------------
 	float connection_height = 1.2f;
 	float wheel_radius = 0.5f;
@@ -125,7 +114,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	position = { 0, 12, 10 };
+	position = { 0, 0, -4 };
 	vehicle->SetPos(position.x, position.y, position.z);
 	
 	Sphere ballon;
@@ -153,10 +142,19 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
+	if (cantJump) {
+		timerJump += 1 * dt;
+		if (timerJump >= 6.0f) {
+			cantJump = false;
+			timerJump = 0.0f;
+			vehicle->info.color = White;
+		}
+	}
+
 	turn = acceleration = brake = 0.0f;
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
-		App->audio->PlayFx(0);
+		//App->audio->PlayFx(0);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && App->scene_intro->winCondition == 0)
 	{
@@ -165,7 +163,7 @@ update_status ModulePlayer::Update(float dt)
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
 	{
-		App->audio->PlayFx(1);
+	//	App->audio->PlayFx(1);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -185,9 +183,11 @@ update_status ModulePlayer::Update(float dt)
 		acceleration = -MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !cantJump)
 	{
 		vehicle->Push(0, 5000.0f, 0);
+		cantJump = true;
+		vehicle->info.color = Red;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -195,7 +195,25 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT && App->scene_intro->winCondition == 0)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
+	{
+		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
+		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+		vehicle->SetTransform(IdentityMatrix.M);
+		vehicle->SetPos(0, 0, -4);
+		finished = false;
+		cantJump = false;
+		timerJump = 0.0f;
+		vehicle->info.color = White;
+		App->scene_intro->loopsCount = 0;
+		App->scene_intro->minutes = 1;
+		App->scene_intro->seconds = 60;
+		App->scene_intro->endTime = false;
+		App->scene_intro->winCondition = 0;
+		App->scene_intro->checkpoints_index = 0;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT && App->scene_intro->winCondition == 0)
 	{
 			vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 			vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
@@ -204,7 +222,7 @@ update_status ModulePlayer::Update(float dt)
 		switch (App->scene_intro->checkpoints_index)
 		{
 		case 0:
-			vehicle->SetPos(0, 12, 10);
+			vehicle->SetPos(0, 0, -4);
 			break;
 		case 1: case 6: case 11:
 			vehicle->SetPos(60, 12, 65);
@@ -235,30 +253,37 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->Push(0, 0, 300.0f);
 		speedupZ = false;
 	}
-
 	else if (speedupZnegative)
 	{
 		vehicle->Push(0, 0, -300.0f);
 		speedupZnegative = false;
 	}
-
-	if (speedupX)
+	else if (speedupX)
 	{
-		vehicle->Push(300.0f, 0, 0);
+		vehicle->Push(150.0f, 0, 0);
 		speedupX = false;
 	}
+	else if (speedupXnegative)
+	{
+		vehicle->Push(-300.0f, 0, 0);
+		speedupXnegative = false;
+	}
 
-	if (App->scene_intro->winCondition == 1 || App->scene_intro->winCondition == 2 && !finished)
+	if ((App->scene_intro->winCondition == 1 && !finished) || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
+		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+
+		vehicle->SetPos(170, 40, 184);
+		finished = true;
+	}
+	else if ((App->scene_intro->winCondition == 2 && !finished) || App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
 		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 
 		vehicle->SetPos(200, 200, 200);
 		finished = true;
-
-		// TODO FINISH CAMERA AND GOOD POSITION AND ADD RESTART GAME BUTTON
-
-		// TODO CLEAN CODE AND ADD VARIABLES TO XML
 	}
 
 	vehicle->ApplyEngineForce(acceleration);

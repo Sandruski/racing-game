@@ -66,11 +66,16 @@ public:
 	Cube ground2;
 
 	// Senors
-	Cube s, h, t, n;
+	Cube s, h, t, n, r, p, q, w, y;
 	PhysBody3D* sensor;
 	PhysBody3D* sensor3;
 	PhysBody3D* sensor4;
 	PhysBody3D* sensor5;
+	PhysBody3D* sensor6;
+	PhysBody3D* sensor7;
+	PhysBody3D* sensor8;
+	PhysBody3D* sensor9;
+	PhysBody3D* sensor10;
 	uint checkpoints_index = 0;
 
 	// Checkpoints
@@ -84,7 +89,7 @@ public:
 	// Game parameters
 	PhysBody3D* loopCompleted;
 	uint loopsCount = 0;
-	int minutes = 3;
+	int minutes = 1;
 	float seconds = 60;
 	bool endTime = false;
 	uint winCondition = 0; //0 neutral //1 win //2 lose
