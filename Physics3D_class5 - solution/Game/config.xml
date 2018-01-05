@@ -7,7 +7,40 @@
   </app>
 
   <scene_intro>
-    <trying value="3.56"/>
+    <road_width value="12"/>
+    <road_height value="0.5"/>
+    <road_length value="30"/>
+    <road_length2 value="20"/>
+    
+    <ground_width value="150"/>
+    <ground_height value="15"/>
+    <ground_length value="100"/>
+    
+    <castle_width value="15"/>
+    <castle_height value="40"/>
+    <castle_length value="15"/>
+    
+    <tunnel_height value="45"/>
+
+    <finish_line_width value="1"/>
+    <finish_line_length value="1"/>
+    <bar_radius value="0.2"/>
+    <bar_height value="30"/>
+    
+    <trunk_radius value="0.5"/>
+    <trunk_height value="5"/>
+    <tree_radius value="6"/>
+    <tree_radius2 value="7"/>
+    <tree_radius3 value="4"/>
+    <tree_height value="20"/>
+    <tree_height2 value="15"/>
+    <tree_height3 value="25"/>
+    
+    <sky_width value="1"/>
+    <sky_height value="400"/>
+    
+    <obstacle_radius value="1"/>
+    <obstacle_height value="4"/>
   </scene_intro>
 
   <player>

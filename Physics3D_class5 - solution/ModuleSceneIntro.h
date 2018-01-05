@@ -35,8 +35,8 @@ public:
 	void UpdateSpeedUpIndex(uint &index);
 
 public:
-	PhysBody3D* pb_Thassis;
-	Cube p_Thassis;
+	PhysBody3D* pb_chassis;
+	Cube p_chassis;
 
 	PhysBody3D* pb_wheel;
 	Cylinder p_wheel;
@@ -71,15 +71,17 @@ public:
 	PhysBody3D* sensor3;
 	PhysBody3D* sensor4;
 	PhysBody3D* sensor5;
-	uint Theckpoints_index = 0;
+	uint checkpoints_index = 0;
 
-	Cube Th1, Th2, Th3, Th4, Th5, loopCompletedCube;
-	PhysBody3D* Theckpoint1;
-	PhysBody3D* Theckpoint2;
-	PhysBody3D* Theckpoint3;
-	PhysBody3D* Theckpoint4;
-	PhysBody3D* Theckpoint5;
+	// Checkpoints
+	Cube ch1, ch2, ch3, ch4, ch5, loopCompletedCube;
+	PhysBody3D* checkpoint1;
+	PhysBody3D* checkpoint2;
+	PhysBody3D* checkpoint3;
+	PhysBody3D* checkpoint4;
+	PhysBody3D* checkpoint5;
 
+	// Game parameters
 	PhysBody3D* loopCompleted;
 	uint loopsCount = 0;
 	int minutes = 3;
@@ -87,12 +89,13 @@ public:
 	bool endTime = false;
 	uint winCondition = 0; //0 neutral //1 win //2 lose
 
+	// Music
 	uint indexMusic = 0;
 	bool song1_active = true, song2_active = false, song3_active = false, song4_active = false;
 
 	// Hinges
-	PhysBody3D* bodyA;
-	PhysBody3D* bodyA2;
+	PhysBody3D* bodyA = nullptr;
+	PhysBody3D* bodyA2 = nullptr;
 	Cube rotating_cu;
 	Cube rotating_cu2;
 
@@ -101,10 +104,17 @@ public:
 	p2List<Cylinder> cylinders;
 	p2List<Cone> cones;
 
-	// Parameters
+	// Map parameters
 	vec3 orthonormal_x = { 0.0f,0.0f,0.0f }, orthonormal_y = { 0.0f,0.0f,0.0f }, orthonormal_z = { 0.0f,0.0f,0.0f }, vec3_zero = { 0.0f,0.0f,0.0f };
-	float RW = 0.0f, RH = 0.0f, RL = 0.0f, sRL = 0.0f;
+	float RW = 0.0f, RH = 0.0f, RL = 0.0f, RL2 = 0.0f;
 	float GW = 0.0f, GH = 0.0f, GL = 0.0f;
-	Color road_col, water_col, ground_col, castle_col, tower_col, hinge_col, finish_line_col, tree_col, trunk_col, sky_col, obstacle_col;
+	float CW = 0.0f, CH = 0.0f, CL = 0.0f;
+	float TUW = 0.0f, TUH = 0.0f;
+	float HcyrotW = 0.0f, HcyrealW = 0.0f, HcyH = 0.0f, HcuW = 0.0f, HcuH = 0.0f, HcuL = 0.0f;
+	float FLW = 0.0f, FLL = 0.0f, BR = 0.0f, BH = 0.0f;
+	float TRUR = 0.0f, TRUH = 0.0f, TRER = 0.0f, TRER2 = 0.0f, TRER3 = 0.0f, TREH = 0.0f, TREH2 = 0.0f, TREH3 = 0.0f;
+	float SW = 0.0f, SH = 0.0f;
+	float OR = 0.0f, OH = 0.0f;
+	Color road_col, water_col, ground_col, castle_col, tower_col, hinge_col, finish_line_col, tree_col, trunk_col, sky_col, obstacle_col, s_active_col, s_dead_col;
 };
 
