@@ -19,6 +19,52 @@ bool ModulePlayer::Init(pugi::xml_node& node)
 {
 	bool ret = true;
 
+	start_pos.x = node.child("start_pos").attribute("x").as_float();
+	start_pos.y = node.child("start_pos").attribute("y").as_float();
+	start_pos.z = node.child("start_pos").attribute("z").as_float();
+
+	checkpoint1_pos.x = node.child("checkpoint1").attribute("x").as_float();
+	checkpoint1_pos.y = node.child("checkpoint1").attribute("y").as_float();
+	checkpoint1_pos.z = node.child("checkpoint1").attribute("z").as_float();
+
+	checkpoint2_pos.x = node.child("checkpoint2").attribute("x").as_float();
+	checkpoint2_pos.y = node.child("checkpoint2").attribute("y").as_float();
+	checkpoint2_pos.z = node.child("checkpoint2").attribute("z").as_float();
+
+	checkpoint3_pos.x = node.child("checkpoint3").attribute("x").as_float();
+	checkpoint3_pos.y = node.child("checkpoint3").attribute("y").as_float();
+	checkpoint3_pos.z = node.child("checkpoint3").attribute("z").as_float();
+
+	checkpoint4_pos.x = node.child("checkpoint4").attribute("x").as_float();
+	checkpoint4_pos.y = node.child("checkpoint4").attribute("y").as_float();
+	checkpoint4_pos.z = node.child("checkpoint4").attribute("z").as_float();
+
+	checkpoint5_pos.x = node.child("checkpoint5").attribute("x").as_float();
+	checkpoint5_pos.y = node.child("checkpoint5").attribute("y").as_float();
+	checkpoint5_pos.z = node.child("checkpoint5").attribute("z").as_float();
+
+	win_pos.x = node.child("win_pos").attribute("x").as_float();
+	win_pos.y = node.child("win_pos").attribute("y").as_float();
+	win_pos.z = node.child("win_pos").attribute("z").as_float();
+
+	lose_pos.x = node.child("lose_pos").attribute("x").as_float();
+	lose_pos.y = node.child("lose_pos").attribute("y").as_float();
+	lose_pos.z = node.child("lose_pos").attribute("z").as_float();
+
+	FX1_path = node.child("FX1").attribute("path").as_string();
+	FX2_path = node.child("FX2").attribute("path").as_string();
+
+	seconds_to_jump = node.child("seconds_to_jump").attribute("value").as_float();
+	jump_force = node.child("jump_force").attribute("value").as_float();
+	
+	speed_positive_x = node.child("speed_up").attribute("positive_x").as_float();
+	speed_negative_x = node.child("speed_up").attribute("negative_x").as_float();
+	speed_positive_z = node.child("speed_up").attribute("positive_z").as_float();
+	speed_negative_z = node.child("speed_up").attribute("negative_z").as_float();
+
+	max_speed = node.child("max_speed").attribute("value").as_float();
+	max_speed = node.child("friction").attribute("value").as_float();
+
 	return ret;
 }
 
@@ -28,9 +74,6 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
-	App->audio->LoadFx("Music/WAV/IDLE.wav");
-	App->audio->LoadFx("Music/WAV/LOOP.wav");
-
 	LOG("Loading player");
 
 	VehicleInfo car;
@@ -114,11 +157,12 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	position = { 0, 0, -4 };
+	position = start_pos;
 	vehicle->SetPos(position.x, position.y, position.z);
 	
-	music_index[0] = App->audio->LoadFx("Music/WAV/VICTORY.wav");
-	music_index[1] = App->audio->LoadFx("Music/WAV/GAMEOVER.wav");
+	// Load FX
+	FX_index[0] = App->audio->LoadFx(FX1_path.GetString());
+	FX_index[1] = App->audio->LoadFx(FX2_path.GetString());
 
 	return true;
 }
@@ -138,9 +182,10 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->physics->SetDebugDraw();
 
+	// Vehicle jump
 	if (cantJump) {
-		timerJump += 1 * dt;
-		if (timerJump >= 6.0f) {
+		timerJump += 1.0f * dt;
+		if (timerJump >= seconds_to_jump) {
 			cantJump = false;
 			timerJump = 0.0f;
 			vehicle->info.color = White;
@@ -151,38 +196,34 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && App->scene_intro->winCondition == 0)
 	{
-		acceleration = MAX_ACCELERATION;	
+		acceleration = MAX_ACCELERATION;
 	}
-
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		if (turn < TURN_DEGREES)
 			turn += TURN_DEGREES;
 	}
-
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		if(turn > -TURN_DEGREES)
 			turn -= TURN_DEGREES;
 	}
-
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && App->scene_intro->winCondition == 0)
 	{
 		acceleration = -MAX_ACCELERATION;
 	}
-
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !cantJump)
 	{
-		vehicle->Push(0, 5000.0f, 0);
+		vehicle->Push(0.0f, jump_force, 0.0f);
 		cantJump = true;
-		vehicle->info.color = Red;
+		vehicle->info.color = IndianRed;
 	}
-
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		brake = BRAKE_POWER;
 	}
 	
+	// Z: restart game (spawn at first checkpoint)
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
 		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
@@ -197,108 +238,116 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->info.color = White;
 		App->scene_intro->loopsCount = 0;
 		App->scene_intro->minutes = 1;
-		App->scene_intro->seconds = 60;
+		App->scene_intro->seconds = 60.0f;
 		App->scene_intro->endTime = false;
 		App->scene_intro->winCondition = 0;
 		App->scene_intro->checkpoints_index = 0;
 	}
 
+	// R: spawn at last checkpoint
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && App->scene_intro->winCondition == 0)
 	{
-			vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
-			vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
-		
+		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
+		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+
 		switch (App->scene_intro->checkpoints_index)
 		{
 		case 0:
 			vehicle->SetTransform(IdentityMatrix.M);
-			vehicle->SetPos(0, 0, -4);		
+			vehicle->SetPos(start_pos.x, start_pos.y, start_pos.z);
 			break;
 		case 1:
 			vehicle->SetTransform(IdentityMatrix.M);
-			vehicle->SetPos(60, 4, 65);	
+			vehicle->SetPos(checkpoint1_pos.x, checkpoint1_pos.y, checkpoint1_pos.z);
 			break;
 		case 2:
 			vehicle->SetTransform(IdentityMatrix.M);
-			vehicle->SetPos(60, 4, 300);
+			vehicle->SetPos(checkpoint2_pos.x, checkpoint2_pos.y, checkpoint2_pos.z);
 			break;
 		case 3:
-			vehicle->SetTransform(IdentityMatrix.rotate(180, vec3(0, 1, 0)).M);
-			IdentityMatrix.rotate(180, vec3(0, 1, 0));
-			vehicle->SetPos(277, 4, 267);
+			vehicle->SetTransform(IdentityMatrix.rotate(180.0f, vec3(0.0f, 1.0f, 0.0f)).M);
+			IdentityMatrix.rotate(180.0f, vec3(0.0f, 1.0f, 0.0f));
+			vehicle->SetPos(checkpoint3_pos.x, checkpoint3_pos.y, checkpoint3_pos.z);
 			break;
 		case 4:
-			vehicle->SetTransform(IdentityMatrix.rotate(180, vec3(0, 1, 0)).M);
-			IdentityMatrix.rotate(180, vec3(0, 1, 0));
-			vehicle->SetPos(277, 12, 70);
+			vehicle->SetTransform(IdentityMatrix.rotate(180.0f, vec3(0.0f, 1.0f, 0.0f)).M);
+			IdentityMatrix.rotate(180.0f, vec3(0.0f, 1.0f, 0.0f));
+			vehicle->SetPos(checkpoint4_pos.x, checkpoint4_pos.y, checkpoint4_pos.z);
 			break;
 		case 5:
-			vehicle->SetTransform(IdentityMatrix.rotate(-90, vec3(0, 1, 0)).M);
-			IdentityMatrix.rotate(90, vec3(0, 1, 0));
-			vehicle->SetPos(338, 12, -55);		
+			vehicle->SetTransform(IdentityMatrix.rotate(-90.0f, vec3(0.0f, 1.0f, 0.0f)).M);
+			IdentityMatrix.rotate(90.0f, vec3(0.0f, 1.0f, 0.0f));
+			vehicle->SetPos(checkpoint5_pos.x, checkpoint5_pos.y, checkpoint5_pos.z);
 			break;
 		}
 	}
 
-	if (vehicle->GetKmh() > 80)
-		acceleration = 0;
+	// Simulate friction with the ground
+	if (vehicle->GetKmh() > max_speed)
+		acceleration = 0.0f;
 
-	if (vehicle->GetKmh() > 0)
-		acceleration -= 100;
+	if (vehicle->GetKmh() > 0.0f)
+		acceleration -= friction;
 
+	// Speed-ups
 	if (speedupZ)
 	{
-		vehicle->Push(0, 0, 300.0f);
+		vehicle->Push(0.0f, 0.0f, speed_positive_z);
 		speedupZ = false;
 	}
 	else if (speedupZnegative)
 	{
-		vehicle->Push(0, 0, -300.0f);
+		vehicle->Push(0.0f, 0.0f, speed_negative_z);
 		speedupZnegative = false;
 	}
 	else if (speedupX)
 	{
-		vehicle->Push(150.0f, 0, 0);
+		vehicle->Push(speed_positive_x, 0.0f, 0.0f);
 		speedupX = false;
 	}
 	else if (speedupXnegative)
 	{
-		vehicle->Push(-300.0f, 0, 0);
+		vehicle->Push(speed_negative_x, 0.0f, 0.0f);
 		speedupXnegative = false;
 	}
 
+	// Win and lose conditions
+	// L: win
 	if ((App->scene_intro->winCondition == 1 && !finished) || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 	{
-		App->audio->PlayFx(music_index[0]);
+		App->audio->PlayFx(FX_index[0]);
 		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 		App->scene_intro->winCondition = 1;
 		IdentityMatrix = IM;
 		vehicle->SetTransform(IdentityMatrix.M);
-		vehicle->SetPos(170, 40, 184);
+		vehicle->SetPos(win_pos.x, win_pos.y, win_pos.z);
 		finished = true;
 	}
+
+	// K: lose
 	else if ((App->scene_intro->winCondition == 2 && !finished) || App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
-		App->audio->PlayFx(music_index[1]);
+		App->audio->PlayFx(FX_index[1]);
 		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 		App->scene_intro->winCondition = 2;
 		IdentityMatrix = IM;
 		vehicle->SetTransform(IdentityMatrix.M);
-		vehicle->SetPos(200, 200, 200);
+		vehicle->SetPos(lose_pos.x, lose_pos.y, lose_pos.z);
 		finished = true;
 	}
 
+	// Update vehicle parameters
 	vehicle->ApplyEngineForce(acceleration);
-
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 	vehicle->Render();
 
 	vehicle->GetPos(position.x, position.y, position.z);
+
+	// Set window title info
 	p2SString song = "Persona 5";
-	
 	if (App->scene_intro->indexMusic == 0)
 		song = "Persona 5";
 	else if (App->scene_intro->indexMusic == 1)

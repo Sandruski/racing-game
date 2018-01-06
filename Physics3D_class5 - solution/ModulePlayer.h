@@ -24,23 +24,43 @@ public:
 
 public:
 
-	PhysVehicle3D* vehicle;
+	PhysVehicle3D* vehicle = nullptr;
 	float turn;
 	float acceleration;
 	float brake;
-	vec3 position;
-	float* identity;
-	float* patata;
-	PhysBody3D* sphere;
+	vec3 start_pos = { 0.0f,0.0f,0.0f };
+	vec3 position = { 0.0f,0.0f,0.0f };
+	float max_speed = 0.0f;
+	float friction = 0.0f;
 
+	// Speed-ups
 	bool speedupX = false;
 	bool speedupZ = false;
 	bool speedupZnegative = false;
 	bool speedupXnegative = false;
 	bool finished = false;
+	float speed_positive_x = 0.0f;
+	float speed_negative_x = 0.0f;
+	float speed_positive_z = 0.0f;
+	float speed_negative_z = 0.0f;
+
+	// Vehicle jump
 	bool cantJump = false;
 	float timerJump = 0.0f;
+	float seconds_to_jump = 0.0f;
+	float jump_force = 0.0f;
 
-	int music_index[2];
-	bool debug = false;
+	// FX
+	uint FX_index[2] = { 0,0 };
+	p2SString FX1_path;
+	p2SString FX2_path;
+
+	// Checkpoints
+	vec3 checkpoint1_pos = { 0.0f,0.0f,0.0f };
+	vec3 checkpoint2_pos = { 0.0f,0.0f,0.0f };
+	vec3 checkpoint3_pos = { 0.0f,0.0f,0.0f };
+	vec3 checkpoint4_pos = { 0.0f,0.0f,0.0f };
+	vec3 checkpoint5_pos = { 0.0f,0.0f,0.0f };
+	vec3 win_pos = { 0.0f,0.0f,0.0f };
+	vec3 lose_pos = { 0.0f,0.0f,0.0f };
 };

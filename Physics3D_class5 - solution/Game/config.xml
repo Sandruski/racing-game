@@ -44,8 +44,24 @@
   </scene_intro>
 
   <player>
+    <start_pos x="0" y="0" z="-4"/>
+    <checkpoint1 x="60" y="4" z="65"/>
+    <checkpoint2 x="60" y="4" z="300"/>
+    <checkpoint3 x="277" y="4" z="267"/>
+    <checkpoint4 x="277" y="12" z="70"/>
+    <checkpoint5 x="338" y="12" z="-55"/>
+    <win_pos x="170" y="40" z="184"/>
+    <lose_pos x="200" y="200" z="200"/>
     
+    <FX1 path="Music/WAV/VICTORY.wav"/>
+    <FX2 path="Music/WAV/GAMEOVER.wav"/>
+    <seconds_to_jump value="6"/>
+    <jump_force value="5000"/>
 
+    <speed_up positive_x="150" negative_x="-300" positive_z="300" negative_z="-300"/>
+    <max_speed value="80"/>
+    <friction value="100"/>
+    
   </player>
 
 </config>
