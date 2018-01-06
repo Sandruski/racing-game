@@ -157,8 +157,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && App->scene_intro->winCondition == 0)
 	{
-		acceleration = MAX_ACCELERATION;
-		
+		acceleration = MAX_ACCELERATION;	
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -189,7 +188,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		brake = BRAKE_POWER;
 	}
-
+	
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
 	{
 		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
@@ -226,13 +225,19 @@ update_status ModulePlayer::Update(float dt)
 			vehicle->SetPos(60, 12, 300);
 			break;
 		case 3: case 8: case 13:
+			vehicle->SetTransform(IdentityMatrix.rotate(180, vec3(0, 1, 0)).M);
+			IdentityMatrix.rotate(180, vec3(0, 1, 0));
 			vehicle->SetPos(277, 12, 267);
 			break;
 		case 4: case 9: case 14:
+			vehicle->SetTransform(IdentityMatrix.rotate(180, vec3(0, 1, 0)).M);
+			IdentityMatrix.rotate(180, vec3(0, 1, 0));
 			vehicle->SetPos(277, 12, 70);
 			break;
 		case 5: case 10: case 15:
-			vehicle->SetPos(338, 12, -55);
+			vehicle->SetTransform(IdentityMatrix.rotate(-90, vec3(0, 1, 0)).M);
+			IdentityMatrix.rotate(90, vec3(0, 1, 0));
+			vehicle->SetPos(338, 12, -55);		
 			break;
 		}
 	}

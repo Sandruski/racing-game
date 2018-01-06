@@ -28,7 +28,8 @@ public:
 	float acceleration;
 	float brake;
 	vec3 position;
-
+	float* identity;
+	float* patata;
 	PhysBody3D* sphere;
 
 	bool speedupX = false;
