@@ -35,6 +35,9 @@ public:
 	void UpdateSpeedUpColors(float dt);
 	void UpdateSpeedUpIndex(uint &index);
 
+	void RadioUpdate();
+	void TimeToLoseUpdate(float dt);
+
 public:
 	// Vehicle parts
 	PhysBody3D* pb_chassis = nullptr;
@@ -69,25 +72,12 @@ public:
 	Cube ground2;
 
 	// Senors
-	Cube s, h, t, n, r, p, q, w, y;
-	PhysBody3D* sensor = nullptr;
-	PhysBody3D* sensor3 = nullptr;
-	PhysBody3D* sensor4 = nullptr;
-	PhysBody3D* sensor5 = nullptr;
-	PhysBody3D* sensor6 = nullptr;
-	PhysBody3D* sensor7 = nullptr;
-	PhysBody3D* sensor8 = nullptr;
-	PhysBody3D* sensor9 = nullptr;
-	PhysBody3D* sensor10 = nullptr;
+	Cube s;
+	PhysBody3D* sensors[9] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr , nullptr };
 	uint checkpoints_index = 0;
 
 	// Checkpoints
-	Cube ch1, ch2, ch3, ch4, ch5, loopCompletedCube;
-	PhysBody3D* checkpoint1 = nullptr;
-	PhysBody3D* checkpoint2 = nullptr;
-	PhysBody3D* checkpoint3 = nullptr;
-	PhysBody3D* checkpoint4 = nullptr;
-	PhysBody3D* checkpoint5 = nullptr;
+	PhysBody3D* checkpoints[5] = { nullptr, nullptr, nullptr, nullptr, nullptr };
 
 	// Game parameters
 	PhysBody3D* loopCompleted = nullptr;

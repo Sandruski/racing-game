@@ -82,106 +82,106 @@ bool ModuleSceneIntro::Start()
 	s.size = vec3(4, 2, 8); // First sensor
 	s.SetPos(0, 1.5f, 13); // First sensor
 
-	h.size = vec3(10, 20, 8); // Third sensor
-	h.SetPos(60, 1.5f, 240); // Third sensor
+	sensors[0] = App->physics->AddBody(s, 0.0f);
+	sensors[0]->SetAsSensor(true);
+	sensors[0]->collision_listeners.add(this);
 
-	t.size = vec3(14, 20, 7); // forth sensor
-	t.SetPos(125, -4, 369); // forth sensor
+	s.size = vec3(10, 20, 8); // Third sensor
+	s.SetPos(60, 1.5f, 240); // Third sensor
 
-	n.size = vec3(32, 20, 9); // fifth sensor
-	n.SetPos(277, 0.5f, 287); // fifth sensor
+	sensors[1] = App->physics->AddBody(s, 0.0f);
+	sensors[1]->SetAsSensor(true);
+	sensors[1]->collision_listeners.add(this);
 
-	r.size = vec3(8, 60, 15); // 6 sensor
-	r.SetPos(345, 0, -13); // fifth sensor
+	s.size = vec3(14, 20, 7); // forth sensor
+	s.SetPos(125, -4, 369); // forth sensor
 
-	w.size = vec3(8, 60, 15); // 9 sensor
-	w.SetPos(331, 0, -85); // fifth sensor
+	sensors[2] = App->physics->AddBody(s, 0.0f);
+	sensors[2]->SetAsSensor(true);
+	sensors[2]->collision_listeners.add(this);
 
-	y.size = vec3(8, 60, 34); // 9 sensor
-	y.SetPos(432, 0, -56); // fifth sensor
+	s.size = vec3(32, 20, 9); // fifth sensor
+	s.SetPos(277, 0.5f, 287); // fifth sensor
 
-	p.size = vec3(8, 10, 4); // 7 sensor
-	p.SetPos(317, 0.5f, -49); // fifth sensor
+	sensors[3] = App->physics->AddBody(s, 0.0f);
+	sensors[3]->SetAsSensor(true);
+	sensors[3]->collision_listeners.add(this);
 
-	q.size = vec3(8, 10, 4); // 8 sensor
-	q.SetPos(317, 0.5f, -62); // fifth sensor
+	s.size = vec3(8, 60, 15); // 6 sensor
+	s.SetPos(345, 0, -13); // fifth sensor
 
-	sensor = App->physics->AddBody(s, 0.0f);
-	sensor->SetAsSensor(true);
-	sensor->collision_listeners.add(this);
+	sensors[4] = App->physics->AddBody(s, 0.0f);
+	sensors[4]->SetAsSensor(true);
+	sensors[4]->collision_listeners.add(this);
 
-	sensor3 = App->physics->AddBody(h, 0.0f);
-	sensor3->SetAsSensor(true);
-	sensor3->collision_listeners.add(this);
+	s.size = vec3(8, 60, 15); // 9 sensor
+	s.SetPos(331, 0, -85); // fifth sensor
 
-	sensor4 = App->physics->AddBody(t, 0.0f);
-	sensor4->SetAsSensor(true);
-	sensor4->collision_listeners.add(this);
+	sensors[7] = App->physics->AddBody(s, 0.0f);
+	sensors[7]->SetAsSensor(true);
+	sensors[7]->collision_listeners.add(this);
 
-	sensor5 = App->physics->AddBody(n, 0.0f);
-	sensor5->SetAsSensor(true);
-	sensor5->collision_listeners.add(this);
+	s.size = vec3(8, 60, 34); // 9 sensor
+	s.SetPos(432, 0, -56); // fifth sensor
 
-	sensor6 = App->physics->AddBody(r, 0.0f);
-	sensor6->SetAsSensor(true);
-	sensor6->collision_listeners.add(this);
+	sensors[8] = App->physics->AddBody(s, 0.0f);
+	sensors[8]->SetAsSensor(true);
+	sensors[8]->collision_listeners.add(this);
 
-	sensor7 = App->physics->AddBody(p, 0.0f);
-	sensor7->SetAsSensor(true);
-	sensor7->collision_listeners.add(this);
+	s.size = vec3(8, 20, 4); // 7 sensor
+	s.SetPos(317, 0.5f, -49); // fifth sensor
 
-	sensor8 = App->physics->AddBody(q, 0.0f);
-	sensor8->SetAsSensor(true);
-	sensor8->collision_listeners.add(this);
+	sensors[5] = App->physics->AddBody(s, 0.0f);
+	sensors[5]->SetAsSensor(true);
+	sensors[5]->collision_listeners.add(this);
 
-	sensor9 = App->physics->AddBody(w, 0.0f);
-	sensor9->SetAsSensor(true);
-	sensor9->collision_listeners.add(this);
+	s.size = vec3(8, 20, 4); // 8 sensor
+	s.SetPos(317, 0.5f, -62); // fifth sensor
 
-	sensor10 = App->physics->AddBody(y, 0.0f);
-	sensor10->SetAsSensor(true);
-	sensor10->collision_listeners.add(this);
+	sensors[6] = App->physics->AddBody(s, 0.0f);
+	sensors[6]->SetAsSensor(true);
+	sensors[6]->collision_listeners.add(this);
 
 	// Checkpoint sensors
-	ch1.size = vec3(10, 4, 10);
-	ch1.SetPos(60, 1.5f, 65);
+	s.size = vec3(10, 4, 10);
+	s.SetPos(60, 1.5f, 65);
 
-	checkpoint1 = App->physics->AddBody(ch1, 0.0f);
-	checkpoint1->SetAsSensor(true);
-	checkpoint1->collision_listeners.add(this);
+	checkpoints[0] = App->physics->AddBody(s, 0.0f);
+	checkpoints[0]->SetAsSensor(true);
+	checkpoints[0]->collision_listeners.add(this);
 
-	ch2.size = vec3(40, 20, 40);
-	ch2.SetPos(60, 1.5f, 300);
+	s.size = vec3(40, 20, 40);
+	s.SetPos(60, 1.5f, 300);
 
-	checkpoint2 = App->physics->AddBody(ch2, 0.0f);
-	checkpoint2->SetAsSensor(true);
-	checkpoint2->collision_listeners.add(this);
+	checkpoints[1] = App->physics->AddBody(s, 0.0f);
+	checkpoints[1]->SetAsSensor(true);
+	checkpoints[1]->collision_listeners.add(this);
 
-	ch3.size = vec3(40, 20, 40);
-	ch3.SetPos(277, 0.5f, 267);
+	s.size = vec3(40, 20, 40);
+	s.SetPos(277, 0.5f, 267);
 
-	checkpoint3 = App->physics->AddBody(ch3, 0.0f);
-	checkpoint3->SetAsSensor(true);
-	checkpoint3->collision_listeners.add(this);
+	checkpoints[2] = App->physics->AddBody(s, 0.0f);
+	checkpoints[2]->SetAsSensor(true);
+	checkpoints[2]->collision_listeners.add(this);
 
-	ch4.size = vec3(40, 60, 40);
-	ch4.SetPos(277, 0, 70);
+	s.size = vec3(40, 60, 40);
+	s.SetPos(277, 0, 70);
 
-	checkpoint4 = App->physics->AddBody(ch4, 0.0f);
-	checkpoint4->SetAsSensor(true);
-	checkpoint4->collision_listeners.add(this);
+	checkpoints[3] = App->physics->AddBody(s, 0.0f);
+	checkpoints[3]->SetAsSensor(true);
+	checkpoints[3]->collision_listeners.add(this);
 
-	ch5.size = vec3(40, 20, 40);
-	ch5.SetPos(338, 0, -55);
+	s.size = vec3(40, 20, 40);
+	s.SetPos(338, 0, -55);
 
-	checkpoint5 = App->physics->AddBody(ch5, 0.0f);
-	checkpoint5->SetAsSensor(true);
-	checkpoint5->collision_listeners.add(this);
+	checkpoints[4] = App->physics->AddBody(s, 0.0f);
+	checkpoints[4]->SetAsSensor(true);
+	checkpoints[4]->collision_listeners.add(this);
 
-	loopCompletedCube.size = vec3(10, 30, 3);
-	loopCompletedCube.SetPos(0, 0, 1);
+	s.size = vec3(10, 30, 3);
+	s.SetPos(0, 0, 1);
 
-	loopCompleted = App->physics->AddBody(loopCompletedCube, 0.0f);
+	loopCompleted = App->physics->AddBody(s, 0.0f);
 	loopCompleted->SetAsSensor(true);
 	loopCompleted->collision_listeners.add(this);
 	//_checkpoint_sensors
@@ -724,47 +724,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	else if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN && indexMusic == MAX_MUSIC)
 		indexMusic = 0;
 
-	if (indexMusic == 0 && !song1_active)
-	{
-		App->audio->PlayMusic("Music/OGG/P5.ogg", 1.0f);
-		song1_active = true;
-		song4_active = false;
-	}
-	else if (indexMusic == 1 && !song2_active)
-	{
-		App->audio->PlayMusic("MUSIC/OGG/GHOSTBUSTERS.ogg", 1.0f);
-		song1_active = false;
-		song2_active = true;
-	}
-	else if (indexMusic == 2 && !song3_active)
-	{
-		App->audio->PlayMusic("MUSIC/OGG/LETITGO.ogg", 1.0f);
+	RadioUpdate();
 
-		song2_active = false;
-		song3_active = true;
-	}
-	else if (indexMusic == 3 && !song4_active)
-	{
-		App->audio->PlayMusic("MUSIC/OGG/POKEMON.ogg", 1.0f);
-
-		song3_active = false;
-		song4_active = true;
-	}
-
-	if (minutes >= 0) {
-		seconds -= 1.0f * dt;
-
-		if (seconds <= 0)
-		{
-			seconds = 60.0f;
-			minutes -= 1;
-		}
-	}
-	else
-	{
-		endTime = true;
-		winCondition = 2;
-	}
+	TimeToLoseUpdate(dt);
 
 	// Blit cubes
 	p2List_item<Cube>* cubes_it = cubes.getFirst();
@@ -1111,45 +1073,93 @@ void ModuleSceneIntro::CreateTrees(Cube ground, vec3 variation[], uint num)
 	}
 }
 
+void ModuleSceneIntro::RadioUpdate() 
+{
+	if (indexMusic == 0 && !song1_active)
+	{
+		App->audio->PlayMusic("Music/OGG/P5.ogg", 1.0f);
+		song1_active = true;
+		song4_active = false;
+	}
+	else if (indexMusic == 1 && !song2_active)
+	{
+		App->audio->PlayMusic("MUSIC/OGG/GHOSTBUSTERS.ogg", 1.0f);
+		song1_active = false;
+		song2_active = true;
+	}
+	else if (indexMusic == 2 && !song3_active)
+	{
+		App->audio->PlayMusic("MUSIC/OGG/LETITGO.ogg", 1.0f);
+
+		song2_active = false;
+		song3_active = true;
+	}
+	else if (indexMusic == 3 && !song4_active)
+	{
+		App->audio->PlayMusic("MUSIC/OGG/POKEMON.ogg", 1.0f);
+
+		song3_active = false;
+		song4_active = true;
+	}
+}
+
+void ModuleSceneIntro::TimeToLoseUpdate(float dt)
+{
+	if (minutes >= 0) {
+		seconds -= 1.0f * dt;
+
+		if (seconds <= 0)
+		{
+			seconds = 60.0f;
+			minutes -= 1;
+		}
+	}
+	else
+	{
+		endTime = true;
+		winCondition = 2;
+	}
+}
+
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1 == sensor && body2 == (PhysBody3D*)App->player->vehicle) {
+	if (body1 == sensors[0] && body2 == (PhysBody3D*)App->player->vehicle) {
 		App->player->speedupZ = true;
 	}
 
-	else if (body1 == sensor3 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == sensors[1] && body2 == (PhysBody3D*)App->player->vehicle) {
 		App->player->speedupZ = true;
 	}
 
-	else if (body1 == sensor4 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == sensors[2] && body2 == (PhysBody3D*)App->player->vehicle) {
 		App->player->speedupX = true;
 	}
 
-	else if (body1 == sensor5 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == sensors[3] && body2 == (PhysBody3D*)App->player->vehicle) {
 		App->player->speedupZnegative = true;
 	}
 
-	else if (body1 == sensor6 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == sensors[4] && body2 == (PhysBody3D*)App->player->vehicle) {
 		App->player->speedupZnegative = true;
 	}
 
-	else if (body1 == sensor7 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == sensors[5] && body2 == (PhysBody3D*)App->player->vehicle) {
 		App->player->speedupXnegative = true;
 	}
 
-	else if (body1 == sensor8 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == sensors[6] && body2 == (PhysBody3D*)App->player->vehicle) {
 		App->player->speedupXnegative = true;
 	}
 
-	else if (body1 == sensor9 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == sensors[7] && body2 == (PhysBody3D*)App->player->vehicle) {
 		App->player->speedupZnegative = true;
 	}
 
-	else if (body1 == sensor10 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == sensors[8] && body2 == (PhysBody3D*)App->player->vehicle) {
 		App->player->speedupXnegative = true;
 	}
 
-	else if (body1 == checkpoint1 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == checkpoints[0] && body2 == (PhysBody3D*)App->player->vehicle) {
 		switch (checkpoints_index) {
 		case 0:
 			checkpoints_index = 1;
@@ -1163,7 +1173,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		}
 	}
 
-	else if (body1 == checkpoint2 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == checkpoints[1] && body2 == (PhysBody3D*)App->player->vehicle) {
 		switch (checkpoints_index) {
 		case 1:
 			checkpoints_index = 2;
@@ -1177,7 +1187,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		}
 	}
 
-	else if (body1 == checkpoint3 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == checkpoints[2] && body2 == (PhysBody3D*)App->player->vehicle) {
 		switch (checkpoints_index) {
 		case 2:
 			checkpoints_index = 3;
@@ -1191,7 +1201,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		}
 	}
 
-	else if (body1 == checkpoint4 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == checkpoints[3] && body2 == (PhysBody3D*)App->player->vehicle) {
 		switch (checkpoints_index) {
 		case 3:
 			checkpoints_index = 4;
@@ -1205,7 +1215,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		}
 	}
 
-	else if (body1 == checkpoint5 && body2 == (PhysBody3D*)App->player->vehicle) {
+	else if (body1 == checkpoints[4] && body2 == (PhysBody3D*)App->player->vehicle) {
 		switch (checkpoints_index) {
 		case 4:
 			checkpoints_index = 5;
