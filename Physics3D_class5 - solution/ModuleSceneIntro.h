@@ -74,16 +74,17 @@ public:
 	// Senors
 	Cube s;
 	PhysBody3D* sensors[9] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr , nullptr };
+	vec3 sensorPos_1, sensorPos_2, sensorPos_3, sensorPos_4, sensorPos_5, sensorPos_6, sensorPos_7, sensorPos_8, sensorPos_9;
 	uint checkpoints_index = 0;
 
 	// Checkpoints
 	PhysBody3D* checkpoints[5] = { nullptr, nullptr, nullptr, nullptr, nullptr };
-
+	vec3 checkbox_sensors_1, checkbox_sensors_2, checkbox_sensors_3, checkbox_sensors_4, checkbox_sensors_5;
 	// Game parameters
 	PhysBody3D* loopCompleted = nullptr;
 	uint loopsCount = 0;
-	int minutes = 1;
-	float seconds = 60;
+	int minutes = 0;
+	float seconds = 0;
 	bool endTime = false;
 	uint winCondition = 0; //0 neutral //1 win //2 lose
 

@@ -59,7 +59,65 @@ bool ModuleSceneIntro::Init(pugi::xml_node& node)
 	OR = node.child("obstacle_radius").attribute("value").as_float(); // radius
 	OH = node.child("obstacle_height").attribute("value").as_float(); // y axis
 	//_map_parameters
+	minutes = node.child("minutes").attribute("value").as_int();
+	seconds = node.child("seconds").attribute("value").as_float();
 
+	sensorPos_1.x = node.child("sensorPos_1").attribute("x").as_float();
+	sensorPos_1.y = node.child("sensorPos_1").attribute("y").as_float();
+	sensorPos_1.z = node.child("sensorPos_1").attribute("z").as_float();
+
+	sensorPos_2.x = node.child("sensorPos_2").attribute("x").as_float();
+	sensorPos_2.y = node.child("sensorPos_2").attribute("y").as_float();
+	sensorPos_2.z = node.child("sensorPos_2").attribute("z").as_float();
+
+	sensorPos_3.x = node.child("sensorPos_3").attribute("x").as_float();
+	sensorPos_3.y = node.child("sensorPos_3").attribute("y").as_float();
+	sensorPos_3.z = node.child("sensorPos_3").attribute("z").as_float();
+
+	sensorPos_4.x = node.child("sensorPos_4").attribute("x").as_float();
+	sensorPos_4.y = node.child("sensorPos_4").attribute("y").as_float();
+	sensorPos_4.z = node.child("sensorPos_4").attribute("z").as_float();
+
+	sensorPos_5.x = node.child("sensorPos_5").attribute("x").as_float();
+	sensorPos_5.y = node.child("sensorPos_5").attribute("y").as_float();
+	sensorPos_5.z = node.child("sensorPos_5").attribute("z").as_float();
+
+	sensorPos_6.x = node.child("sensorPos_6").attribute("x").as_float();
+	sensorPos_6.y = node.child("sensorPos_6").attribute("y").as_float();
+	sensorPos_6.z = node.child("sensorPos_6").attribute("z").as_float();
+
+	sensorPos_7.x = node.child("sensorPos_7").attribute("x").as_float();
+	sensorPos_7.y = node.child("sensorPos_7").attribute("y").as_float();
+	sensorPos_7.z = node.child("sensorPos_7").attribute("z").as_float();
+
+	sensorPos_8.x = node.child("sensorPos_8").attribute("x").as_float();
+	sensorPos_8.y = node.child("sensorPos_8").attribute("y").as_float();
+	sensorPos_8.z = node.child("sensorPos_8").attribute("z").as_float();
+
+	sensorPos_9.x = node.child("sensorPos_9").attribute("x").as_float();
+	sensorPos_9.y = node.child("sensorPos_9").attribute("y").as_float();
+	sensorPos_9.z = node.child("sensorPos_9").attribute("z").as_float();
+
+	checkbox_sensors_1.x = node.child("checkbox_sensors_1").attribute("x").as_float();
+	checkbox_sensors_1.y = node.child("checkbox_sensors_1").attribute("y").as_float();
+	checkbox_sensors_1.z = node.child("checkbox_sensors_1").attribute("z").as_float();
+
+	checkbox_sensors_2.x = node.child("checkbox_sensors_2").attribute("x").as_float();
+	checkbox_sensors_2.y = node.child("checkbox_sensors_2").attribute("y").as_float();
+	checkbox_sensors_2.z = node.child("checkbox_sensors_2").attribute("z").as_float();
+
+	checkbox_sensors_3.x = node.child("checkbox_sensors_3").attribute("x").as_float();
+	checkbox_sensors_3.y = node.child("checkbox_sensors_3").attribute("y").as_float();
+	checkbox_sensors_3.z = node.child("checkbox_sensors_3").attribute("z").as_float();
+
+	checkbox_sensors_4.x = node.child("checkbox_sensors_4").attribute("x").as_float();
+	checkbox_sensors_4.y = node.child("checkbox_sensors_4").attribute("y").as_float();
+	checkbox_sensors_4.z = node.child("checkbox_sensors_4").attribute("z").as_float();
+
+	checkbox_sensors_5.x = node.child("checkbox_sensors_5").attribute("x").as_float();
+	checkbox_sensors_5.y = node.child("checkbox_sensors_5").attribute("y").as_float();
+	checkbox_sensors_5.z = node.child("checkbox_sensors_5").attribute("z").as_float();
+	
 	return ret;
 }
 
@@ -79,64 +137,64 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	// Sensors
-	s.size = vec3(4, 2, 8); // First sensor
-	s.SetPos(0, 1.5f, 13); // First sensor
+	s.size = vec3(4, 2, 8);
+	s.SetPos(sensorPos_1.x, sensorPos_1.y, sensorPos_1.z);
 
 	sensors[0] = App->physics->AddBody(s, 0.0f);
 	sensors[0]->SetAsSensor(true);
 	sensors[0]->collision_listeners.add(this);
 
-	s.size = vec3(10, 20, 8); // Third sensor
-	s.SetPos(60, 1.5f, 240); // Third sensor
+	s.size = vec3(10, 20, 8);
+	s.SetPos(sensorPos_2.x, sensorPos_2.y, sensorPos_2.z);
 
 	sensors[1] = App->physics->AddBody(s, 0.0f);
 	sensors[1]->SetAsSensor(true);
 	sensors[1]->collision_listeners.add(this);
 
-	s.size = vec3(14, 20, 7); // forth sensor
-	s.SetPos(125, -4, 369); // forth sensor
+	s.size = vec3(14, 20, 7);
+	s.SetPos(sensorPos_3.x, sensorPos_3.y, sensorPos_3.z);
 
 	sensors[2] = App->physics->AddBody(s, 0.0f);
 	sensors[2]->SetAsSensor(true);
 	sensors[2]->collision_listeners.add(this);
 
-	s.size = vec3(32, 20, 9); // fifth sensor
-	s.SetPos(277, 0.5f, 287); // fifth sensor
+	s.size = vec3(32, 20, 9);
+	s.SetPos(sensorPos_4.x, sensorPos_4.y, sensorPos_4.z);
 
 	sensors[3] = App->physics->AddBody(s, 0.0f);
 	sensors[3]->SetAsSensor(true);
 	sensors[3]->collision_listeners.add(this);
 
-	s.size = vec3(8, 60, 15); // 6 sensor
-	s.SetPos(345, 0, -13); // fifth sensor
+	s.size = vec3(8, 60, 15);
+	s.SetPos(sensorPos_5.x, sensorPos_5.y, sensorPos_5.z);
 
 	sensors[4] = App->physics->AddBody(s, 0.0f);
 	sensors[4]->SetAsSensor(true);
 	sensors[4]->collision_listeners.add(this);
 
-	s.size = vec3(8, 60, 15); // 9 sensor
-	s.SetPos(331, 0, -85); // fifth sensor
+	s.size = vec3(8, 60, 15);
+	s.SetPos(sensorPos_6.x, sensorPos_6.y, sensorPos_6.z);
 
 	sensors[7] = App->physics->AddBody(s, 0.0f);
 	sensors[7]->SetAsSensor(true);
 	sensors[7]->collision_listeners.add(this);
 
-	s.size = vec3(8, 60, 34); // 9 sensor
-	s.SetPos(432, 0, -56); // fifth sensor
+	s.size = vec3(8, 60, 34);
+	s.SetPos(sensorPos_7.x, sensorPos_7.y, sensorPos_7.z);
 
 	sensors[8] = App->physics->AddBody(s, 0.0f);
 	sensors[8]->SetAsSensor(true);
 	sensors[8]->collision_listeners.add(this);
 
-	s.size = vec3(8, 20, 4); // 7 sensor
-	s.SetPos(317, 0.5f, -49); // fifth sensor
+	s.size = vec3(8, 20, 4);
+	s.SetPos(sensorPos_8.x, sensorPos_8.y, sensorPos_8.z);
 
 	sensors[5] = App->physics->AddBody(s, 0.0f);
 	sensors[5]->SetAsSensor(true);
 	sensors[5]->collision_listeners.add(this);
 
-	s.size = vec3(8, 20, 4); // 8 sensor
-	s.SetPos(317, 0.5f, -62); // fifth sensor
+	s.size = vec3(8, 20, 4);
+	s.SetPos(sensorPos_9.x, sensorPos_9.y, sensorPos_9.z);
 
 	sensors[6] = App->physics->AddBody(s, 0.0f);
 	sensors[6]->SetAsSensor(true);
@@ -144,35 +202,35 @@ bool ModuleSceneIntro::Start()
 
 	// Checkpoint sensors
 	s.size = vec3(10, 4, 10);
-	s.SetPos(60, 1.5f, 65);
+	s.SetPos(checkbox_sensors_1.x, checkbox_sensors_1.y, checkbox_sensors_1.z);
 
 	checkpoints[0] = App->physics->AddBody(s, 0.0f);
 	checkpoints[0]->SetAsSensor(true);
 	checkpoints[0]->collision_listeners.add(this);
 
 	s.size = vec3(40, 20, 40);
-	s.SetPos(60, 1.5f, 300);
+	s.SetPos(checkbox_sensors_2.x, checkbox_sensors_2.y, checkbox_sensors_2.z);
 
 	checkpoints[1] = App->physics->AddBody(s, 0.0f);
 	checkpoints[1]->SetAsSensor(true);
 	checkpoints[1]->collision_listeners.add(this);
 
 	s.size = vec3(40, 20, 40);
-	s.SetPos(277, 0.5f, 267);
+	s.SetPos(checkbox_sensors_3.x, checkbox_sensors_3.y, checkbox_sensors_3.z);
 
 	checkpoints[2] = App->physics->AddBody(s, 0.0f);
 	checkpoints[2]->SetAsSensor(true);
 	checkpoints[2]->collision_listeners.add(this);
 
 	s.size = vec3(40, 60, 40);
-	s.SetPos(277, 0, 70);
+	s.SetPos(checkbox_sensors_4.x, checkbox_sensors_4.y, checkbox_sensors_4.z);
 
 	checkpoints[3] = App->physics->AddBody(s, 0.0f);
 	checkpoints[3]->SetAsSensor(true);
 	checkpoints[3]->collision_listeners.add(this);
 
 	s.size = vec3(40, 20, 40);
-	s.SetPos(338, 0, -55);
+	s.SetPos(checkbox_sensors_5.x, checkbox_sensors_5.y, checkbox_sensors_5.z);
 
 	checkpoints[4] = App->physics->AddBody(s, 0.0f);
 	checkpoints[4]->SetAsSensor(true);
