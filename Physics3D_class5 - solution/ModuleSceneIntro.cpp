@@ -307,7 +307,7 @@ bool ModuleSceneIntro::Start()
 
 	Cube tunnel_wall = CreateCube(vec3(TUW, TUH, TUL), vec3(cu17.GetPos().x + (2.0f * RL) / 2.0f - cy9.radius - TUW / 2.0f, cu17.GetPos().y, cy9.GetPos().z - cy9.radius - TUL / 2.0f), road_col);
 	Cube tunnel_wall2 = CreateCube(vec3(TUW, TUH, TUL), vec3(cu17.GetPos().x + (2.0f * RL) / 2.0f + cy9.radius + TUW / 2.0f, cu17.GetPos().y, cy9.GetPos().z - cy9.radius - TUL / 2.0f), road_col);
-	Cube tunnel_wall3 = CreateCube(vec3((tunnel_wall2.GetPos().x + tunnel_wall2.GetSize().x / 2.0f) - (tunnel_wall.GetPos().x - tunnel_wall.GetSize().x / 2.0f), CW / 4.0f, TUL), vec3(tunnel_wall.GetPos().x + tunnel_wall.GetSize().x / 2.0f + cu18.GetSize().x / 2.0f, tunnel_wall.GetPos().y + tunnel_wall.GetSize().y / 2.0f + (CW / 4.0f) / 2.0f, tunnel_wall.GetPos().z), road_col);
+	Cube tunnel_wall3 = CreateCube(vec3((tunnel_wall2.GetPos().x + tunnel_wall2.GetSize().x / 2.0f) - (tunnel_wall.GetPos().x - tunnel_wall.GetSize().x / 2.0f), TUW / 4.0f, TUL), vec3(tunnel_wall.GetPos().x + tunnel_wall.GetSize().x / 2.0f + cu18.GetSize().x / 2.0f, tunnel_wall.GetPos().y + tunnel_wall.GetSize().y / 2.0f + (TUW / 4.0f) / 2.0f, tunnel_wall.GetPos().z), road_col);
 	//_tunnel
 	//_3rd_section
 
@@ -366,46 +366,41 @@ bool ModuleSceneIntro::Start()
 
 	// Trees
 	// ground
-	Cylinder trunk = CreateCylinder(TRUR, TRUH, vec3(ground.GetPos().x - ground.GetSize().x / 3.0f, ground.GetPos().y + ground.GetSize().y / 2.0f, ground.GetPos().z + ground.GetSize().z / 3.0f), trunk_col);
-	CreateCone(TRER, TREH, vec3(trunk.GetPos().x, trunk.GetPos().y + trunk.height / 2.0f + TREH / 2.0f, trunk.GetPos().z), tree_col);
-	Cylinder trunk2 = CreateCylinder(TRUR, TRUH, vec3(ground.GetPos().x - ground.GetSize().x / 4.0f, ground.GetPos().y + ground.GetSize().y / 2.0f, ground.GetPos().z - ground2.GetSize().z / 15.0f), trunk_col);
-	CreateCone(TRER, TREH, vec3(trunk2.GetPos().x, trunk2.GetPos().y + trunk2.height / 2.0f + TREH / 2.0f, trunk2.GetPos().z), tree_col);
-	Cylinder trunk3 = CreateCylinder(TRUR, TRUH, vec3(ground.GetPos().x - ground.GetSize().x / 3.0f - ground.GetSize().x / 15.0f, ground.GetPos().y + ground.GetSize().y / 2.0f, ground.GetPos().z - ground2.GetSize().z / 6.0f), trunk_col);
-	CreateCone(TRER2, TREH2, vec3(trunk3.GetPos().x, trunk3.GetPos().y + trunk3.height / 2.0f + TREH2 / 2.0f, trunk3.GetPos().z), tree_col);
-	Cylinder trunk4 = CreateCylinder(TRUR, TRUH, vec3(ground.GetPos().x + ground.GetSize().x / 3.0f, ground.GetPos().y + ground.GetSize().y / 2.0f, ground.GetPos().z - ground2.GetSize().z / 8.0f), trunk_col);
-	CreateCone(TRER2, TREH, vec3(trunk4.GetPos().x, trunk4.GetPos().y + trunk4.height / 2.0f + TREH / 2.0f, trunk4.GetPos().z), tree_col);
-	
+	vec3 variation[4] = {
+		{ -1.0f / 3.0f,0.0f,1.0f / 3.0f },
+		{ -1.0f / 4.0f,0.0f,-1.0f / 15.0f },
+		{ -2.0f / 5.0f,0.0f,-1.0f / 6.0f },
+		{ 1.0f / 3.0f,0.0f,-1.0f / 8.0f },
+	};
+	CreateTrees(ground, variation, 4);
+
 	// ground2
-	Cylinder trunk5 = CreateCylinder(TRUR, TRUH, vec3(ground2.GetPos().x - ground2.GetSize().x / 3.0f, ground2.GetPos().y + ground2.GetSize().y / 2.0f, ground2.GetPos().z + ground2.GetSize().z / 3.0f), trunk_col);
-	CreateCone(TRER, TREH, vec3(trunk5.GetPos().x, trunk5.GetPos().y + trunk5.height / 2.0f + TREH / 2.0f, trunk5.GetPos().z), tree_col);
-	Cylinder trunk6 = CreateCylinder(TRUR, TRUH, vec3(ground2.GetPos().x - ground2.GetSize().x / 3.0f - ground2.GetSize().x / 10.0f, ground2.GetPos().y + ground2.GetSize().y / 2.0f, ground2.GetPos().z + ground2.GetSize().z / 4.0f), trunk_col);
-	CreateCone(TRER3, TREH3, vec3(trunk6.GetPos().x, trunk6.GetPos().y + trunk6.height / 2.0f + TREH3 / 2.0f, trunk6.GetPos().z), tree_col);
+	vec3 variation2[2] = {
+		{ -1.0f / 3.0f,0.0f,1.0f / 3.0f },
+		{ -13.0f / 30.0f,0.0f,1.0f / 4.0f },
+	};
+	CreateTrees(ground2, variation2, 2);
 
 	// ground4
-	Cylinder trunk7 = CreateCylinder(TRUR, TRUH, vec3(ground4.GetPos().x + ground4.GetSize().x / 5.0f, ground4.GetPos().y + ground4.GetSize().y / 2.0f, ground4.GetPos().z), trunk_col);
-	CreateCone(TRER, TREH, vec3(trunk7.GetPos().x, trunk7.GetPos().y + trunk7.height / 2.0f + TREH / 2.0f, trunk7.GetPos().z), tree_col);
-	Cylinder trunk8 = CreateCylinder(TRUR, TRUH, vec3(ground4.GetPos().x - ground4.GetSize().x / 4.0f, ground4.GetPos().y + ground4.GetSize().y / 2.0f, ground4.GetPos().z + ground4.GetSize().z / 5.0f), trunk_col);
-	CreateCone(TRER2, TREH2, vec3(trunk8.GetPos().x, trunk8.GetPos().y + trunk8.height / 2.0f + TREH2 / 2.0f, trunk8.GetPos().z), tree_col);
-	Cylinder trunk9 = CreateCylinder(TRUR, TRUH, vec3(ground4.GetPos().x - ground4.GetSize().x / 3.0f, ground4.GetPos().y + ground4.GetSize().y / 2.0f, ground4.GetPos().z - ground4.GetSize().z / 4.0f), trunk_col);
-	CreateCone(TRER3, TREH3, vec3(trunk9.GetPos().x, trunk9.GetPos().y + trunk9.height / 2.0f + TREH3 / 2.0f, trunk9.GetPos().z), tree_col);
-	Cylinder trunk10 = CreateCylinder(TRUR, TRUH, vec3(ground4.GetPos().x, ground4.GetPos().y + ground4.GetSize().y / 2.0f, ground4.GetPos().z + ground4.GetPos().z / 6.0f), trunk_col);
-	CreateCone(TRER3, TREH, vec3(trunk10.GetPos().x, trunk10.GetPos().y + trunk10.height / 2.0f + TREH / 2.0f, trunk10.GetPos().z), tree_col);
+	vec3 variation3[4] = {
+		{ 1.0f / 5.0f,0.0f,0.0f },
+		{ -1.0f / 4.0f,0.0f,1.0f / 5.0f },
+		{ -1.0f / 3.0f,0.0f,-1.0f / 4.0f },
+		{ 0.0f,0.0f,1.0f / 6.0f },
+	};
+	CreateTrees(ground4, variation3, 4);
 
 	// ground7
-	Cylinder trunk11 = CreateCylinder(TRUR, TRUH, vec3(ground7.GetPos().x + ground7.GetSize().x / 3.0f, ground7.GetPos().y + ground7.GetSize().y / 2.0f, ground7.GetPos().z + ground7.GetSize().z / 3.0f), trunk_col);
-	CreateCone(TRER, TREH, vec3(trunk11.GetPos().x, trunk11.GetPos().y + trunk11.height / 2.0f + TREH / 2.0f, trunk11.GetPos().z), tree_col);
-	Cylinder trunk12 = CreateCylinder(TRUR, TRUH, vec3(ground7.GetPos().x + ground7.GetSize().x / 4.0f, ground7.GetPos().y + ground7.GetSize().y / 2.0f, ground7.GetPos().z + ground7.GetSize().z / 3.0f + ground7.GetSize().z / 10.0f), trunk_col);
-	CreateCone(TRER3, TREH2, vec3(trunk12.GetPos().x, trunk12.GetPos().y + trunk12.height / 2.0f + TREH2 / 2.0f, trunk12.GetPos().z), tree_col);
-	Cylinder trunk13 = CreateCylinder(TRUR, TRUH, vec3(ground7.GetPos().x + ground7.GetSize().x / 5.0f, ground7.GetPos().y + ground7.GetSize().y / 2.0f, ground7.GetPos().z + ground7.GetSize().z / 4.0f + ground7.GetSize().z / 8.0f), trunk_col);
-	CreateCone(TRER3, TREH3, vec3(trunk13.GetPos().x, trunk13.GetPos().y + trunk13.height / 2.0f + TREH3 / 2.0f, trunk13.GetPos().z), tree_col);
-	Cylinder trunk14 = CreateCylinder(TRUR, TRUH, vec3(ground7.GetPos().x + ground7.GetSize().x / 3.0f + ground7.GetSize().x / 10.0f, ground7.GetPos().y + ground7.GetSize().y / 2.0f, ground7.GetPos().z + ground7.GetSize().z / 3.0f - ground7.GetSize().z / 8.0f), trunk_col);
-	CreateCone(TRER, TREH2, vec3(trunk14.GetPos().x, trunk14.GetPos().y + trunk14.height / 2.0f + TREH2 / 2.0f, trunk14.GetPos().z), tree_col);
-	Cylinder trunk15 = CreateCylinder(TRUR, TRUH, vec3(ground7.GetPos().x + ground7.GetSize().x / 5.0f + ground7.GetSize().x / 10.0f, ground7.GetPos().y + ground7.GetSize().y / 2.0f, ground7.GetPos().z + ground7.GetSize().z / 3.0f - ground7.GetSize().z / 5.0f), trunk_col);
-	CreateCone(TRER2, TREH, vec3(trunk15.GetPos().x, trunk15.GetPos().y + trunk15.height / 2.0f + TREH / 2.0f, trunk15.GetPos().z), tree_col);
-	Cylinder trunk16 = CreateCylinder(TRUR, TRUH, vec3(ground7.GetPos().x + ground7.GetSize().x / 5.0f + ground7.GetSize().x / 5.0f, ground7.GetPos().y + ground7.GetSize().y / 2.0f, ground7.GetPos().z + ground7.GetSize().z / 3.0f - ground7.GetSize().z / 4.0f), trunk_col);
-	CreateCone(TRER, TREH, vec3(trunk16.GetPos().x, trunk16.GetPos().y + trunk16.height / 2.0f + TREH / 2.0f, trunk16.GetPos().z), tree_col);
-	Cylinder trunk17 = CreateCylinder(TRUR, TRUH, vec3(ground7.GetPos().x + ground7.GetSize().x / 10.0f, ground7.GetPos().y + ground7.GetSize().y / 2.0f, ground7.GetPos().z + ground7.GetSize().z / 4.5f), trunk_col);
-	CreateCone(TRER, TREH, vec3(trunk17.GetPos().x, trunk17.GetPos().y + trunk17.height / 2.0f + TREH / 2.0f, trunk17.GetPos().z), tree_col);
+	vec3 variation4[7] = {
+		{ 1.0f / 3.0f,0.0f,1.0f / 3.0f },
+		{ 1.0f / 4.0f,0.0f,13.0f / 30.0f },
+		{ 1.0f / 5.0f,0.0f,3.0f / 8.0f },
+		{ 13.0f / 30.0f,0.0f,5.0f / 24.0f },
+		{ 3.0f / 10.0f,0.0f,2.0f / 15.0f },
+		{ 2.0f / 5.0f,0.0f,1.0f / 12.0f },
+		{ 1.0f / 10.0f,0.0f,1.0f / 4.5f },
+	};
+	CreateTrees(ground7, variation4, 7);
 	//_trees
 
 	// Sky
@@ -1101,6 +1096,16 @@ void ModuleSceneIntro::CreateLimits(Primitive* p, bool pos[4], bool inv_col[4], 
 				increment_x += dir * cu_base;
 			}
 		}
+	}
+}
+
+void ModuleSceneIntro::CreateTrees(Cube ground, vec3 variation[], uint num)
+{
+	Cylinder trunk;
+
+	for (uint i = 0; i < num; ++i) {
+		trunk = CreateCylinder(TRUR, TRUH, vec3(ground.GetPos().x + variation[i].x * ground.GetSize().x, ground.GetPos().y + ground.GetSize().y / 2.0f, ground.GetPos().z + variation[i].z * ground.GetSize().z), trunk_col);
+		CreateCone(TRER, TREH, vec3(trunk.GetPos().x, trunk.GetPos().y + trunk.height / 2.0f + TREH / 2.0f, trunk.GetPos().z), tree_col);
 	}
 }
 

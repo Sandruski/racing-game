@@ -30,6 +30,7 @@ public:
 	void CreateSpeedUp(vec3 size = { 1.0f,1.0f,1.0f }, vec3 pos = { 0.0f, 0.0f, 0.0f }, uint num = 4, bool flip = true, float angle = 0.0f, vec3 u = { 0.0f, 0.0f, 0.0f });
 	void CreateFinishLine(vec3 size = { 1.0f,1.0f,1.0f }, vec3 pos = { 0.0f, 0.0f, 0.0f });
 	void CreateLimits(Primitive* p, bool pos[4], bool inv_col[4], bool inv_pos[4], vec4 lim = { 0.0f,0.0f,0.0f,0.0f });
+	void CreateTrees(Cube ground, vec3 variation[], uint num = 0);
 
 	void UpdateSpeedUpColors(float dt);
 	void UpdateSpeedUpIndex(uint &index);
