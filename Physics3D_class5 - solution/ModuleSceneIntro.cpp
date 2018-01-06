@@ -414,19 +414,19 @@ bool ModuleSceneIntro::Start()
 	//_sky
 
 	// Obstacles
-	Cylinder obs = CreateCylinder(OR, OH, vec3(cu8.GetPos().x - cu8.GetSize().x / 4.0f, cu8.GetPos().y + cu8.GetSize().y / 2.0f + OH / 2.0f, cu8.GetPos().z - cu8.GetSize().z / 4.0f), obstacle_col);
-	Cylinder obs2 = CreateCylinder(OR, OH, vec3(cu8.GetPos().x + cu8.GetSize().x / 4.0f, cu8.GetPos().y + cu8.GetSize().y / 2.0f + OH / 2.0f, cu8.GetPos().z + cu8.GetSize().z / 4.0f), obstacle_col);
-	Cylinder obs3 = CreateCylinder(OR, OH, vec3(cy5.GetPos().x, cy5.GetPos().y + cy5.height / 2.0f + OH / 2.0f, cy5.GetPos().z), obstacle_col);
-	Cylinder obs4 = CreateCylinder(OR, OH, vec3(cu9.GetPos().x + cu9.GetSize().x / 3.0f, cu9.GetPos().y + cu9.GetSize().y / 2.0f + OH / 2.0f, cu9.GetPos().z + cu9.GetSize().z / 4.0f), obstacle_col);
-	Cylinder obs5 = CreateCylinder(OR, OH, vec3(cu9.GetPos().x + cu9.GetSize().x / 3.0f, cu9.GetPos().y + cu9.GetSize().y / 2.0f + OH / 2.0f, cu9.GetPos().z - cu9.GetSize().z / 4.0f), obstacle_col);
-	Cylinder obs6 = CreateCylinder(OR, OH, vec3(cy7.GetPos().x, cy7.GetPos().y + cy7.height / 2.0f + OH / 2.0f, cy7.GetPos().z), obstacle_col);
-	Cylinder obs7 = CreateCylinder(OR, OH, vec3(cu15.GetPos().x, cu15.GetPos().y + cu15.GetSize().y / 2.0f + OH / 2.0f, cu15.GetPos().z), obstacle_col);
-	Cylinder obs8 = CreateCylinder(OR, OH, vec3(cu17.GetPos().x, cu17.GetPos().y + cu17.GetSize().y / 2.0f + OH / 2.0f, cu17.GetPos().z), obstacle_col);
-	Cylinder obs9 = CreateCylinder(OR, OH, vec3(cu18.GetPos().x, cu18.GetPos().y + cu18.GetSize().y / 2.0f + OH / 2.0f, cu18.GetPos().z), obstacle_col);
-	Cylinder obs10 = CreateCylinder(OR, OH, vec3(cu20.GetPos().x + cu20.GetSize().x / 5.0f, cu20.GetPos().y + cu20.GetSize().y / 2.0f + OH / 2.0f, cu20.GetPos().z + cu20.GetSize().z / 5.0f), obstacle_col);
-	Cylinder obs11 = CreateCylinder(OR, OH, vec3(cu20.GetPos().x - cu20.GetSize().x / 5.0f, cu20.GetPos().y + cu20.GetSize().y / 2.0f + OH / 2.0f, cu20.GetPos().z - cu20.GetSize().z / 5.0f), obstacle_col);
-	Cylinder obs12 = CreateCylinder(OR, OH, vec3(cu25.GetPos().x + cu25.GetSize().x / 4.0f, cu25.GetPos().y + cu25.GetSize().y / 2.0f + OH / 2.0f, cu23.GetPos().z), obstacle_col);
-	Cylinder obs13 = CreateCylinder(OR, OH, vec3(cy18.GetPos().x, cy18.GetPos().y + cy18.height / 2.0f + OH / 2.0f, cy18.GetPos().z), obstacle_col);
+	obs = &CreateCylinder(OR, OH, vec3(cu8.GetPos().x - cu8.GetSize().x / 4.0f, cu8.GetPos().y + cu8.GetSize().y / 2.0f + OH / 2.0f, cu8.GetPos().z - cu8.GetSize().z / 4.0f), obstacle_col);
+	obs2 = &CreateCylinder(OR, OH, vec3(cu8.GetPos().x + cu8.GetSize().x / 4.0f, cu8.GetPos().y + cu8.GetSize().y / 2.0f + OH / 2.0f, cu8.GetPos().z + cu8.GetSize().z / 4.0f), obstacle_col);
+	obs3 = &CreateCylinder(OR, OH, vec3(cy5.GetPos().x, cy5.GetPos().y + cy5.height / 2.0f + OH / 2.0f, cy5.GetPos().z), obstacle_col);
+	obs4 = &CreateCylinder(OR, OH, vec3(cu9.GetPos().x + cu9.GetSize().x / 3.0f, cu9.GetPos().y + cu9.GetSize().y / 2.0f + OH / 2.0f, cu9.GetPos().z + cu9.GetSize().z / 4.0f), obstacle_col);
+	obs5 = &CreateCylinder(OR, OH, vec3(cu9.GetPos().x + cu9.GetSize().x / 3.0f, cu9.GetPos().y + cu9.GetSize().y / 2.0f + OH / 2.0f, cu9.GetPos().z - cu9.GetSize().z / 4.0f), obstacle_col);
+	obs6 = &CreateCylinder(OR, OH, vec3(cy7.GetPos().x, cy7.GetPos().y + cy7.height / 2.0f + OH / 2.0f, cy7.GetPos().z), obstacle_col);
+	obs7 = &CreateCylinder(OR, OH, vec3(cu15.GetPos().x, cu15.GetPos().y + cu15.GetSize().y / 2.0f + OH / 2.0f, cu15.GetPos().z), obstacle_col);
+	obs8 = &CreateCylinder(OR, OH, vec3(cu17.GetPos().x, cu17.GetPos().y + cu17.GetSize().y / 2.0f + OH / 2.0f, cu17.GetPos().z), obstacle_col);
+	obs9 = &CreateCylinder(OR, OH, vec3(cu18.GetPos().x, cu18.GetPos().y + cu18.GetSize().y / 2.0f + OH / 2.0f, cu18.GetPos().z), obstacle_col);
+	obs10 = &CreateCylinder(OR, OH, vec3(cu20.GetPos().x + cu20.GetSize().x / 5.0f, cu20.GetPos().y + cu20.GetSize().y / 2.0f + OH / 2.0f, cu20.GetPos().z + cu20.GetSize().z / 5.0f), obstacle_col);
+	obs11 = &CreateCylinder(OR, OH, vec3(cu20.GetPos().x - cu20.GetSize().x / 5.0f, cu20.GetPos().y + cu20.GetSize().y / 2.0f + OH / 2.0f, cu20.GetPos().z - cu20.GetSize().z / 5.0f), obstacle_col);
+	obs12 = &CreateCylinder(OR, OH, vec3(cu25.GetPos().x + cu25.GetSize().x / 4.0f, cu25.GetPos().y + cu25.GetSize().y / 2.0f + OH / 2.0f, cu23.GetPos().z), obstacle_col);
+	obs13 = &CreateCylinder(OR, OH, vec3(cy18.GetPos().x, cy18.GetPos().y + cy18.height / 2.0f + OH / 2.0f, cy18.GetPos().z), obstacle_col);
 	//_obstacles
 
 	// Road limits

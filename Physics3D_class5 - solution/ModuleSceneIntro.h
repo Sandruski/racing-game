@@ -56,6 +56,7 @@ public:
 	bool a_updated = false, b_updated = false, c_updated = false, d_updated = false;
 	uint index_a = 0, index_b = 1, index_c = 2, index_d = 3;
 
+	// Primitives
 	Cube cu6; // 2nd speed-up position reference
 	Cube cu7;
 	Cube cu9;
@@ -65,6 +66,20 @@ public:
 	Cube cu23;
 	Cube cu24;
 	Cube ground2;
+
+	Cylinder* obs = nullptr;
+	Cylinder* obs2 = nullptr;
+	Cylinder* obs3 = nullptr;
+	Cylinder* obs4 = nullptr;
+	Cylinder* obs5 = nullptr;
+	Cylinder* obs6 = nullptr;
+	Cylinder* obs7 = nullptr;
+	Cylinder* obs8 = nullptr;
+	Cylinder* obs9 = nullptr;
+	Cylinder* obs10 = nullptr;
+	Cylinder* obs11 = nullptr;
+	Cylinder* obs12 = nullptr;
+	Cylinder* obs13 = nullptr;
 
 	// Senors
 	Cube s, h, t, n, r, p, q, w, y;
