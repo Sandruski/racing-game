@@ -24,6 +24,7 @@ public:
 
 public:
 
+	// Vehicle parameters
 	PhysVehicle3D* vehicle = nullptr;
 	float turn;
 	float acceleration;
@@ -32,6 +33,12 @@ public:
 	vec3 position = { 0.0f,0.0f,0.0f };
 	float max_speed = 0.0f;
 	float friction = 0.0f;
+
+	// Vehicle jump
+	bool cantJump = false;
+	float timerJump = 0.0f;
+	float seconds_to_jump = 0.0f;
+	float jump_force = 0.0f;
 
 	// Speed-ups
 	bool speedupX = false;
@@ -43,12 +50,6 @@ public:
 	float speed_negative_x = 0.0f;
 	float speed_positive_z = 0.0f;
 	float speed_negative_z = 0.0f;
-
-	// Vehicle jump
-	bool cantJump = false;
-	float timerJump = 0.0f;
-	float seconds_to_jump = 0.0f;
-	float jump_force = 0.0f;
 
 	// FX
 	uint FX_index[2] = { 0,0 };

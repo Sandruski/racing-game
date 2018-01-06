@@ -39,6 +39,7 @@ public:
 	void TimeToLoseUpdate(float dt);
 
 public:
+
 	// Vehicle parts
 	PhysBody3D* pb_chassis = nullptr;
 	Cube p_chassis;
