@@ -36,17 +36,18 @@ public:
 	void UpdateSpeedUpIndex(uint &index);
 
 public:
-	PhysBody3D* pb_chassis;
+	// Vehicle parts
+	PhysBody3D* pb_chassis = nullptr;
 	Cube p_chassis;
 
-	PhysBody3D* pb_wheel;
+	PhysBody3D* pb_wheel = nullptr;
 	Cylinder p_wheel;
 
-	PhysBody3D* pb_wheel2;
+	PhysBody3D* pb_wheel2 = nullptr;
 	Cylinder p_wheel2;
 
-	PhysMotor3D* left_wheel;
-	PhysMotor3D* right_wheel;
+	PhysMotor3D* left_wheel = nullptr;
+	PhysMotor3D* right_wheel = nullptr;
 
 	float max_speed_time = 0.0f;
 	float speed_time_count = 0.0f;
@@ -67,43 +68,29 @@ public:
 	Cube cu24;
 	Cube ground2;
 
-	Cylinder* obs = nullptr;
-	Cylinder* obs2 = nullptr;
-	Cylinder* obs3 = nullptr;
-	Cylinder* obs4 = nullptr;
-	Cylinder* obs5 = nullptr;
-	Cylinder* obs6 = nullptr;
-	Cylinder* obs7 = nullptr;
-	Cylinder* obs8 = nullptr;
-	Cylinder* obs9 = nullptr;
-	Cylinder* obs10 = nullptr;
-	Cylinder* obs11 = nullptr;
-	Cylinder* obs12 = nullptr;
-	Cylinder* obs13 = nullptr;
-
 	// Senors
 	Cube s, h, t, n, r, p, q, w, y;
-	PhysBody3D* sensor;
-	PhysBody3D* sensor3;
-	PhysBody3D* sensor4;
-	PhysBody3D* sensor5;
-	PhysBody3D* sensor6;
-	PhysBody3D* sensor7;
-	PhysBody3D* sensor8;
-	PhysBody3D* sensor9;
-	PhysBody3D* sensor10;
+	PhysBody3D* sensor = nullptr;
+	PhysBody3D* sensor3 = nullptr;
+	PhysBody3D* sensor4 = nullptr;
+	PhysBody3D* sensor5 = nullptr;
+	PhysBody3D* sensor6 = nullptr;
+	PhysBody3D* sensor7 = nullptr;
+	PhysBody3D* sensor8 = nullptr;
+	PhysBody3D* sensor9 = nullptr;
+	PhysBody3D* sensor10 = nullptr;
 	uint checkpoints_index = 0;
 
 	// Checkpoints
 	Cube ch1, ch2, ch3, ch4, ch5, loopCompletedCube;
-	PhysBody3D* checkpoint1;
-	PhysBody3D* checkpoint2;
-	PhysBody3D* checkpoint3;
-	PhysBody3D* checkpoint4;
-	PhysBody3D* checkpoint5;
+	PhysBody3D* checkpoint1 = nullptr;
+	PhysBody3D* checkpoint2 = nullptr;
+	PhysBody3D* checkpoint3 = nullptr;
+	PhysBody3D* checkpoint4 = nullptr;
+	PhysBody3D* checkpoint5 = nullptr;
 
 	// Game parameters
-	PhysBody3D* loopCompleted;
+	PhysBody3D* loopCompleted = nullptr;
 	uint loopsCount = 0;
 	int minutes = 1;
 	float seconds = 60;
