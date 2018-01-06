@@ -38,4 +38,6 @@ public:
 	bool finished = false;
 	bool cantJump = false;
 	float timerJump = 0.0f;
+
+	int music_index[2];
 };

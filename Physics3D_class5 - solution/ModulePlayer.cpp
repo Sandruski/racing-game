@@ -128,6 +128,8 @@ bool ModulePlayer::Start()
 	sphere->GetPos(i, j, k);
 //	App->physics->AddConstraintP2P(*(PhysBody3D*)(vehicle->GetBody()), *sphere, vec3(0,0,0), vec3(0,1,0));
 	//App->audio->PlayFx(0);
+	music_index[0] = App->audio->LoadFx("Music/WAV/VICTORY.wav");
+	music_index[1] = App->audio->LoadFx("Music/WAV/GAMEOVER.wav");
 	return true;
 }
 
@@ -152,18 +154,11 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	turn = acceleration = brake = 0.0f;
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
-	{
-		//App->audio->PlayFx(0);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && App->scene_intro->winCondition == 0)
+
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && App->scene_intro->winCondition == 0)
 	{
 		acceleration = MAX_ACCELERATION;
 		
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
-	{
-	//	App->audio->PlayFx(1);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -271,17 +266,19 @@ update_status ModulePlayer::Update(float dt)
 
 	if ((App->scene_intro->winCondition == 1 && !finished) || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 	{
+		App->audio->PlayFx(music_index[0]);
 		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
-
+		App->scene_intro->winCondition = 1;
 		vehicle->SetPos(170, 40, 184);
 		finished = true;
 	}
 	else if ((App->scene_intro->winCondition == 2 && !finished) || App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
+		App->audio->PlayFx(music_index[1]);
 		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
-
+		App->scene_intro->winCondition = 2;
 		vehicle->SetPos(200, 200, 200);
 		finished = true;
 	}
@@ -295,7 +292,12 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->GetPos(position.x, position.y, position.z);
 	position;
 	char title[80];
-	sprintf_s(title, "%.1f Km/h, checkpoint: %i loops: %i, time: %i:%.1f, Win: %i", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->loopsCount, App->scene_intro->minutes, App->scene_intro->seconds, App->scene_intro->winCondition);
+	p2SString win = "...";
+	if (App->scene_intro->winCondition == 1)
+		win = "VICTORY!!!";
+	else if (App->scene_intro->winCondition == 2)
+		win = "Maybe next time...";
+	sprintf_s(title, "%.1f Km/h, checkpoint: %i loops: %i, time: %i:%.1f, Win: %s", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->loopsCount, App->scene_intro->minutes, App->scene_intro->seconds, win.GetString());
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
