@@ -41,6 +41,26 @@
     
     <obstacle_radius value="1"/>
     <obstacle_height value="4"/>
+
+    <minutes value ="1"/>
+    <seconds value ="60"/>
+
+    <sensorPos_1 x ="0" y ="1.5" z ="13"/>
+    <sensorPos_2 x ="60" y ="1.5" z ="240"/>
+    <sensorPos_3 x ="125" y ="-4" z ="369"/>
+    <sensorPos_4 x ="277" y ="0.5" z ="287"/>
+    <sensorPos_5 x ="345" y ="0" z ="-13"/>
+    <sensorPos_6 x ="331" y ="0" z ="-85"/>
+    <sensorPos_7 x ="432" y ="0" z ="-56"/>
+    <sensorPos_8 x ="317" y ="0.5" z ="-49"/>
+    <sensorPos_9 x ="317" y ="0.5" z ="-62"/>
+
+    <checkbox_sensors_1 x ="60" y ="1.5" z ="65"/>
+    <checkbox_sensors_2 x ="60" y ="1.5" z ="300"/>
+    <checkbox_sensors_3 x ="277" y ="0.5" z ="267"/>
+    <checkbox_sensors_4 x ="277" y ="0" z ="70"/>
+    <checkbox_sensors_5 x ="388" y ="0" z ="-55"/>
+
   </scene_intro>
 
   <player>
