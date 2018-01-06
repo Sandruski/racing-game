@@ -117,19 +117,9 @@ bool ModulePlayer::Start()
 	position = { 0, 0, -4 };
 	vehicle->SetPos(position.x, position.y, position.z);
 	
-	Sphere ballon;
-	ballon.radius = 1.0f;
-	ballon.SetPos(0, 16, 10);
-
-	sphere = App->physics->AddBody(ballon);
-	float x, y, z;
-	vehicle->GetPos(x, y, z);
-	float i, j, k;
-	sphere->GetPos(i, j, k);
-//	App->physics->AddConstraintP2P(*(PhysBody3D*)(vehicle->GetBody()), *sphere, vec3(0,0,0), vec3(0,1,0));
-	//App->audio->PlayFx(0);
 	music_index[0] = App->audio->LoadFx("Music/WAV/VICTORY.wav");
 	music_index[1] = App->audio->LoadFx("Music/WAV/GAMEOVER.wav");
+
 	return true;
 }
 
@@ -144,6 +134,10 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
+	// F1: debug draw
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		App->physics->SetDebugDraw();
+
 	if (cantJump) {
 		timerJump += 1 * dt;
 		if (timerJump >= 6.0f) {
@@ -189,12 +183,14 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 	
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
 		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+
+		IdentityMatrix = IM;
 		vehicle->SetTransform(IdentityMatrix.M);
-		vehicle->SetPos(0, 0, -4);
+
 		finished = false;
 		cantJump = false;
 		timerJump = 0.0f;
@@ -207,34 +203,36 @@ update_status ModulePlayer::Update(float dt)
 		App->scene_intro->checkpoints_index = 0;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT && App->scene_intro->winCondition == 0)
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && App->scene_intro->winCondition == 0)
 	{
 			vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 			vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
-			vehicle->SetTransform(IdentityMatrix.M);
 		
 		switch (App->scene_intro->checkpoints_index)
 		{
 		case 0:
-			vehicle->SetPos(0, 0, -4);
+			vehicle->SetTransform(IdentityMatrix.M);
+			vehicle->SetPos(0, 0, -4);		
 			break;
-		case 1: case 6: case 11:
-			vehicle->SetPos(60, 12, 65);
+		case 1:
+			vehicle->SetTransform(IdentityMatrix.M);
+			vehicle->SetPos(60, 4, 65);	
 			break;
-		case 2: case 7: case 12:
-			vehicle->SetPos(60, 12, 300);
+		case 2:
+			vehicle->SetTransform(IdentityMatrix.M);
+			vehicle->SetPos(60, 4, 300);
 			break;
-		case 3: case 8: case 13:
+		case 3:
 			vehicle->SetTransform(IdentityMatrix.rotate(180, vec3(0, 1, 0)).M);
 			IdentityMatrix.rotate(180, vec3(0, 1, 0));
-			vehicle->SetPos(277, 12, 267);
+			vehicle->SetPos(277, 4, 267);
 			break;
-		case 4: case 9: case 14:
+		case 4:
 			vehicle->SetTransform(IdentityMatrix.rotate(180, vec3(0, 1, 0)).M);
 			IdentityMatrix.rotate(180, vec3(0, 1, 0));
 			vehicle->SetPos(277, 12, 70);
 			break;
-		case 5: case 10: case 15:
+		case 5:
 			vehicle->SetTransform(IdentityMatrix.rotate(-90, vec3(0, 1, 0)).M);
 			IdentityMatrix.rotate(90, vec3(0, 1, 0));
 			vehicle->SetPos(338, 12, -55);		
@@ -275,6 +273,8 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 		App->scene_intro->winCondition = 1;
+		IdentityMatrix = IM;
+		vehicle->SetTransform(IdentityMatrix.M);
 		vehicle->SetPos(170, 40, 184);
 		finished = true;
 	}
@@ -284,6 +284,8 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
 		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 		App->scene_intro->winCondition = 2;
+		IdentityMatrix = IM;
+		vehicle->SetTransform(IdentityMatrix.M);
 		vehicle->SetPos(200, 200, 200);
 		finished = true;
 	}
@@ -295,14 +297,24 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 	vehicle->GetPos(position.x, position.y, position.z);
-	position;
+	p2SString song = "Persona 5";
+	
+	if (App->scene_intro->indexMusic == 0)
+		song = "Persona 5";
+	else if (App->scene_intro->indexMusic == 1)
+		song = "Ghostbusters";
+	else if (App->scene_intro->indexMusic == 2)
+		song = "Let It Go";
+	else if (App->scene_intro->indexMusic == 3)
+		song = "Pokemon";
+
 	char title[80];
 	p2SString win = "...";
 	if (App->scene_intro->winCondition == 1)
 		win = "VICTORY!!!";
 	else if (App->scene_intro->winCondition == 2)
-		win = "Maybe next time...";
-	sprintf_s(title, "%.1f Km/h, checkpoint: %i loops: %i, time: %i:%.1f, Win: %s", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->loopsCount, App->scene_intro->minutes, App->scene_intro->seconds, win.GetString());
+		win = "LOSE!!!";
+	sprintf_s(title, "%.1f Km/h, Checkpoint: %i, Time: %i:%.1f, Win: %s, Song: %s", vehicle->GetKmh(), App->scene_intro->checkpoints_index, App->scene_intro->minutes, App->scene_intro->seconds, win.GetString(), song.GetString());
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;

@@ -9,6 +9,7 @@ struct PhysVehicle3D;
 #define BOOST_ACCELERATION 1500.0f
 #define TURN_DEGREES 30.0f * DEGTORAD
 #define BRAKE_POWER 100.0f
+#define IM mat4x4(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
 
 class ModulePlayer : public Module
 {
@@ -41,4 +42,5 @@ public:
 	float timerJump = 0.0f;
 
 	int music_index[2];
+	bool debug = false;
 };

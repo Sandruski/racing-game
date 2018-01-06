@@ -532,6 +532,7 @@ bool ModuleSceneIntro::Start()
 	pos[++i] = false;
 	i = 0;
 	inv_pos[1] = true;
+	inv_col[0] = true;
 	inv_col[1] = true;
 	CreateLimits((Primitive*)&cu9, pos, inv_col, inv_pos, vec4(0.0f, cu8.GetSize().x / 2.0f,0.0f,0.0f));
 
@@ -541,6 +542,7 @@ bool ModuleSceneIntro::Start()
 	pos[++i] = false;
 	i = 0;
 	inv_pos[1] = false;
+	inv_col[0] = false;
 	inv_col[1] = false;
 	inv_col[2] = true;
 	CreateLimits((Primitive*)&cu11, pos, inv_col, inv_pos);

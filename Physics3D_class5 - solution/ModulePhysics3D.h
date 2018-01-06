@@ -36,9 +36,9 @@ public:
 
 	void AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anThorA, const vec3& anThorB);
 	void AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anThorA, const vec3& anThorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false, bool motor = false);
+	void SetDebugDraw();
 
 private:
-
 	bool debug;
 
 	btDefaultCollisionConfiguration*	collision_conf;
