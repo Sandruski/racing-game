@@ -4,7 +4,7 @@
 This is a simple racing game in which you must complete a loop before the time ends (you only have 2 minutes, so hurry up!).
 Take advantage of the speed-ups and avoid being hit by two big rotating sticks. Will you be fast enough to conquer the castle?<br>
 
-•	GitHub repository: [https://github.com/Sandruski/Racing-Game)
+•	GitHub repository: [https://github.com/Sandruski/racing-game)
 
 ## Inputs
 
